@@ -6,17 +6,15 @@
 
 body{
     font-family: Arial, sans-serif;
-
     background: #0a0a0a;
-
     color: white;
 }
 
+/* HEADER */
+
 header{
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
 
     padding: 20px 50px;
@@ -28,15 +26,12 @@ header{
 
 header h1{
     color: cyan;
-
     font-size: 32px;
-
     text-shadow: 0 0 10px cyan;
 }
 
 nav a{
     text-decoration: none;
-
     color: white;
 
     margin-left: 25px;
@@ -49,6 +44,94 @@ nav a{
 nav a:hover{
     color: cyan;
 }
+
+/* NAVBAR */
+
+.navbar{
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 20px 50px;
+
+    background: rgba(10,10,10,0.8);
+
+    backdrop-filter: blur(10px);
+
+    border-bottom: 1px solid cyan;
+
+    box-shadow: 0 0 15px rgba(0,255,255,0.2);
+}
+
+.logo h1{
+    color: cyan;
+
+    font-size: 32px;
+
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 0 5px cyan,
+        0 0 15px cyan;
+}
+
+.menu{
+    display: flex;
+
+    gap: 30px;
+}
+
+.menu a{
+    position: relative;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+.menu a:hover{
+    color: cyan;
+
+    text-shadow: 0 0 10px cyan;
+}
+
+.menu a::after{
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: -5px;
+
+    width: 0%;
+
+    height: 2px;
+
+    background: cyan;
+
+    transition: 0.3s;
+}
+
+.menu a:hover::after{
+    width: 100%;
+}
+
+/* BANNER */
 
 .banner{
     height: 60vh;
@@ -82,8 +165,10 @@ nav a:hover{
     margin-top: 20px;
 }
 
+/* BOTÕES */
+
 button{
-    margin-top: 30px;
+    margin-top: 20px;
 
     padding: 15px 35px;
 
@@ -109,6 +194,8 @@ button:hover{
 
     box-shadow: 0 0 20px cyan;
 }
+
+/* PRODUTOS */
 
 .produtos{
     padding: 80px 50px;
@@ -198,86 +285,112 @@ button:hover{
     width: 100%;
 }
 
-.navbar{
-    position: sticky;
+/* LOGIN */
 
-    top: 0;
+.login-container{
+    width: 100%;
 
-    z-index: 1000;
+    height: 100vh;
 
     display: flex;
 
-    justify-content: space-between;
+    justify-content: center;
 
     align-items: center;
 
-    padding: 20px 50px;
+    background: linear-gradient(
+        135deg,
+        #050505,
+        #0f0f0f
+    );
+}
 
-    background: rgba(10,10,10,0.8);
+.login-box{
+    width: 400px;
+
+    padding: 40px;
+
+    border-radius: 20px;
+
+    background: rgba(255,255,255,0.05);
 
     backdrop-filter: blur(10px);
 
-    border-bottom: 1px solid cyan;
+    border: 1px solid rgba(0,255,255,0.2);
 
-    box-shadow: 0 0 15px rgba(0,255,255,0.2);
+    box-shadow: 0 0 30px rgba(0,255,255,0.3);
+
+    text-align: center;
 }
 
-.logo h1{
+.login-box h2{
     color: cyan;
 
-    font-size: 32px;
+    font-size: 40px;
 
-    letter-spacing: 2px;
+    margin-bottom: 30px;
 
-    text-shadow:
-        0 0 5px cyan,
-        0 0 15px cyan;
+    text-shadow: 0 0 15px cyan;
 }
 
-.menu{
-    display: flex;
+.login-box input{
+    width: 100%;
 
-    gap: 30px;
-}
+    padding: 15px;
 
-.menu a{
-    position: relative;
+    margin-bottom: 20px;
+
+    border: none;
+
+    outline: none;
+
+    border-radius: 10px;
+
+    background: #111;
 
     color: white;
 
-    text-decoration: none;
+    font-size: 16px;
 
-    font-size: 18px;
-
-    font-weight: bold;
+    border: 1px solid rgba(0,255,255,0.3);
 
     transition: 0.3s;
 }
 
-.menu a:hover{
+.login-box input:focus{
+    border-color: cyan;
+
+    box-shadow: 0 0 15px cyan;
+}
+
+.login-box button{
+    width: 100%;
+}
+
+#mensagem{
+    margin-top: 20px;
+
     color: cyan;
 
-    text-shadow: 0 0 10px cyan;
+    font-size: 16px;
 }
 
-.menu a::after{
-    content: "";
+.cadastro-btn{
+    margin-top: 15px;
 
-    position: absolute;
+    background: transparent;
 
-    left: 0;
+    color: cyan;
 
-    bottom: -5px;
+    border: 1px solid cyan;
 
-    width: 0%;
-
-    height: 2px;
-
-    background: cyan;
+    font-size: 14px;
 
     transition: 0.3s;
 }
 
-.menu a:hover::after{
-    width: 100%;
+.cadastro-btn:hover{
+    background: cyan;
+
+    color: black;
 }
