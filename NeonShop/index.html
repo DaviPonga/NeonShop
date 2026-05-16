@@ -2,118 +2,280 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>NeonShop</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet"
+        href="css/style.css">
+
 </head>
 
 <body>
 
-    <header class="navbar">
+    <!-- LOADING -->
 
-    <div class="logo">
-        <h1>NEONSHOP</h1>
+    <div id="loading">
+
+        <div class="loader-box">
+
+            <h1>NEONSHOP</h1>
+
+            <div class="loading-bar">
+
+                <div class="loading-fill"></div>
+
+            </div>
+
+            <p>
+                Inicializando sistema...
+            </p>
+
+        </div>
+
     </div>
 
-    <nav class="menu">
+    <!-- NAVBAR -->
 
-        <a href="index.html">Home</a>
-        <a href="">Produtos</a>
-        <a href="">Categorias</a>
-        <a href="carrinho.html">Carrinho</a>
-        <a href="login.html">Login</a>
+    <header class="navbar">
 
-    </nav>
+        <div class="logo">
 
-</header>
+            <h1>NEONSHOP</h1>
+
+        </div>
+
+        <nav class="menu">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="produtos.html">
+                Produtos
+            </a>
+
+            <a href="favoritos.html">
+                Favoritos
+            </a>
+
+            <a href="categorias.html">
+                Categorias
+            </a>
+
+            <a href="carrinho.html">
+                Carrinho
+            </a>
+
+            <a href="perfil.html">
+                Perfil
+            </a>
+
+            <a href="login.html">
+                Login
+            </a>
+
+            <button
+                class="tema-btn"
+                onclick="trocarTema()"
+            >
+                🌙
+            </button>
+
+        </nav>
+
+    </header>
+
+    <!-- MAIN -->
+
     <main>
+
+        <!-- BANNER -->
 
         <section class="banner">
 
             <h2>Loja Gamer</h2>
 
-            <p>Os melhores periféricos para seus jogos.</p>
+            <p>
+                Os melhores periféricos para seus jogos.
+            </p>
 
-            <button>Comprar Agora</button>
+            <button>
+                Comprar Agora
+            </button>
 
         </section>
 
+        <!-- PRODUTOS -->
+
         <section class="produtos">
 
-            <h2 class="titulo-produtos">PRODUTOS</h2>
+            <h2 class="titulo-produtos">
+                PRODUTOS
+            </h2>
 
-            <div class="grid-produtos">
+            <!-- PESQUISA -->
 
-                <div class="produto">
+            <div class="pesquisa">
 
-                    <img src="img/teclado.jpg" alt="Teclado Gamer">
+                <input
+                    type="text"
+                    id="pesquisa"
+                    placeholder="Pesquisar produtos..."
+                    onkeyup="pesquisarProdutos()"
+                >
+
+            </div>
+
+            <!-- CATEGORIAS -->
+
+            <div class="categorias">
+
+                <button onclick="filtrarProdutos('todos')">
+                    Todos
+                </button>
+
+                <button onclick="filtrarProdutos('mouse')">
+                    Mouse
+                </button>
+
+                <button onclick="filtrarProdutos('teclado')">
+                    Teclados
+                </button>
+
+                <button onclick="filtrarProdutos('fone')">
+                    Fones
+                </button>
+
+            </div>
+
+            <!-- GRID -->
+
+            <div
+                class="grid-produtos"
+                id="lista-produtos"
+            >
+
+                <!-- TECLADO -->
+
+                <div
+                    class="produto"
+                    data-categoria="teclado"
+                >
+
+                    <div
+                        class="favorito"
+                        onclick="toggleFavorito(this)"
+                    >
+                        ❤
+                    </div>
+
+                    <img
+                        src="img/teclado.jpg"
+                        alt="Teclado Gamer"
+                    >
 
                     <h3>Teclado Gamer</h3>
 
-                    <p>RGB mecânico profissional.</p>
+                    <p>
+                        RGB mecânico profissional.
+                    </p>
 
-                    <span>R$ 299,99</span>
-
-                    <button>Comprar</button>
+                    <span>
+                        R$ 299,99
+                    </span>
 
                     <button onclick="adicionarCarrinho(
-                    'Teclado Gamer',
-                    299.99,
-                    'img/teclado.jpg',
-                    7312
+                        'Teclado Gamer',
+                        299.99,
+                        'img/teclado.jpg',
+                        7312
                     )">
-                    Adicionar ao Carrinho
+                        Adicionar ao Carrinho
                     </button>
-                    
 
                 </div>
 
-                <div class="produto">
+                <!-- MOUSE -->
 
-                    <img src="img/mouse.jpg" alt="Mouse Gamer">
+                <div
+                    class="produto"
+                    data-categoria="mouse"
+                >
+
+                    <div
+                        class="favorito"
+                        onclick="toggleFavorito(this)"
+                    >
+                        ❤
+                    </div>
+
+                    <img
+                        src="img/mouse.jpg"
+                        alt="Mouse Gamer"
+                    >
 
                     <h3>Mouse Gamer</h3>
 
-                    <p>Mouse ultra rápido RGB.</p>
+                    <p>
+                        Mouse ultra rápido RGB.
+                    </p>
 
-                    <span>R$ 199,99</span>
-
-                    <button>Comprar</button>
+                    <span>
+                        R$ 199,99
+                    </span>
 
                     <button onclick="adicionarCarrinho(
-                    'Mouse Gamer',
-                    199.99,
-                    'img/mouse.jpg',
-                    1531
+                        'Mouse Gamer',
+                        199.99,
+                        'img/mouse.jpg',
+                        1531
                     )">
-                    Adicionar ao Carrinho
+                        Adicionar ao Carrinho
                     </button>
 
                 </div>
 
-                <div class="produto">
+                <!-- FONE -->
 
-                    <img src="img/fone.jpg" alt="Fone Gamer">
+                <div
+                    class="produto"
+                    data-categoria="fone"
+                >
+
+                    <div
+                        class="favorito"
+                        onclick="toggleFavorito(this)"
+                    >
+                        ❤
+                    </div>
+
+                    <img
+                        src="img/fone.jpg"
+                        alt="Fone Gamer"
+                    >
 
                     <h3>Fone Gamer</h3>
 
-                    <p>Áudio imersivo 7.1.</p>
+                    <p>
+                        Áudio imersivo 7.1.
+                    </p>
 
-                    <span>R$ 149,99</span>
-
-                    <button>Comprar</button>
+                    <span>
+                        R$ 149,99
+                    </span>
 
                     <button onclick="adicionarCarrinho(
-                    'Fone Gamer',
-                    149.99,
-                    'img/fone.jpg',
-                    131
+                        'Fone Gamer',
+                        149.99,
+                        'img/fone.jpg',
+                        131
                     )">
-                    Adicionar ao Carrinho
+                        Adicionar ao Carrinho
                     </button>
 
                 </div>
@@ -123,6 +285,12 @@
         </section>
 
     </main>
+
+    <!-- TOAST -->
+
+    <div id="toast"></div>
+
+    <!-- SCRIPT -->
 
     <script src="js/script.js"></script>
 

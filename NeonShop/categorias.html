@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Categorias - NeonShop</title>
+
+    <link rel="stylesheet"
+        href="css/style.css">
+
+</head>
+
+<body>
+
+    <div id="loading">
+
+        <div class="loader-box">
+
+            <h1>NEONSHOP</h1>
+
+            <div class="loading-bar">
+                <div class="loading-fill"></div>
+            </div>
+
+            <p>
+                Carregando categorias...
+            </p>
+
+        </div>
+
+    </div>
+
+    <header class="navbar">
+
+        <div class="logo">
+            <h1>NEONSHOP</h1>
+        </div>
+
+        <nav class="menu">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="favoritos.html">
+                Favoritos
+            </a>
+
+            <a href="carrinho.html">
+                Carrinho
+            </a>
+
+            <a href="perfil.html">
+                Perfil
+            </a>
+
+        </nav>
+
+    </header>
+
+    <section class="produtos">
+
+        <h2 class="titulo-produtos">
+            CATEGORIAS
+        </h2>
+
+        <div class="categorias">
+
+            <button onclick="filtrarProdutos('todos')">
+                Todos
+            </button>
+
+            <button onclick="filtrarProdutos('mouse')">
+                Mouse
+            </button>
+
+            <button onclick="filtrarProdutos('teclado')">
+                Teclados
+            </button>
+
+            <button onclick="filtrarProdutos('fone')">
+                Fones
+            </button>
+
+        </div>
+
+        <div
+            class="grid-produtos"
+            id="lista-categorias"
+        >
+
+            <div
+                class="produto"
+                data-categoria="mouse"
+            >
+
+                <div
+                    class="favorito"
+                    onclick="toggleFavorito(this)"
+                >
+                    ❤
+                </div>
+
+                <img src="img/mouse.jpg">
+
+                <h3>Mouse Gamer</h3>
+
+                <span>
+                    R$ 199.99
+                </span>
+
+                <button onclick="adicionarCarrinho(
+                    'Mouse Gamer',
+                    199.99,
+                    'img/mouse.jpg',
+                    10
+                )">
+                    Comprar
+                </button>
+
+            </div>
+
+            <div
+                class="produto"
+                data-categoria="teclado"
+            >
+
+                <div
+                    class="favorito"
+                    onclick="toggleFavorito(this)"
+                >
+                    ❤
+                </div>
+
+                <img src="img/teclado.jpg">
+
+                <h3>Teclado Gamer</h3>
+
+                <span>
+                    R$ 299.99
+                </span>
+
+                <button onclick="adicionarCarrinho(
+                    'Teclado Gamer',
+                    299.99,
+                    'img/teclado.jpg',
+                    5
+                )">
+                    Comprar
+                </button>
+
+            </div>
+
+            <div
+                class="produto"
+                data-categoria="fone"
+            >
+
+                <div
+                    class="favorito"
+                    onclick="toggleFavorito(this)"
+                >
+                    ❤
+                </div>
+
+                <img src="img/fone.jpg">
+
+                <h3>Fone Gamer</h3>
+
+                <span>
+                    R$ 149.99
+                </span>
+
+                <button onclick="adicionarCarrinho(
+                    'Fone Gamer',
+                    149.99,
+                    'img/fone.jpg',
+                    8
+                )">
+                    Comprar
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+    <div id="toast"></div>
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>

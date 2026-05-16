@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Admin - NeonShop</title>
+
+    <link rel="stylesheet"
+        href="css/style.css">
+
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="logo">
+            <h1>NEONSHOP ADMIN</h1>
+        </div>
+
+        <nav class="menu">
+
+            <a href="index.html">
+                Loja
+            </a>
+
+        </nav>
+
+    </header>
+
+    <section class="login-container">
+
+        <div class="login-box">
+
+            <h2>Adicionar Produto</h2>
+
+            <input
+                type="text"
+                id="produto-nome"
+                placeholder="Nome do produto"
+            >
+
+            <input
+                type="number"
+                id="produto-preco"
+                placeholder="Preço"
+            >
+
+            <input
+                type="text"
+                id="produto-imagem"
+                placeholder="Imagem (img/produto.png)"
+            >
+
+            <input
+                type="text"
+                id="produto-categoria"
+                placeholder="Categoria"
+            >
+
+            <input
+                type="number"
+                id="produto-estoque"
+                placeholder="Estoque"
+            >
+
+            <button onclick="adicionarProdutoAdmin()">
+                Adicionar Produto
+            </button>
+
+            <p id="admin-msg"></p>
+
+        </div>
+
+    </section>
+     <div id="toast"></div>
+    <script src="js/script.js"></script>
+
+   
+</body>
+
+</html>

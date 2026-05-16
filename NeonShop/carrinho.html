@@ -1,39 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho - NeonShop</title>
+<html lang="pt-BR">
 
-    <link rel="stylesheet" href="css/style.css">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Carrinho - NeonShop
+    </title>
+
+    <link rel="stylesheet"
+        href="css/style.css">
 
 </head>
+
 <body>
+
+    <!-- NAVBAR -->
+
     <header class="navbar">
-    <div class="logo">
-        <h1>NEONSHOP</h1>
-    </div>
-    <nav class="menu">
-        <a href="index.html">Home</a>
-        <a href="">Produtos</a>
-        <a href="">Categorias</a>
-        <a href="carrinho.html">Carrinho</a>
-        <a href="login.html">Login</a>
-    </nav>
-    </header>
 
-    <section class="produtos">
-        <h2 class="titulo-produtos">CARRINHO
-        </h2>
+        <div class="logo">
 
-        <div id="carrinho-produtos" 
-        class="grid-produtos">
+            <h1>NEONSHOP</h1>
+
         </div>
 
-        <h2 id="total"></h2>
+        <nav class="menu">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="produtos.html">
+                Produtos
+            </a>
+
+            <a href="categorias.html">
+                Categorias
+            </a>
+
+            <a href="favoritos.html">
+                Favoritos
+            </a>
+
+            <a href="carrinho.html">
+                Carrinho
+            </a>
+
+            <a href="perfil.html">
+                Perfil
+            </a>
+
+            <a href="login.html">
+                Login
+            </a>
+
+            <button
+                class="tema-btn"
+                onclick="trocarTema()"
+            >
+                🌙
+            </button>
+
+        </nav>
+
+    </header>
+
+    <!-- CARRINHO -->
+
+    <section class="produtos">
+
+        <h2 class="titulo-produtos">
+            CARRINHO
+        </h2>
+
+        <!-- GRID PRODUTOS -->
+
+        <div
+            id="carrinho-produtos"
+            class="grid-produtos"
+        >
+        </div>
+
+        <!-- CUPOM -->
+
+        <div class="cupom-area">
+
+            <input
+                type="text"
+                id="cupom"
+                placeholder="Digite seu cupom"
+            >
+
+            <button onclick="aplicarCupom()">
+                Aplicar
+            </button>
+
+        </div>
+
+        <p id="mensagem-cupom"></p>
+
+        <!-- TOTAL -->
+
+        <div class="total-area">
+
+            <h2 id="total">
+                TOTAL: R$ 0,00
+            </h2>
+
+        </div>
+
+        <!-- FINALIZAR -->
+
+        <div class="checkout">
+
+            <button onclick="abrirPix()">
+                Finalizar Compra
+            </button>
+
+        </div>
 
     </section>
 
+    <!-- MODAL PIX -->
+
+    <div
+        class="pix-modal"
+        id="pix-modal"
+    >
+
+        <div class="pix-box">
+
+            <h2>
+                PAGAMENTO PIX
+            </h2>
+
+            <img
+                src="img/Qrcodepix.png"
+                alt="QR Code PIX"
+            >
+
+            <p id="pix-total"></p>
+
+            <button onclick="confirmarPagamento()">
+                Confirmar Pagamento
+            </button>
+
+            <button onclick="fecharPix()">
+                Fechar
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- TOAST -->
+
+    <div id="toast"></div>
+
+    <!-- SCRIPT -->
+
     <script src="js/script.js"></script>
+
 </body>
+
 </html>
