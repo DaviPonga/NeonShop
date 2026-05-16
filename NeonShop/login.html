@@ -1,63 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Login - NeonShop</title>
-
     <link rel="stylesheet" href="css/style.css">
-
 </head>
-
 <body>
-
     <div class="login-container">
-
         <div class="login-box">
+            <h2>NEONSHOP</h2>
+            <p style="color:#aaa;margin-bottom:25px;font-size:15px;">Entre na sua conta</p>
 
-            <h2>NEONSHOP LOGIN</h2>
+            <input type="email" id="email" placeholder="Seu email">
+            <input type="password" id="senha" placeholder="Sua senha">
 
-            <input
-                type="email"
-                id="email"
-                placeholder="Digite seu email"
-            >
+            <button type="button" onclick="login()">Entrar</button>
 
-            <input
-                type="password"
-                id="senha"
-                placeholder="Digite sua senha"
-            >
-
-            <button
-                type="button"
-                onclick="login()"
-            >
-                Entrar
-            </button>
-
-            <button
-                type="button"
-                class="cadastro-btn"
-                onclick="window.location.href='register.html'"
-            >
-                Criar Sua Conta
+            <button type="button" class="cadastro-btn"
+                onclick="window.location.href='register.html'">
+                Criar Conta
             </button>
 
             <p id="mensagem"></p>
-
         </div>
-
     </div>
 
     <div id="toast"></div>
-    
-    <script src="js/script.js"></script>
-
+    <script type="module" src="js/script.js"></script>
 </body>
-
 </html>

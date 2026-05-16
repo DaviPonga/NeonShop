@@ -1,140 +1,201 @@
-<!-- MOUSE -->
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-<div
-    class="produto"
-    data-categoria="mouse"
->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - NeonShop</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
 
-    <div
-        class="favorito"
-        onclick="toggleFavorito(this)"
-    >
-        ❤
+<body>
+
+    <!-- LOADING -->
+    <div id="loading">
+        <div class="loader-box">
+            <h1>NEONSHOP</h1>
+            <div class="loading-bar">
+                <div class="loading-fill"></div>
+            </div>
+            <p>Carregando produtos...</p>
+        </div>
     </div>
 
-    <a
-        href="mouse.html"
-        class="produto-link"
-    >
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="logo"><h1>NEONSHOP</h1></div>
+        <nav class="menu">
+            <a href="index.html">Home</a>
+            <a href="produtos.html">Produtos</a>
+            <a href="favoritos.html">Favoritos</a>
+            <a href="categorias.html">Categorias</a>
+            <a href="carrinho.html" class="carrinho-link">
+                Carrinho
+                <span id="contador-carrinho">0</span>
+            </a>
+            <a href="perfil.html">Perfil</a>
+            <a href="login.html">Login</a>
+            <button class="tema-btn" onclick="trocarTema()">🌙</button>
+        </nav>
+    </header>
 
-        <img
-            src="img/mouse.jpg"
-            alt="Mouse Gamer"
-        >
+    <main>
+        <section class="produtos">
 
-        <h3>
-            Mouse Gamer
-        </h3>
+            <h2 class="titulo-produtos">PRODUTOS</h2>
 
-    </a>
+            <!-- PESQUISA -->
+            <div class="pesquisa">
+                <input type="text" id="pesquisa" placeholder="Pesquisar produtos..." onkeyup="pesquisarProdutos()">
+            </div>
 
-    <span>
-        R$ 199.99
-    </span>
+            <!-- CATEGORIAS -->
+            <div class="categorias">
+                <button onclick="filtrarProdutos('todos')">Todos</button>
+                <button onclick="filtrarProdutos('mouse')">Mouse</button>
+                <button onclick="filtrarProdutos('teclado')">Teclados</button>
+                <button onclick="filtrarProdutos('fone')">Fones</button>
+                <button onclick="filtrarProdutos('cadeira')">Cadeiras</button>
+                <button onclick="filtrarProdutos('monitor')">Monitores</button>
+                <button onclick="filtrarProdutos('headset')">Headsets</button>
+            </div>
 
-    <button onclick="adicionarCarrinho(
-        'Mouse Gamer',
-        199.99,
-        'img/mouse.jpg',
-        10
-    )">
+            <!-- GRID -->
+            <div class="grid-produtos">
 
-        Comprar
+                <!-- 1. MOUSE GAMER -->
+                <div class="produto" data-categoria="mouse">
+                    <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                    <a href="mouse.html" class="produto-link">
+                        <img src="img/mouse.jpg" alt="Mouse Gamer">
+                        <h3>Mouse Gamer Pro</h3>
+                    </a>
+                    <p>Mouse ultra rápido RGB com 16000 DPI.</p>
+                    <span>R$ 199,99</span>
+                    <button onclick="adicionarCarrinho('Mouse Gamer Pro', 199.99, 'img/mouse.jpg', 10)">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
 
-    </button>
+                <!-- 2. TECLADO -->
+                <div class="produto" data-categoria="teclado">
+                    <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                    <a href="teclado.html" class="produto-link">
+                        <img src="img/teclado.jpg" alt="Teclado Gamer">
+                        <h3>Teclado Mecânico RGB</h3>
+                    </a>
+                    <p>Switches mecânicos blue, iluminação RGB full.</p>
+                    <span>R$ 299,99</span>
+                    <button onclick="adicionarCarrinho('Teclado Mecânico RGB', 299.99, 'img/teclado.jpg', 5)">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
 
-</div>
+                <!-- 3. FONE -->
+                <div class="produto" data-categoria="fone">
+                    <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                    <a href="fone.html" class="produto-link">
+                        <img src="img/fone.jpg" alt="Fone Gamer">
+                        <h3>Fone Gamer 7.1</h3>
+                    </a>
+                    <p>Áudio surround 7.1 com microfone retrátil.</p>
+                    <span>R$ 149,99</span>
+                    <button onclick="adicionarCarrinho('Fone Gamer 7.1', 149.99, 'img/fone.jpg', 8)">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
 
-<!-- TECLADO -->
+                <!-- 4. MOUSE SEM FIO -->
+                <div class="produto" data-categoria="mouse">
+                    <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                    <a href="mouse.html" class="produto-link">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=250&fit=crop" alt="Mouse Sem Fio">
+                        <h3>Mouse Sem Fio Elite</h3>
+                    </a>
+                    <p>Wireless 2.4GHz, bateria de 70h, RGB.</p>
+                    <span>R$ 259,99</span>
+                    <button onclick="adicionarCarrinho('Mouse Sem Fio Elite', 259.99, 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=250&fit=crop', 7)">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
 
-<div
-    class="produto"
-    data-categoria="teclado"
->
+                <!-- 5. TECLADO COMPACTO -->
+                <div class="produto" data-categoria="teclado">
+                    <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                    <a href="teclado.html" class="produto-link">
+                        <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=250&fit=crop" alt="Teclado TKL">
+                        <h3>Teclado TKL Compacto</h3>
+                    </a>
+                    <p>Layout TKL 80%, hot-swap, RGB por tecla.</p>
+                    <span>R$ 349,99</span>
+                    <button onclick="adicionarCarrinho('Teclado TKL Compacto', 349.99, 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=250&fit=crop', 4)">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
 
-    <div
-        class="favorito"
-        onclick="toggleFavorito(this)"
-    >
-        ❤
-    </div>
+                <!-- 6. HEADSET -->
+                <div class="produto" data-categoria="headset">
+                    <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                    <a href="fone.html" class="produto-link">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop" alt="Headset Pro">
+                        <h3>Headset Pro Wireless</h3>
+                    </a>
+                    <p>Cancelamento de ruído ativo, 30h de bateria.</p>
+                    <span>R$ 449,99</span>
+                    <button onclick="adicionarCarrinho('Headset Pro Wireless', 449.99, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop', 6)">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
 
-    <a
-        href="teclado.html"
-        class="produto-link"
-    >
+                <!-- 7. CADEIRA GAMER -->
+                <div class="produto" data-categoria="cadeira">
+                    <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                    <a href="#" class="produto-link">
+                        <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=250&fit=crop" alt="Cadeira Gamer">
+                        <h3>Cadeira Gamer Pro</h3>
+                    </a>
+                    <p>Apoio lombar, reclinável 180°, espuma premium.</p>
+                    <span>R$ 1.299,99</span>
+                    <button onclick="adicionarCarrinho('Cadeira Gamer Pro', 1299.99, 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=250&fit=crop', 3)">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
 
-        <img
-            src="img/teclado.jpg"
-            alt="Teclado Gamer"
-        >
+                <!-- 8. MONITOR -->
+                <div class="produto" data-categoria="monitor">
+                    <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                    <a href="#" class="produto-link">
+                        <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=250&fit=crop" alt="Monitor Gamer">
+                        <h3>Monitor 144Hz IPS</h3>
+                    </a>
+                    <p>24" Full HD, 144Hz, 1ms, FreeSync Premium.</p>
+                    <span>R$ 899,99</span>
+                    <button onclick="adicionarCarrinho('Monitor 144Hz IPS', 899.99, 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=250&fit=crop', 5)">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
 
-        <h3>
-            Teclado Gamer
-        </h3>
+                <!-- 9. MOUSEPAD -->
+                <div class="produto" data-categoria="mouse">
+                    <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                    <a href="#" class="produto-link">
+                        <img src="https://images.unsplash.com/photo-1616400619175-5beda3a17896?w=400&h=250&fit=crop" alt="Mousepad XL">
+                        <h3>Mousepad XL RGB</h3>
+                    </a>
+                    <p>900x400mm, borda costurada, iluminação RGB.</p>
+                    <span>R$ 89,99</span>
+                    <button onclick="adicionarCarrinho('Mousepad XL RGB', 89.99, 'https://images.unsplash.com/photo-1616400619175-5beda3a17896?w=400&h=250&fit=crop', 15)">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
 
-    </a>
+            </div>
 
-    <span>
-        R$ 299.99
-    </span>
+        </section>
+    </main>
 
-    <button onclick="adicionarCarrinho(
-        'Teclado Gamer',
-        299.99,
-        'img/teclado.jpg',
-        5
-    )">
+    <div id="toast"></div>
+    <script type="module" src="js/script.js"></script>
 
-        Comprar
-
-    </button>
-
-</div>
-
-<!-- FONE -->
-
-<div
-    class="produto"
-    data-categoria="fone"
->
-
-    <div
-        class="favorito"
-        onclick="toggleFavorito(this)"
-    >
-        ❤
-    </div>
-
-    <a
-        href="fone.html"
-        class="produto-link"
-    >
-
-        <img
-            src="img/fone.jpg"
-            alt="Fone Gamer"
-        >
-
-        <h3>
-            Fone Gamer
-        </h3>
-
-    </a>
-
-    <span>
-        R$ 149.99
-    </span>
-
-    <button onclick="adicionarCarrinho(
-        'Fone Gamer',
-        149.99,
-        'img/fone.jpg',
-        8
-    )">
-
-        Comprar
-
-    </button>
-
-</div>
+</body>
+</html>

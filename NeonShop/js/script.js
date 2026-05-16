@@ -1,730 +1,429 @@
+// =============================================
+// NEONSHOP - script.js ATUALIZADO COM FIREBASE
+// =============================================
+
+import {
+    auth,
+    db,
+    cadastrarFirebase,
+    loginFirebase,
+    logoutFirebase,
+    observarLogin,
+    salvarPedido,
+    buscarMeusPedidos,
+    buscarNomeUsuario
+} from "./firebase.js";
+
 let desconto = 0;
 
 /* =========================
 TOAST
 ========================= */
-
-function mostrarToast(texto){
-
-    const toast =
-        document.getElementById("toast");
-
-    if(!toast) return;
-
+function mostrarToast(texto) {
+    const toast = document.getElementById("toast");
+    if (!toast) return;
     toast.innerHTML = texto;
-
     toast.classList.add("show");
-
-    setTimeout(() => {
-
-        toast.classList.remove("show");
-
-    }, 3000);
+    setTimeout(() => toast.classList.remove("show"), 3000);
 }
 
 /* =========================
-CADASTRO
+CADASTRO (Firebase)
 ========================= */
+window.cadastrar = async function () {
+    const nome  = document.getElementById("nome")?.value.trim();
+    const email = document.getElementById("email")?.value.trim();
+    const senha = document.getElementById("senha")?.value;
+    const msg   = document.getElementById("mensagem");
 
-function cadastrar() {
-
-    const nome =
-        document.getElementById("nome").value;
-
-    const email =
-        document.getElementById("email").value;
-
-    const senha =
-        document.getElementById("senha").value;
-
-    const mensagem =
-        document.getElementById("mensagem");
-
-    if (
-        nome === "" ||
-        email === "" ||
-        senha === ""
-    ) {
-
-        mensagem.innerHTML =
-            "Preencha todos os campos.";
-
+    if (!nome || !email || !senha) {
+        msg.innerHTML = "Preencha todos os campos.";
+        return;
+    }
+    if (senha.length < 6) {
+        msg.innerHTML = "A senha precisa ter pelo menos 6 caracteres.";
         return;
     }
 
-    const usuario = {
-        nome,
-        email,
-        senha
+    try {
+        msg.innerHTML = "Criando conta...";
+        await cadastrarFirebase(nome, email, senha);
+        mostrarToast("Conta criada com sucesso!");
+        setTimeout(() => window.location.href = "index.html", 1500);
+    } catch (e) {
+        msg.innerHTML = traduzirErroFirebase(e.code);
+    }
+};
+
+/* =========================
+LOGIN (Firebase)
+========================= */
+window.login = async function () {
+    const email = document.getElementById("email")?.value.trim();
+    const senha = document.getElementById("senha")?.value;
+    const msg   = document.getElementById("mensagem");
+
+    if (!email || !senha) {
+        msg.innerHTML = "Preencha todos os campos.";
+        return;
+    }
+
+    try {
+        msg.innerHTML = "Entrando...";
+        await loginFirebase(email, senha);
+        mostrarToast("Login realizado!");
+        setTimeout(() => window.location.href = "index.html", 1000);
+    } catch (e) {
+        msg.innerHTML = traduzirErroFirebase(e.code);
+    }
+};
+
+/* =========================
+LOGOUT (Firebase)
+========================= */
+window.logout = async function () {
+    await logoutFirebase();
+    mostrarToast("Logout realizado!");
+    setTimeout(() => window.location.href = "login.html", 1000);
+};
+
+/* =========================
+TRADUZIR ERROS FIREBASE
+========================= */
+function traduzirErroFirebase(code) {
+    const erros = {
+        "auth/email-already-in-use": "Este email já está cadastrado.",
+        "auth/invalid-email": "Email inválido.",
+        "auth/weak-password": "Senha muito fraca (mínimo 6 caracteres).",
+        "auth/user-not-found": "Usuário não encontrado.",
+        "auth/wrong-password": "Senha incorreta.",
+        "auth/invalid-credential": "Email ou senha incorretos.",
+        "auth/too-many-requests": "Muitas tentativas. Tente novamente mais tarde.",
+        "auth/network-request-failed": "Erro de conexão. Verifique sua internet."
     };
-
-    localStorage.setItem(
-        "usuario",
-        JSON.stringify(usuario)
-    );
-
-    mensagem.innerHTML =
-        "Cadastro realizado!";
-
-    mostrarToast(
-        "Conta criada com sucesso!"
-    );
-
-    setTimeout(() => {
-
-        window.location.href =
-            "login.html";
-
-    }, 1500);
+    return erros[code] || "Erro: " + code;
 }
 
 /* =========================
-LOGIN
+CARRINHO (localStorage)
 ========================= */
+window.adicionarCarrinho = function (nome, preco, imagem, estoque) {
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    let existente = carrinho.find(p => p.nome === nome);
 
-function login() {
-
-    const email =
-        document.getElementById("email").value;
-
-    const senha =
-        document.getElementById("senha").value;
-
-    const mensagem =
-        document.getElementById("mensagem");
-
-    const usuarioSalvo =
-        JSON.parse(
-            localStorage.getItem("usuario")
-        );
-
-    if (!usuarioSalvo) {
-
-        mensagem.innerHTML =
-            "Usuário não encontrado.";
-
-        return;
-    }
-
-    if (
-        email === usuarioSalvo.email &&
-        senha === usuarioSalvo.senha
-    ) {
-
-        mensagem.innerHTML =
-            "Login realizado!";
-
-        localStorage.setItem(
-            "logado",
-            "true"
-        );
-
-        mostrarToast(
-            "Login realizado!"
-        );
-
-        setTimeout(() => {
-
-            window.location.href =
-                "index.html";
-
-        }, 1500);
-
-    } else {
-
-        mensagem.innerHTML =
-            "Email ou senha incorretos.";
-    }
-}
-
-/* =========================
-CARRINHO
-========================= */
-
-function adicionarCarrinho(
-    nome,
-    preco,
-    imagem,
-    estoque
-){
-
-    let carrinho =
-        JSON.parse(
-            localStorage.getItem("carrinho")
-        ) || [];
-
-    let produtoExistente =
-        carrinho.find(
-            produto => produto.nome === nome
-        );
-
-    if(produtoExistente){
-
-        if(
-            produtoExistente.quantidade <
-            produtoExistente.estoque
-        ){
-
-            produtoExistente.quantidade++;
-
-            mostrarToast(
-                "Quantidade aumentada!"
-            );
-
-        }else{
-
-            mostrarToast(
-                "Estoque máximo atingido!"
-            );
+    if (existente) {
+        if (existente.quantidade < existente.estoque) {
+            existente.quantidade++;
+            mostrarToast("Quantidade aumentada!");
+        } else {
+            mostrarToast("Estoque máximo atingido!");
         }
-
-    }else{
-
-        carrinho.push({
-            nome,
-            preco: Number(preco),
-            imagem,
-            quantidade: 1,
-            estoque: Number(estoque)
-        });
-
-        mostrarToast(
-            nome + " adicionado!"
-        );
+    } else {
+        carrinho.push({ nome, preco: Number(preco), imagem, quantidade: 1, estoque: Number(estoque) });
+        mostrarToast(nome + " adicionado!");
     }
 
-    localStorage.setItem(
-        "carrinho",
-        JSON.stringify(carrinho)
-    );
-
-    carregarCarrinho();
-}
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    atualizarContadorCarrinho();
+};
 
 /* =========================
 CARREGAR CARRINHO
 ========================= */
+function carregarCarrinho() {
+    const container = document.getElementById("carrinho-produtos");
+    const totalHTML = document.getElementById("total");
+    if (!container || !totalHTML) return;
 
-function carregarCarrinho(){
-
-    const container =
-        document.getElementById(
-            "carrinho-produtos"
-        );
-
-    const totalHTML =
-        document.getElementById("total");
-
-    if(!container || !totalHTML) return;
-
-    let carrinho =
-        JSON.parse(
-            localStorage.getItem("carrinho")
-        ) || [];
-
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
     let total = 0;
-
     container.innerHTML = "";
 
+    if (carrinho.length === 0) {
+        container.innerHTML = `<p style="text-align:center;color:#aaa;font-size:20px;grid-column:1/-1;padding:40px 0;">Seu carrinho está vazio 🛒</p>`;
+        totalHTML.innerHTML = "TOTAL: R$ 0,00";
+        return;
+    }
+
     carrinho.forEach((produto, index) => {
-
-        total +=
-            Number(produto.preco) *
-            produto.quantidade;
-
+        total += Number(produto.preco) * produto.quantidade;
         container.innerHTML += `
-        
         <div class="produto">
-
-            <img src="${produto.imagem}">
-
+            <img src="${produto.imagem}" alt="${produto.nome}">
             <h3>${produto.nome}</h3>
-
-            <span>
-                R$ ${Number(produto.preco).toFixed(2)}
-            </span>
-
-            <p>
-                Quantidade:
-                ${produto.quantidade}
-            </p>
-
-            <p>
-                Estoque:
-                ${produto.estoque}
-            </p>
-
-            <button onclick="aumentarQuantidade(${index})">
-                +
-            </button>
-
-            <button onclick="diminuirQuantidade(${index})">
-                -
-            </button>
-
-            <button onclick="removerCarrinho(${index})">
-                Remover
-            </button>
-
-        </div>
-        `;
+            <span>R$ ${Number(produto.preco).toFixed(2)}</span>
+            <p>Quantidade: ${produto.quantidade} / ${produto.estoque}</p>
+            <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
+                <button onclick="aumentarQuantidade(${index})" style="width:auto;padding:10px 20px;margin:0;">+</button>
+                <button onclick="diminuirQuantidade(${index})" style="width:auto;padding:10px 20px;margin:0;">−</button>
+                <button onclick="removerCarrinho(${index})" style="width:auto;padding:10px 20px;margin:0;background:#ff0066;">✕</button>
+            </div>
+        </div>`;
     });
 
-    let totalFinal =
-        total - (total * desconto / 100);
+    let totalFinal = total - (total * desconto / 100);
+    totalHTML.innerHTML = `TOTAL: R$ ${totalFinal.toFixed(2)}`;
 
-    totalHTML.innerHTML =
-        `TOTAL: R$ ${totalFinal.toFixed(2)}`;
+    // Atualiza total do modal PIX
+    const pixTotal = document.getElementById("pix-total");
+    if (pixTotal) pixTotal.innerHTML = `R$ ${totalFinal.toFixed(2)}`;
 }
 
-/* =========================
-QUANTIDADE
-========================= */
-
-function aumentarQuantidade(index){
-
-    let carrinho =
-        JSON.parse(
-            localStorage.getItem("carrinho")
-        ) || [];
-
-    if(
-        carrinho[index].quantidade <
-        carrinho[index].estoque
-    ){
-
+window.aumentarQuantidade = function (index) {
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    if (carrinho[index].quantidade < carrinho[index].estoque) {
         carrinho[index].quantidade++;
-
-    }else{
-
-        mostrarToast(
-            "Limite do estoque!"
-        );
+    } else {
+        mostrarToast("Limite do estoque!");
     }
-
-    localStorage.setItem(
-        "carrinho",
-        JSON.stringify(carrinho)
-    );
-
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
     carregarCarrinho();
-}
+};
 
-function diminuirQuantidade(index){
-
-    let carrinho =
-        JSON.parse(
-            localStorage.getItem("carrinho")
-        ) || [];
-
-    if(
-        carrinho[index].quantidade > 1
-    ){
-
+window.diminuirQuantidade = function (index) {
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    if (carrinho[index].quantidade > 1) {
         carrinho[index].quantidade--;
-
-    }else{
-
-        carrinho.splice(index,1);
+    } else {
+        carrinho.splice(index, 1);
     }
-
-    localStorage.setItem(
-        "carrinho",
-        JSON.stringify(carrinho)
-    );
-
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
     carregarCarrinho();
-}
+};
 
-function removerCarrinho(index){
-
-    let carrinho =
-        JSON.parse(
-            localStorage.getItem("carrinho")
-        ) || [];
-
-    carrinho.splice(index,1);
-
-    localStorage.setItem(
-        "carrinho",
-        JSON.stringify(carrinho)
-    );
-
-    mostrarToast(
-        "Produto removido!"
-    );
-
+window.removerCarrinho = function (index) {
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    carrinho.splice(index, 1);
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    mostrarToast("Produto removido!");
     carregarCarrinho();
-}
+    atualizarContadorCarrinho();
+};
 
 /* =========================
 PESQUISA
 ========================= */
-
-function pesquisarProdutos(){
-
-    const input =
-        document.getElementById("pesquisa");
-
-    if(!input) return;
-
-    const filtro =
-        input.value.toLowerCase();
-
-    const produtos =
-        document.querySelectorAll(".produto");
-
-    produtos.forEach(produto => {
-
-        const nome =
-            produto.querySelector("h3")
-            .innerText
-            .toLowerCase();
-
-        produto.style.display =
-            nome.includes(filtro)
-            ? "block"
-            : "none";
+window.pesquisarProdutos = function () {
+    const input = document.getElementById("pesquisa");
+    if (!input) return;
+    const filtro = input.value.toLowerCase();
+    document.querySelectorAll(".produto").forEach(p => {
+        const nome = p.querySelector("h3")?.innerText.toLowerCase() || "";
+        p.style.display = nome.includes(filtro) ? "block" : "none";
     });
-}
+};
 
 /* =========================
-CATEGORIAS
+FILTRAR CATEGORIAS
 ========================= */
-
-function filtrarProdutos(categoria){
-
-    const produtos =
-        document.querySelectorAll(".produto");
-
-    produtos.forEach(produto => {
-
-        const categoriaProduto =
-            produto.dataset.categoria;
-
-        produto.style.display =
-            categoria === "todos" ||
-            categoriaProduto === categoria
-            ? "block"
-            : "none";
+window.filtrarProdutos = function (categoria) {
+    document.querySelectorAll(".produto").forEach(p => {
+        p.style.display =
+            categoria === "todos" || p.dataset.categoria === categoria
+            ? "block" : "none";
     });
-}
+};
 
 /* =========================
 FAVORITOS
 ========================= */
+window.toggleFavorito = function (el) {
+    const produto = el.parentElement;
+    const nome    = produto.querySelector("h3").innerText;
+    const preco   = produto.querySelector("span").innerText;
+    const imagem  = produto.querySelector("img").src;
 
-function toggleFavorito(elemento){
+    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    let existe    = favoritos.find(i => i.nome === nome);
 
-    const produto =
-        elemento.parentElement;
-
-    const nome =
-        produto.querySelector("h3").innerText;
-
-    const preco =
-        produto.querySelector("span").innerText;
-
-    const imagem =
-        produto.querySelector("img").src;
-
-    let favoritos =
-        JSON.parse(
-            localStorage.getItem("favoritos")
-        ) || [];
-
-    let existe =
-        favoritos.find(
-            item => item.nome === nome
-        );
-
-    if(existe){
-
-        favoritos =
-            favoritos.filter(
-                item => item.nome !== nome
-            );
-
-        elemento.classList.remove("ativo");
-
-    }else{
-
-        favoritos.push({
-            nome,
-            preco,
-            imagem
-        });
-
-        elemento.classList.add("ativo");
+    if (existe) {
+        favoritos = favoritos.filter(i => i.nome !== nome);
+        el.classList.remove("ativo");
+        mostrarToast("Removido dos favoritos!");
+    } else {
+        favoritos.push({ nome, preco, imagem });
+        el.classList.add("ativo");
+        mostrarToast("Adicionado aos favoritos! ❤");
     }
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+};
 
-    localStorage.setItem(
-        "favoritos",
-        JSON.stringify(favoritos)
-    );
-}
-
-function carregarFavoritos(){
-
-    let favoritos =
-        JSON.parse(
-            localStorage.getItem("favoritos")
-        ) || [];
-
-    const produtos =
-        document.querySelectorAll(".produto");
-
-    produtos.forEach(produto => {
-
-        const nome =
-            produto.querySelector("h3").innerText;
-
-        const coracao =
-            produto.querySelector(".favorito");
-
-        if(!coracao) return;
-
-        let existe =
-            favoritos.find(
-                item => item.nome === nome
-            );
-
-        if(existe){
-
-            coracao.classList.add("ativo");
-        }
+function carregarFavoritos() {
+    const favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    document.querySelectorAll(".produto").forEach(p => {
+        const nome   = p.querySelector("h3")?.innerText;
+        const coracao = p.querySelector(".favorito");
+        if (!coracao || !nome) return;
+        if (favoritos.find(i => i.nome === nome)) coracao.classList.add("ativo");
     });
 }
 
 /* =========================
 CUPOM
 ========================= */
-
-function aplicarCupom(){
-
-    const cupom =
-        document.getElementById("cupom")
-        .value
-        .toUpperCase();
-
-    const mensagem =
-        document.getElementById(
-            "mensagem-cupom"
-        );
-
-    if(cupom === "NEON10"){
-
-        desconto = 10;
-
-    }else if(cupom === "GAMER20"){
-
-        desconto = 20;
-
-    }else if(cupom === "VIP50"){
-
-        desconto = 50;
-
-    }else{
-
-        desconto = 0;
-    }
-
-    mensagem.innerHTML =
-        desconto > 0
-        ? `Cupom ${desconto}% aplicado!`
-        : "Cupom inválido.";
-
+window.aplicarCupom = function () {
+    const cupom = document.getElementById("cupom")?.value.toUpperCase();
+    const msg   = document.getElementById("mensagem-cupom");
+    const cupons = { "NEON10": 10, "GAMER20": 20, "VIP50": 50 };
+    desconto = cupons[cupom] || 0;
+    msg.innerHTML = desconto > 0 ? `✅ Cupom ${desconto}% aplicado!` : "❌ Cupom inválido.";
     carregarCarrinho();
-}
+};
 
 /* =========================
 TEMA
 ========================= */
+window.trocarTema = function () {
+    document.body.classList.toggle("light-mode");
+    const tema = document.body.classList.contains("light-mode") ? "light" : "dark";
+    localStorage.setItem("tema", tema);
+    document.querySelector(".tema-btn").textContent = tema === "light" ? "☀️" : "🌙";
+};
 
-function trocarTema(){
-
-    document.body.classList.toggle(
-        "light-mode"
-    );
-
-    if(
-        document.body.classList.contains(
-            "light-mode"
-        )
-    ){
-
-        localStorage.setItem(
-            "tema",
-            "light"
-        );
-
-    }else{
-
-        localStorage.setItem(
-            "tema",
-            "dark"
-        );
-    }
-}
-
-function carregarTema(){
-
-    const tema =
-        localStorage.getItem("tema");
-
-    if(tema === "light"){
-
-        document.body.classList.add(
-            "light-mode"
-        );
+function carregarTema() {
+    if (localStorage.getItem("tema") === "light") {
+        document.body.classList.add("light-mode");
+        const btn = document.querySelector(".tema-btn");
+        if (btn) btn.textContent = "☀️";
     }
 }
 
 /* =========================
-PIX
+PIX / FINALIZAR COMPRA
 ========================= */
+window.abrirPix = function () {
+    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    if (carrinho.length === 0) {
+        mostrarToast("Carrinho vazio!");
+        return;
+    }
+    const modal = document.getElementById("pix-modal");
+    if (modal) modal.style.display = "flex";
+};
 
-function abrirPix(){
+window.fecharPix = function () {
+    const modal = document.getElementById("pix-modal");
+    if (modal) modal.style.display = "none";
+};
 
-    const modal =
-        document.getElementById("pix-modal");
+window.confirmarPagamento = async function () {
+    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    if (carrinho.length === 0) return;
 
-    if(!modal) return;
+    let total = carrinho.reduce((s, p) => s + p.preco * p.quantidade, 0);
+    let totalFinal = total - (total * desconto / 100);
 
-    modal.style.display = "flex";
-}
+    try {
+        // Tenta salvar no Firebase se usuário estiver logado
+        if (auth.currentUser) {
+            await salvarPedido(carrinho, totalFinal);
+        }
+    } catch (e) {
+        console.warn("Pedido não salvo no Firebase:", e);
+    }
 
-function fecharPix(){
-
-    const modal =
-        document.getElementById("pix-modal");
-
-    if(!modal) return;
-
-    modal.style.display = "none";
-}
-
-function confirmarPagamento(){
-
-    mostrarToast(
-        "Pagamento aprovado!"
-    );
-
+    mostrarToast("✅ Pagamento aprovado! Obrigado!");
     localStorage.removeItem("carrinho");
+    atualizarContadorCarrinho();
 
     setTimeout(() => {
+        fecharPix();
+        window.location.href = "index.html";
+    }, 2000);
+};
 
-        window.location.href =
-            "index.html";
+/* =========================
+PERFIL (Firebase)
+========================= */
+async function carregarPerfil() {
+    const nomeEl  = document.getElementById("perfil-nome");
+    const emailEl = document.getElementById("perfil-email");
+    const pedidosEl = document.getElementById("perfil-pedidos");
+    if (!nomeEl) return;
 
-    }, 1500);
+    observarLogin(async (user) => {
+        if (user) {
+            emailEl && (emailEl.innerHTML = user.email);
+            try {
+                const nome = await buscarNomeUsuario();
+                nomeEl.innerHTML = nome || user.email;
+            } catch {
+                nomeEl.innerHTML = user.email;
+            }
+
+            // Carregar pedidos
+            if (pedidosEl) {
+                try {
+                    const pedidos = await buscarMeusPedidos();
+                    if (pedidos.length === 0) {
+                        pedidosEl.innerHTML = "<p style='color:#aaa'>Nenhum pedido ainda.</p>";
+                    } else {
+                        pedidosEl.innerHTML = pedidos.map(p => `
+                            <div style="background:#1a1a1a;border:1px solid rgba(0,255,255,0.2);border-radius:12px;padding:15px;margin-bottom:12px;text-align:left;">
+                                <p style="color:cyan;font-weight:bold;">Pedido #${p.id.slice(-6).toUpperCase()}</p>
+                                <p style="color:#aaa;font-size:14px;">${p.itens.length} item(s) · R$ ${Number(p.total).toFixed(2)}</p>
+                                <p style="color:#666;font-size:12px;">Status: ${p.status}</p>
+                            </div>
+                        `).join("");
+                    }
+                } catch {
+                    pedidosEl.innerHTML = "<p style='color:#aaa'>Erro ao carregar pedidos.</p>";
+                }
+            }
+        } else {
+            nomeEl.innerHTML = "Não logado";
+            emailEl && (emailEl.innerHTML = "Faça login para ver seus dados");
+        }
+    });
 }
 
 /* =========================
-PERFIL
+CONTADOR CARRINHO
 ========================= */
-
-function carregarPerfil(){
-
-    const usuario =
-        JSON.parse(
-            localStorage.getItem("usuario")
-        );
-
-    if(!usuario) return;
-
-    const nome =
-        document.getElementById(
-            "perfil-nome"
-        );
-
-    const email =
-        document.getElementById(
-            "perfil-email"
-        );
-
-    if(nome){
-
-        nome.innerHTML =
-            usuario.nome;
-    }
-
-    if(email){
-
-        email.innerHTML =
-            usuario.email;
-    }
+function atualizarContadorCarrinho() {
+    const contador = document.getElementById("contador-carrinho");
+    if (!contador) return;
+    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    const total = carrinho.reduce((s, p) => s + p.quantidade, 0);
+    contador.innerHTML = total;
 }
 
-function logout(){
-
-    localStorage.removeItem("logado");
-
-    mostrarToast(
-        "Logout realizado!"
-    );
-
-    setTimeout(() => {
-
-        window.location.href =
-            "login.html";
-
-    }, 1000);
+/* =========================
+NAVBAR: mostrar nome do usuário logado
+========================= */
+function atualizarNavbarLogin() {
+    observarLogin(async (user) => {
+        const loginLink = document.querySelector('a[href="login.html"]');
+        if (!loginLink) return;
+        if (user) {
+            try {
+                const nome = await buscarNomeUsuario();
+                loginLink.textContent = nome ? nome.split(" ")[0] : "Perfil";
+                loginLink.href = "perfil.html";
+            } catch {
+                loginLink.textContent = "Perfil";
+                loginLink.href = "perfil.html";
+            }
+        }
+    });
 }
 
 /* =========================
 LOADING
 ========================= */
-
 window.addEventListener("load", () => {
-
     carregarCarrinho();
     atualizarContadorCarrinho();
     carregarFavoritos();
     carregarTema();
     carregarPerfil();
+    atualizarNavbarLogin();
 
-    const loading =
-        document.getElementById("loading");
-
-    if(!loading) return;
-
-    setTimeout(() => {
-
-        loading.style.opacity = "0";
-
-        loading.style.visibility =
-            "hidden";
-
-    }, 2000);
+    const loading = document.getElementById("loading");
+    if (loading) {
+        setTimeout(() => {
+            loading.style.opacity = "0";
+            loading.style.visibility = "hidden";
+        }, 2000);
+    }
 });
-/* =========================
-CONTADOR CARRINHO
-========================= */
-
-function atualizarContadorCarrinho(){
-
-    const contador =
-        document.getElementById(
-            "contador-carrinho"
-        );
-
-    if(!contador) return;
-
-    let carrinho =
-        JSON.parse(
-            localStorage.getItem(
-                "carrinho"
-            )
-        ) || [];
-
-    let totalItens = 0;
-
-    carrinho.forEach(produto => {
-
-        totalItens += produto.quantidade;
-    });
-
-    contador.innerHTML =
-        totalItens;
-}

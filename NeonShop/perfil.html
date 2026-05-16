@@ -1,75 +1,58 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil - NeonShop</title>
-
-    <link rel="stylesheet"
-        href="css/style.css">
-
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-    <header class="navbar">
-
-        <div class="logo">
+    <div id="loading">
+        <div class="loader-box">
             <h1>NEONSHOP</h1>
+            <div class="loading-bar"><div class="loading-fill"></div></div>
+            <p>Carregando perfil...</p>
         </div>
+    </div>
 
+    <header class="navbar">
+        <div class="logo"><h1>NEONSHOP</h1></div>
         <nav class="menu">
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="carrinho.html">
+            <a href="index.html">Home</a>
+            <a href="produtos.html">Produtos</a>
+            <a href="carrinho.html" class="carrinho-link">
                 Carrinho
+                <span id="contador-carrinho">0</span>
             </a>
-
+            <a href="login.html">Login</a>
+            <button class="tema-btn" onclick="trocarTema()">🌙</button>
         </nav>
-
     </header>
 
-    <section class="login-container">
+    <section class="login-container" style="flex-direction:column;gap:30px;padding:60px 20px;align-items:center;">
 
         <div class="perfil-box">
+            <img src="img/avatar.png" class="avatar" alt="Avatar">
+            <h2 id="perfil-nome">Carregando...</h2>
+            <p id="perfil-email">---</p>
+            <span class="status">ONLINE</span>
+            <button onclick="logout()">Sair da Conta</button>
+        </div>
 
-            <img
-                src="img/avatar.png"
-                class="avatar"
-            >
-
-            <h2 id="perfil-nome">
-                Usuário
+        <!-- MEUS PEDIDOS -->
+        <div style="width:100%;max-width:600px;">
+            <h2 style="color:cyan;text-align:center;margin-bottom:20px;text-shadow:0 0 10px cyan;">
+                MEUS PEDIDOS
             </h2>
-
-            <p id="perfil-email">
-                email@email.com
-            </p>
-
-            <span class="status">
-                ONLINE
-            </span>
-
-            <button onclick="logout()">
-                Sair da Conta
-            </button>
-
+            <div id="perfil-pedidos" style="text-align:center;color:#aaa;">
+                Carregando pedidos...
+            </div>
         </div>
 
     </section>
 
     <div id="toast"></div>
-
-    <script src="js/script.js"></script>
-
+    <script type="module" src="js/script.js"></script>
 </body>
-
 </html>
