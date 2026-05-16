@@ -1,214 +1,140 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!-- MOUSE -->
 
-<head>
+<div
+    class="produto"
+    data-categoria="mouse"
+>
 
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <title>Produtos - NeonShop</title>
-
-    <link rel="stylesheet"
-        href="css/style.css">
-
-</head>
-
-<body>
-
-    <div id="loading">
-
-        <div class="loader-box">
-
-            <h1>NEONSHOP</h1>
-
-            <div class="loading-bar">
-                <div class="loading-fill"></div>
-            </div>
-
-            <p>
-                Carregando produtos...
-            </p>
-
-        </div>
-
+    <div
+        class="favorito"
+        onclick="toggleFavorito(this)"
+    >
+        ❤
     </div>
 
-    <!-- NAVBAR -->
+    <a
+        href="mouse.html"
+        class="produto-link"
+    >
 
-    <header class="navbar">
+        <img
+            src="img/mouse.jpg"
+            alt="Mouse Gamer"
+        >
 
-        <div class="logo">
-            <h1>NEONSHOP</h1>
-        </div>
+        <h3>
+            Mouse Gamer
+        </h3>
 
-        <nav class="menu">
+    </a>
 
-            <a href="index.html">
-                Home
-            </a>
+    <span>
+        R$ 199.99
+    </span>
 
-            <a href="categorias.html">
-                Categorias
-            </a>
+    <button onclick="adicionarCarrinho(
+        'Mouse Gamer',
+        199.99,
+        'img/mouse.jpg',
+        10
+    )">
 
-            <a href="favoritos.html">
-                Favoritos
-            </a>
+        Comprar
 
-            <a href="carrinho.html">
-                Carrinho
-            </a>
+    </button>
 
-            <a href="perfil.html">
-                Perfil
-            </a>
+</div>
 
-        </nav>
+<!-- TECLADO -->
 
-    </header>
+<div
+    class="produto"
+    data-categoria="teclado"
+>
 
-    <section class="produtos">
+    <div
+        class="favorito"
+        onclick="toggleFavorito(this)"
+    >
+        ❤
+    </div>
 
-        <h2 class="titulo-produtos">
-            TODOS OS PRODUTOS
-        </h2>
+    <a
+        href="teclado.html"
+        class="produto-link"
+    >
 
-        <div class="pesquisa">
+        <img
+            src="img/teclado.jpg"
+            alt="Teclado Gamer"
+        >
 
-            <input
-                type="text"
-                id="pesquisa"
-                placeholder="Pesquisar produtos..."
-                onkeyup="pesquisarProdutos()"
-            >
+        <h3>
+            Teclado Gamer
+        </h3>
 
-        </div>
+    </a>
 
-        <div class="categorias">
+    <span>
+        R$ 299.99
+    </span>
 
-            <button onclick="filtrarProdutos('todos')">
-                Todos
-            </button>
+    <button onclick="adicionarCarrinho(
+        'Teclado Gamer',
+        299.99,
+        'img/teclado.jpg',
+        5
+    )">
 
-            <button onclick="filtrarProdutos('mouse')">
-                Mouse
-            </button>
+        Comprar
 
-            <button onclick="filtrarProdutos('teclado')">
-                Teclados
-            </button>
+    </button>
 
-            <button onclick="filtrarProdutos('fone')">
-                Fones
-            </button>
+</div>
 
-        </div>
+<!-- FONE -->
 
-        <div class="grid-produtos">
+<div
+    class="produto"
+    data-categoria="fone"
+>
 
-            <div
-                class="produto"
-                data-categoria="mouse"
-            >
+    <div
+        class="favorito"
+        onclick="toggleFavorito(this)"
+    >
+        ❤
+    </div>
 
-                <div
-                    class="favorito"
-                    onclick="toggleFavorito(this)"
-                >
-                    ❤
-                </div>
+    <a
+        href="fone.html"
+        class="produto-link"
+    >
 
-                <img src="img/mouse.jpg">
+        <img
+            src="img/fone.jpg"
+            alt="Fone Gamer"
+        >
 
-                <h3>Mouse Gamer</h3>
+        <h3>
+            Fone Gamer
+        </h3>
 
-                <span>
-                    R$ 199.99
-                </span>
+    </a>
 
-                <button onclick="adicionarCarrinho(
-                    'Mouse Gamer',
-                    199.99,
-                    'img/mouse.jpg',
-                    10
-                )">
-                    Comprar
-                </button>
+    <span>
+        R$ 149.99
+    </span>
 
-            </div>
+    <button onclick="adicionarCarrinho(
+        'Fone Gamer',
+        149.99,
+        'img/fone.jpg',
+        8
+    )">
 
-            <div
-                class="produto"
-                data-categoria="teclado"
-            >
+        Comprar
 
-                <div
-                    class="favorito"
-                    onclick="toggleFavorito(this)"
-                >
-                    ❤
-                </div>
+    </button>
 
-                <img src="img/teclado.jpg">
-
-                <h3>Teclado Gamer</h3>
-
-                <span>
-                    R$ 299.99
-                </span>
-
-                <button onclick="adicionarCarrinho(
-                    'Teclado Gamer',
-                    299.99,
-                    'img/teclado.jpg',
-                    5
-                )">
-                    Comprar
-                </button>
-
-            </div>
-
-            <div
-                class="produto"
-                data-categoria="fone"
-            >
-
-                <div
-                    class="favorito"
-                    onclick="toggleFavorito(this)"
-                >
-                    ❤
-                </div>
-
-                <img src="img/fone.jpg">
-
-                <h3>Fone Gamer</h3>
-
-                <span>
-                    R$ 149.99
-                </span>
-
-                <button onclick="adicionarCarrinho(
-                    'Fone Gamer',
-                    149.99,
-                    'img/fone.jpg',
-                    8
-                )">
-                    Comprar
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <div id="toast"></div>
-
-    <script src="js/script.js"></script>
-
-</body>
-
-</html>
+</div>

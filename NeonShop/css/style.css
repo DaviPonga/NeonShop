@@ -914,3 +914,323 @@ button:hover{
 
     transform: translateX(0);
 }
+.carrinho-link{
+
+    position: relative;
+}
+
+#contador-carrinho{
+
+    background: #ff0066;
+
+    color: white;
+
+    border-radius: 50%;
+
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+
+    position: absolute;
+
+    top: -10px;
+    right: -15px;
+
+    font-weight: bold;
+
+    box-shadow: 0 0 10px #ff0066;
+}
+.produto-detalhe{
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 50px;
+
+    padding: 60px;
+
+    flex-wrap: wrap;
+}
+
+.produto-imagem img{
+
+    width: 400px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 0 20px cyan;
+}
+
+.produto-info{
+
+    max-width: 500px;
+}
+
+.produto-info h1{
+
+    font-size: 40px;
+
+    margin-bottom: 20px;
+}
+
+.produto-preco{
+
+    font-size: 32px;
+
+    color: cyan;
+
+    margin-bottom: 20px;
+}
+
+.produto-descricao{
+
+    line-height: 1.6;
+
+    margin-bottom: 30px;
+}
+
+.produto-extra{
+
+    margin-bottom: 30px;
+}
+
+.produto-extra p{
+
+    margin-bottom: 10px;
+}
+
+.produto-botoes{
+
+    display: flex;
+
+    gap: 20px;
+}
+
+.produto-botoes button{
+
+    padding: 15px 25px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+.produto-botoes button:hover{
+
+    transform: scale(1.05);
+}
+
+.favorito-btn{
+
+    background: hotpink;
+
+    color: white;
+}
+html{
+    scroll-behavior: smooth;
+}
+
+/* RESPONSIVIDADE */
+
+@media(max-width: 900px){
+
+    .navbar{
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .menu{
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .banner h2{
+        font-size: 40px;
+    }
+
+    .banner p{
+        font-size: 18px;
+    }
+
+    .produto-detalhe{
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    .produto-imagem img{
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .produto-info h1{
+        font-size: 32px;
+    }
+
+    .produto-botoes{
+        flex-direction: column;
+    }
+
+    .produto-botoes button{
+        width: 100%;
+    }
+
+    .loading-bar{
+        width: 280px;
+    }
+
+    .loader-box h1{
+        font-size: 45px;
+    }
+
+    .pesquisa input{
+        width: 100%;
+    }
+
+    .cupom-area input{
+        width: 100%;
+    }
+
+    .pix-box{
+        width: 90%;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width: 600px){
+
+    .produtos{
+        padding: 50px 20px;
+    }
+
+    .titulo-produtos{
+        font-size: 32px;
+    }
+
+    .grid-produtos{
+        grid-template-columns: 1fr;
+    }
+
+    .produto{
+        padding: 15px;
+    }
+
+    .produto img{
+        height: 200px;
+    }
+
+    .banner{
+        height: auto;
+        padding: 60px 20px;
+    }
+
+    .banner h2{
+        font-size: 32px;
+    }
+
+    .banner p{
+        font-size: 16px;
+    }
+
+    button{
+        width: 100%;
+    }
+
+    .menu a{
+        font-size: 16px;
+    }
+
+    #contador-carrinho{
+        right: -10px;
+        top: -8px;
+    }
+}
+
+/* MELHORIAS */
+
+.produto{
+    overflow: hidden;
+}
+
+.produto img{
+    transition: 0.4s;
+}
+
+.produto:hover img{
+    transform: scale(1.05);
+}
+
+button{
+    transition:
+        transform 0.3s,
+        box-shadow 0.3s,
+        background 0.3s;
+}
+
+input{
+    transition:
+        box-shadow 0.3s,
+        border 0.3s;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+    width: 10px;
+}
+
+::-webkit-scrollbar-track{
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb{
+    background: cyan;
+    border-radius: 10px;
+}
+
+/* LOADING */
+
+#loading.hidden{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.produto-link{
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+
+.produto-link img{
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    border-radius: 15px;
+}
+
+.produto-link h3{
+    margin-top: 15px;
+    color: cyan;
+    font-size: 24px;
+}
+
+.produto-link:hover h3{
+    text-shadow: 0 0 10px cyan;
+}

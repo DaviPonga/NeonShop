@@ -62,6 +62,7 @@
             <button
                 class="tema-btn"
                 onclick="trocarTema()"
+                aria-label="Trocar tema"
             >
                 🌙
             </button>
@@ -70,61 +71,67 @@
 
     </header>
 
-    <!-- CARRINHO -->
+    <!-- MAIN -->
 
-    <section class="produtos">
+    <main>
 
-        <h2 class="titulo-produtos">
-            CARRINHO
-        </h2>
+        <!-- CARRINHO -->
 
-        <!-- GRID PRODUTOS -->
+        <section class="produtos">
 
-        <div
-            id="carrinho-produtos"
-            class="grid-produtos"
-        >
-        </div>
-
-        <!-- CUPOM -->
-
-        <div class="cupom-area">
-
-            <input
-                type="text"
-                id="cupom"
-                placeholder="Digite seu cupom"
-            >
-
-            <button onclick="aplicarCupom()">
-                Aplicar
-            </button>
-
-        </div>
-
-        <p id="mensagem-cupom"></p>
-
-        <!-- TOTAL -->
-
-        <div class="total-area">
-
-            <h2 id="total">
-                TOTAL: R$ 0,00
+            <h2 class="titulo-produtos">
+                CARRINHO
             </h2>
 
-        </div>
+            <!-- GRID PRODUTOS -->
 
-        <!-- FINALIZAR -->
+            <div
+                id="carrinho-produtos"
+                class="grid-produtos"
+            >
+            </div>
 
-        <div class="checkout">
+            <!-- CUPOM -->
 
-            <button onclick="abrirPix()">
-                Finalizar Compra
-            </button>
+            <div class="cupom-area">
 
-        </div>
+                <input
+                    type="text"
+                    id="cupom"
+                    placeholder="Digite seu cupom"
+                >
 
-    </section>
+                <button onclick="aplicarCupom()">
+                    Aplicar
+                </button>
+
+            </div>
+
+            <p id="mensagem-cupom"></p>
+
+            <!-- TOTAL -->
+
+            <div class="total-area">
+
+                <h2 id="total">
+                    TOTAL: R$ 0,00
+                </h2>
+
+            </div>
+
+            <!-- FINALIZAR -->
+
+            <div class="checkout">
+
+                <button onclick="abrirPix()">
+                    Finalizar Compra
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
 
     <!-- MODAL PIX -->
 
@@ -142,6 +149,7 @@
             <img
                 src="img/Qrcodepix.png"
                 alt="QR Code PIX"
+                onerror="this.style.display='none'"
             >
 
             <p id="pix-total"></p>
