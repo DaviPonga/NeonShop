@@ -1,81 +1,133 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <title>
-        Fone Gamer
-    </title>
-
-    <link rel="stylesheet"
-        href="css/style.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fone Gamer - NeonShop</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-<header class="navbar">
-
-    <div class="logo">
-        <h1>NEONSHOP</h1>
+    <div id="loading">
+        <div class="loader-box">
+            <h1>NEONSHOP</h1>
+            <div class="loading-bar"><div class="loading-fill"></div></div>
+            <p>Carregando produto...</p>
+        </div>
     </div>
 
-</header>
+    <header class="navbar">
+        <div class="logo"><h1>NEONSHOP</h1></div>
+        <nav class="menu">
+            <a href="index.html">Home</a>
+            <a href="produtos.html">Produtos</a>
+            <a href="favoritos.html">Favoritos</a>
+            <a href="carrinho.html" class="carrinho-link">
+                Carrinho
+                <span id="contador-carrinho">0</span>
+            </a>
+            <a href="perfil.html">Perfil</a>
+            <a href="login.html">Login</a>
+            <button class="tema-btn" onclick="trocarTema()">🌙</button>
+        </nav>
+    </header>
 
-<section class="produto-detalhe">
+    <section class="produto-detalhe">
 
-    <div class="produto-imagem">
-
-        <img src="img/fone.jpg">
-
-    </div>
-
-    <div class="produto-info">
-
-        <h1>
-            Fone Gamer 7.1
-        </h1>
-
-        <p class="produto-preco">
-            R$ 149.99
-        </p>
-
-        <p class="produto-descricao">
-
-            Headset gamer
-            com áudio surround 7.1,
-            graves fortes
-            e microfone profissional.
-
-        </p>
-
-        <div class="produto-extra">
-
-            <p>✅ Som 7.1</p>
-            <p>✅ Microfone HD</p>
-            <p>✅ Conforto Premium</p>
-
+        <!-- GALERIA -->
+        <div class="produto-imagem">
+            <div class="galeria">
+                <img
+                    id="img-principal"
+                    class="galeria-principal"
+                    src="img/fone.jpg"
+                    alt="Fone Gamer"
+                >
+                <div class="galeria-thumbs">
+                    <img src="img/fone.jpg" alt="Fone frente" class="ativa" onclick="trocarImagem(this)">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&h=200&fit=crop" alt="Fone lateral" onclick="trocarImagem(this)">
+                    <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=200&h=200&fit=crop" alt="Fone detalhe" onclick="trocarImagem(this)">
+                    <img src="https://images.unsplash.com/photo-1496957961598-e0218b0e4af7?w=200&h=200&fit=crop" alt="Fone uso" onclick="trocarImagem(this)">
+                </div>
+            </div>
         </div>
 
-        <button onclick="adicionarCarrinho(
-            'Fone Gamer',
-            149.99,
-            'img/fone.jpg',
-            8
-        )">
+        <!-- INFO -->
+        <div class="produto-info">
 
-            Adicionar ao Carrinho
+            <span class="badge badge-promo" style="position:static;display:inline-block;margin-bottom:15px;">⚡ Promoção</span>
 
-        </button>
+            <h1>Fone Gamer 7.1</h1>
 
-    </div>
+            <div class="estrelas" id="estrelas">
+                <span class="estrela" onclick="avaliar(1)">★</span>
+                <span class="estrela" onclick="avaliar(2)">★</span>
+                <span class="estrela" onclick="avaliar(3)">★</span>
+                <span class="estrela" onclick="avaliar(4)">★</span>
+                <span class="estrela" onclick="avaliar(5)">★</span>
+            </div>
+            <p class="avaliacao-msg" id="avaliacao-msg"></p>
 
-</section>
+            <p class="produto-preco">R$ 149,99</p>
 
-<script type="module" src="js/script.js"></script>
+            <p class="produto-descricao">
+                Headset gamer com som surround virtual 7.1 para imersão total.
+                Graves potentes, microfone com cancelamento de ruído e
+                almofadas de espuma memory foam para conforto em longas sessões.
+            </p>
 
+            <div class="produto-extra">
+                <p>✅ Som Surround 7.1 virtual</p>
+                <p>✅ Microfone com noise cancel</p>
+                <p>✅ Almofadas memory foam</p>
+                <p>✅ Controle de volume inline</p>
+                <p>✅ Frete grátis</p>
+            </div>
+
+            <div class="produto-botoes">
+                <button onclick="adicionarCarrinho('Fone Gamer 7.1', 149.99, 'img/fone.jpg', 8)">
+                    🛒 Adicionar ao Carrinho
+                </button>
+                <button class="favorito-btn" onclick="toggleFavoritoDetalhe(this, 'Fone Gamer 7.1', 'R$ 149,99', 'img/fone.jpg')">
+                    ❤ Favoritar
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="toast"></div>
+    <script type="module" src="js/script.js"></script>
+    <script>
+        function trocarImagem(thumb) {
+            document.getElementById('img-principal').src = thumb.src;
+            document.querySelectorAll('.galeria-thumbs img').forEach(t => t.classList.remove('ativa'));
+            thumb.classList.add('ativa');
+        }
+
+        function avaliar(nota) {
+            const estrelas = document.querySelectorAll('.estrela');
+            estrelas.forEach((e, i) => e.classList.toggle('ativa', i < nota));
+            const msgs = ['', 'Muito ruim 😞', 'Ruim 😕', 'Regular 😐', 'Bom 😊', 'Excelente! 🤩'];
+            document.getElementById('avaliacao-msg').textContent = msgs[nota];
+            localStorage.setItem('avaliacao-fone', nota);
+        }
+
+        const notaSalva = localStorage.getItem('avaliacao-fone');
+        if (notaSalva) avaliar(Number(notaSalva));
+
+        function toggleFavoritoDetalhe(btn, nome, preco, imagem) {
+            let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+            const existe = favoritos.find(i => i.nome === nome);
+            if (existe) {
+                favoritos = favoritos.filter(i => i.nome !== nome);
+                btn.textContent = '❤ Favoritar';
+            } else {
+                favoritos.push({ nome, preco, imagem });
+                btn.textContent = '❤ Favoritado!';
+            }
+            localStorage.setItem('favoritos', JSON.stringify(favoritos));
+        }
+    </script>
 </body>
-
 </html>

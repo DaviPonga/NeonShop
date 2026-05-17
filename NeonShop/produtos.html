@@ -10,18 +10,14 @@
 
 <body>
 
-    <!-- LOADING -->
     <div id="loading">
         <div class="loader-box">
             <h1>NEONSHOP</h1>
-            <div class="loading-bar">
-                <div class="loading-fill"></div>
-            </div>
+            <div class="loading-bar"><div class="loading-fill"></div></div>
             <p>Carregando produtos...</p>
         </div>
     </div>
 
-    <!-- NAVBAR -->
     <header class="navbar">
         <div class="logo"><h1>NEONSHOP</h1></div>
         <nav class="menu">
@@ -44,12 +40,10 @@
 
             <h2 class="titulo-produtos">PRODUTOS</h2>
 
-            <!-- PESQUISA -->
             <div class="pesquisa">
                 <input type="text" id="pesquisa" placeholder="Pesquisar produtos..." onkeyup="pesquisarProdutos()">
             </div>
 
-            <!-- CATEGORIAS -->
             <div class="categorias">
                 <button onclick="filtrarProdutos('todos')">Todos</button>
                 <button onclick="filtrarProdutos('mouse')">Mouse</button>
@@ -60,11 +54,11 @@
                 <button onclick="filtrarProdutos('headset')">Headsets</button>
             </div>
 
-            <!-- GRID -->
             <div class="grid-produtos">
 
-                <!-- 1. MOUSE GAMER -->
+                <!-- 1. MOUSE GAMER PRO -->
                 <div class="produto" data-categoria="mouse">
+                    <span class="badge badge-vendido">🔥 Mais Vendido</span>
                     <div class="favorito" onclick="toggleFavorito(this)">❤</div>
                     <a href="mouse.html" class="produto-link">
                         <img src="img/mouse.jpg" alt="Mouse Gamer">
@@ -79,6 +73,7 @@
 
                 <!-- 2. TECLADO -->
                 <div class="produto" data-categoria="teclado">
+                    <span class="badge badge-novo">🆕 Novo</span>
                     <div class="favorito" onclick="toggleFavorito(this)">❤</div>
                     <a href="teclado.html" class="produto-link">
                         <img src="img/teclado.jpg" alt="Teclado Gamer">
@@ -93,6 +88,7 @@
 
                 <!-- 3. FONE -->
                 <div class="produto" data-categoria="fone">
+                    <span class="badge badge-promo">⚡ Promoção</span>
                     <div class="favorito" onclick="toggleFavorito(this)">❤</div>
                     <a href="fone.html" class="produto-link">
                         <img src="img/fone.jpg" alt="Fone Gamer">
@@ -107,6 +103,7 @@
 
                 <!-- 4. MOUSE SEM FIO -->
                 <div class="produto" data-categoria="mouse">
+                    <span class="badge badge-novo">🆕 Novo</span>
                     <div class="favorito" onclick="toggleFavorito(this)">❤</div>
                     <a href="mouse.html" class="produto-link">
                         <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=250&fit=crop" alt="Mouse Sem Fio">
@@ -121,6 +118,7 @@
 
                 <!-- 5. TECLADO COMPACTO -->
                 <div class="produto" data-categoria="teclado">
+                    <span class="badge badge-vendido">🔥 Mais Vendido</span>
                     <div class="favorito" onclick="toggleFavorito(this)">❤</div>
                     <a href="teclado.html" class="produto-link">
                         <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=250&fit=crop" alt="Teclado TKL">
@@ -135,6 +133,7 @@
 
                 <!-- 6. HEADSET -->
                 <div class="produto" data-categoria="headset">
+                    <span class="badge badge-promo">⚡ Promoção</span>
                     <div class="favorito" onclick="toggleFavorito(this)">❤</div>
                     <a href="fone.html" class="produto-link">
                         <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop" alt="Headset Pro">
@@ -149,6 +148,7 @@
 
                 <!-- 7. CADEIRA GAMER -->
                 <div class="produto" data-categoria="cadeira">
+                    <span class="badge badge-novo">🆕 Novo</span>
                     <div class="favorito" onclick="toggleFavorito(this)">❤</div>
                     <a href="#" class="produto-link">
                         <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=250&fit=crop" alt="Cadeira Gamer">
@@ -163,6 +163,7 @@
 
                 <!-- 8. MONITOR -->
                 <div class="produto" data-categoria="monitor">
+                    <span class="badge badge-vendido">🔥 Mais Vendido</span>
                     <div class="favorito" onclick="toggleFavorito(this)">❤</div>
                     <a href="#" class="produto-link">
                         <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=250&fit=crop" alt="Monitor Gamer">
@@ -177,6 +178,7 @@
 
                 <!-- 9. MOUSEPAD -->
                 <div class="produto" data-categoria="mouse">
+                    <span class="badge badge-promo">⚡ Promoção</span>
                     <div class="favorito" onclick="toggleFavorito(this)">❤</div>
                     <a href="#" class="produto-link">
                         <img src="https://images.unsplash.com/photo-1616400619175-5beda3a17896?w=400&h=250&fit=crop" alt="Mousepad XL">
@@ -190,12 +192,23 @@
                 </div>
 
             </div>
-
         </section>
     </main>
 
     <div id="toast"></div>
     <script type="module" src="js/script.js"></script>
+    <script>
+    // Animação fade-in com Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visivel');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.produto').forEach(p => observer.observe(p));
+    </script>
 
 </body>
 </html>

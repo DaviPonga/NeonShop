@@ -1,81 +1,136 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <title>
-        Mouse Gamer
-    </title>
-
-    <link rel="stylesheet"
-        href="css/style.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Gamer - NeonShop</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-<header class="navbar">
-
-    <div class="logo">
-        <h1>NEONSHOP</h1>
+    <div id="loading">
+        <div class="loader-box">
+            <h1>NEONSHOP</h1>
+            <div class="loading-bar"><div class="loading-fill"></div></div>
+            <p>Carregando produto...</p>
+        </div>
     </div>
 
-</header>
+    <header class="navbar">
+        <div class="logo"><h1>NEONSHOP</h1></div>
+        <nav class="menu">
+            <a href="index.html">Home</a>
+            <a href="produtos.html">Produtos</a>
+            <a href="favoritos.html">Favoritos</a>
+            <a href="carrinho.html" class="carrinho-link">
+                Carrinho
+                <span id="contador-carrinho">0</span>
+            </a>
+            <a href="perfil.html">Perfil</a>
+            <a href="login.html">Login</a>
+            <button class="tema-btn" onclick="trocarTema()">🌙</button>
+        </nav>
+    </header>
 
-<section class="produto-detalhe">
+    <section class="produto-detalhe">
 
-    <div class="produto-imagem">
-
-        <img src="img/mouse.jpg">
-
-    </div>
-
-    <div class="produto-info">
-
-        <h1>
-            Mouse Gamer RGB
-        </h1>
-
-        <p class="produto-preco">
-            R$ 199.99
-        </p>
-
-        <p class="produto-descricao">
-
-            Mouse ultra rápido
-            com iluminação RGB,
-            sensor profissional
-            e alta precisão.
-
-        </p>
-
-        <div class="produto-extra">
-
-            <p>✅ RGB Neon</p>
-            <p>✅ Sensor Gamer</p>
-            <p>✅ Frete grátis</p>
-
+        <!-- GALERIA -->
+        <div class="produto-imagem">
+            <div class="galeria">
+                <img
+                    id="img-principal"
+                    class="galeria-principal"
+                    src="img/mouse.jpg"
+                    alt="Mouse Gamer"
+                >
+                <div class="galeria-thumbs">
+                    <img src="img/mouse.jpg" alt="Mouse frente" class="ativa" onclick="trocarImagem(this)">
+                    <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=200&h=200&fit=crop" alt="Mouse lateral" onclick="trocarImagem(this)">
+                    <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=200&h=200&fit=crop" alt="Mouse detalhe" onclick="trocarImagem(this)">
+                    <img src="https://images.unsplash.com/photo-1563297007-0686b7003af7?w=200&h=200&fit=crop" alt="Mouse RGB" onclick="trocarImagem(this)">
+                </div>
+            </div>
         </div>
 
-        <button onclick="adicionarCarrinho(
-            'Mouse Gamer',
-            199.99,
-            'img/mouse.jpg',
-            10
-        )">
+        <!-- INFO -->
+        <div class="produto-info">
 
-            Adicionar ao Carrinho
+            <span class="badge badge-vendido" style="position:static;display:inline-block;margin-bottom:15px;">🔥 Mais Vendido</span>
 
-        </button>
+            <h1>Mouse Gamer Pro RGB</h1>
 
-    </div>
+            <div class="estrelas" id="estrelas">
+                <span class="estrela" onclick="avaliar(1)">★</span>
+                <span class="estrela" onclick="avaliar(2)">★</span>
+                <span class="estrela" onclick="avaliar(3)">★</span>
+                <span class="estrela" onclick="avaliar(4)">★</span>
+                <span class="estrela" onclick="avaliar(5)">★</span>
+            </div>
+            <p class="avaliacao-msg" id="avaliacao-msg"></p>
 
-</section>
+            <p class="produto-preco">R$ 199,99</p>
 
-<script type="module" src="js/script.js"></script>
+            <p class="produto-descricao">
+                Mouse gamer profissional com sensor óptico de alta precisão,
+                iluminação RGB personalizável em 16 milhões de cores e design
+                ergonômico para longas sessões de jogo. Ideal para FPS, MOBA e RPG.
+            </p>
 
+            <div class="produto-extra">
+                <p>✅ Sensor 16.000 DPI ajustável</p>
+                <p>✅ Iluminação RGB Neon</p>
+                <p>✅ 6 botões programáveis</p>
+                <p>✅ Cabo trançado 1.8m</p>
+                <p>✅ Frete grátis</p>
+            </div>
+
+            <div class="produto-botoes">
+                <button onclick="adicionarCarrinho('Mouse Gamer Pro', 199.99, 'img/mouse.jpg', 10)">
+                    🛒 Adicionar ao Carrinho
+                </button>
+                <button class="favorito-btn" onclick="toggleFavoritoDetalhe(this, 'Mouse Gamer Pro', 'R$ 199,99', 'img/mouse.jpg')">
+                    ❤ Favoritar
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="toast"></div>
+    <script type="module" src="js/script.js"></script>
+    <script>
+        function trocarImagem(thumb) {
+            document.getElementById('img-principal').src = thumb.src;
+            document.querySelectorAll('.galeria-thumbs img').forEach(t => t.classList.remove('ativa'));
+            thumb.classList.add('ativa');
+        }
+
+        function avaliar(nota) {
+            const estrelas = document.querySelectorAll('.estrela');
+            estrelas.forEach((e, i) => {
+                e.classList.toggle('ativa', i < nota);
+            });
+            const msgs = ['', 'Muito ruim 😞', 'Ruim 😕', 'Regular 😐', 'Bom 😊', 'Excelente! 🤩'];
+            document.getElementById('avaliacao-msg').textContent = msgs[nota];
+            localStorage.setItem('avaliacao-mouse', nota);
+        }
+
+        // Carregar avaliação salva
+        const notaSalva = localStorage.getItem('avaliacao-mouse');
+        if (notaSalva) avaliar(Number(notaSalva));
+
+        function toggleFavoritoDetalhe(btn, nome, preco, imagem) {
+            let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+            const existe = favoritos.find(i => i.nome === nome);
+            if (existe) {
+                favoritos = favoritos.filter(i => i.nome !== nome);
+                btn.textContent = '❤ Favoritar';
+            } else {
+                favoritos.push({ nome, preco, imagem });
+                btn.textContent = '❤ Favoritado!';
+            }
+            localStorage.setItem('favoritos', JSON.stringify(favoritos));
+        }
+    </script>
 </body>
-
 </html>
