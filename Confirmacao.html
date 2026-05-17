@@ -3,18 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil - NeonShop</title>
+    <title>Pedido Confirmado - NeonShop</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-    <div id="loading">
-        <div class="loader-box">
-            <h1>NEONSHOP</h1>
-            <div class="loading-bar"><div class="loading-fill"></div></div>
-            <p>Carregando perfil...</p>
-        </div>
-    </div>
 
     <header class="navbar">
         <div class="logo"><h1>NEONSHOP</h1></div>
@@ -25,38 +17,43 @@
                 Carrinho
                 <span id="contador-carrinho">0</span>
             </a>
-            <a href="login.html">Login</a>
+            <a href="perfil.html">Perfil</a>
             <button class="tema-btn" onclick="trocarTema()">🌙</button>
         </nav>
     </header>
 
-    <section class="login-container" style="flex-direction:column;gap:30px;padding:60px 20px;align-items:center;">
+    <section class="confirmacao">
+        <div class="confirmacao-icon">🎉</div>
+        <h1>Pedido Confirmado!</h1>
+        <p>Obrigado pela sua compra na NeonShop!</p>
+        <p>Seu pedido foi recebido e está sendo processado.</p>
 
-        <div class="perfil-box">
-            <img src="img/avatar.png" class="avatar" alt="Avatar">
-            <h2 id="perfil-nome">Carregando...</h2>
-            <p id="perfil-email">---</p>
-            <span class="status">ONLINE</span>
-            <button onclick="logout()">Sair da Conta</button>
+        <div class="pedido-id" id="pedido-id">
+            #NEON000000
         </div>
 
-        <!-- MEUS PEDIDOS -->
-        <div style="width:100%;max-width:600px;">
-            <h2 style="color:cyan;text-align:center;margin-bottom:20px;text-shadow:0 0 10px cyan;">
-                MEUS PEDIDOS
-            </h2>
-            <div id="perfil-pedidos" style="text-align:center;color:#aaa;">
-                Carregando pedidos...
-            </div>
-        </div>
+        <p style="color:#aaa;font-size:15px;">
+            Guarde esse número para acompanhar seu pedido no perfil.
+        </p>
 
+        <div style="display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin-top:10px;">
+            <button class="btn-voltar" onclick="window.location.href='produtos.html'">
+                🛒 Continuar Comprando
+            </button>
+            <button class="btn-voltar" style="background:transparent;border:2px solid cyan;color:cyan;"
+                onclick="window.location.href='perfil.html'">
+                📋 Ver Meus Pedidos
+            </button>
+        </div>
     </section>
 
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
                 <h3>NEONSHOP</h3>
-                <p style="font-size:14px;line-height:1.8;">A melhor loja gamer do Brasil.</p>
+                <p style="font-size:14px;line-height:1.8;">
+                    A melhor loja gamer do Brasil. Produtos de qualidade com entrega rápida.
+                </p>
                 <div class="footer-redes">
                     <a href="#">📸</a>
                     <a href="#">🐦</a>
@@ -76,11 +73,13 @@
                 <a href="login.html">Login</a>
                 <a href="register.html">Cadastro</a>
                 <a href="perfil.html">Meu Perfil</a>
+                <a href="carrinho.html">Carrinho</a>
             </div>
             <div class="footer-col">
                 <h3>CONTATO</h3>
                 <a href="#">📧 suporte@neonshop.com</a>
                 <a href="#">📞 (11) 9999-9999</a>
+                <a href="#">💬 Chat ao vivo</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -90,5 +89,13 @@
 
     <div id="toast"></div>
     <script type="module" src="js/script.js"></script>
+    <script>
+        // Pegar ID do pedido da URL ou localStorage
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id') || localStorage.getItem('ultimo-pedido') || '';
+        if (id) {
+            document.getElementById('pedido-id').textContent = '#NEON' + id.slice(-6).toUpperCase();
+        }
+    </script>
 </body>
 </html>

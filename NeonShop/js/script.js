@@ -313,10 +313,15 @@ window.confirmarPagamento = async function () {
     let total = carrinho.reduce((s, p) => s + p.preco * p.quantidade, 0);
     let totalFinal = total - (total * desconto / 100);
 
+    // Adicionar frete se calculado
+    const frete = parseFloat(localStorage.getItem("frete") || 0);
+    totalFinal += frete;
+
+    let pedidoId = Date.now().toString();
+
     try {
-        // Tenta salvar no Firebase se usuário estiver logado
         if (auth.currentUser) {
-            await salvarPedido(carrinho, totalFinal);
+            pedidoId = await salvarPedido(carrinho, totalFinal);
         }
     } catch (e) {
         console.warn("Pedido não salvo no Firebase:", e);
@@ -324,12 +329,14 @@ window.confirmarPagamento = async function () {
 
     mostrarToast("✅ Pagamento aprovado! Obrigado!");
     localStorage.removeItem("carrinho");
+    localStorage.removeItem("frete");
+    localStorage.setItem("ultimo-pedido", pedidoId);
     atualizarContadorCarrinho();
 
     setTimeout(() => {
         fecharPix();
-        window.location.href = "index.html";
-    }, 2000);
+        window.location.href = "confirmacao.html?id=" + pedidoId;
+    }, 1500);
 };
 
 /* =========================

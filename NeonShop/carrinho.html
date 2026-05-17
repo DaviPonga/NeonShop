@@ -1,179 +1,192 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <title>
-        Carrinho - NeonShop
-    </title>
-
-    <link rel="stylesheet"
-        href="css/style.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - NeonShop</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-    <!-- NAVBAR -->
+    <div id="loading">
+        <div class="loader-box">
+            <h1>NEONSHOP</h1>
+            <div class="loading-bar"><div class="loading-fill"></div></div>
+            <p>Carregando carrinho...</p>
+        </div>
+    </div>
 
     <header class="navbar">
-
-        <div class="logo">
-
-            <h1>NEONSHOP</h1>
-
-        </div>
-
+        <div class="logo"><h1>NEONSHOP</h1></div>
         <nav class="menu">
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="produtos.html">
-                Produtos
-            </a>
-
-            <a href="categorias.html">
-                Categorias
-            </a>
-
-            <a href="favoritos.html">
-                Favoritos
-            </a>
-
-            <a href="carrinho.html">
+            <a href="index.html">Home</a>
+            <a href="produtos.html">Produtos</a>
+            <a href="categorias.html">Categorias</a>
+            <a href="favoritos.html">Favoritos</a>
+            <a href="carrinho.html" class="carrinho-link">
                 Carrinho
+                <span id="contador-carrinho">0</span>
             </a>
-
-            <a href="perfil.html">
-                Perfil
-            </a>
-
-            <a href="login.html">
-                Login
-            </a>
-
-            <button
-                class="tema-btn"
-                onclick="trocarTema()"
-                aria-label="Trocar tema"
-            >
-                🌙
-            </button>
-
+            <a href="perfil.html">Perfil</a>
+            <a href="login.html">Login</a>
+            <button class="tema-btn" onclick="trocarTema()">🌙</button>
         </nav>
-
     </header>
 
-    <!-- MAIN -->
-
     <main>
-
-        <!-- CARRINHO -->
-
         <section class="produtos">
 
-            <h2 class="titulo-produtos">
-                CARRINHO
-            </h2>
+            <h2 class="titulo-produtos">CARRINHO</h2>
 
-            <!-- GRID PRODUTOS -->
-
-            <div
-                id="carrinho-produtos"
-                class="grid-produtos"
-            >
-            </div>
+            <div id="carrinho-produtos" class="grid-produtos"></div>
 
             <!-- CUPOM -->
-
             <div class="cupom-area">
-
-                <input
-                    type="text"
-                    id="cupom"
-                    placeholder="Digite seu cupom"
-                >
-
-                <button onclick="aplicarCupom()">
-                    Aplicar
-                </button>
-
+                <input type="text" id="cupom" placeholder="Digite seu cupom">
+                <button onclick="aplicarCupom()">Aplicar</button>
             </div>
-
             <p id="mensagem-cupom"></p>
 
+            <!-- CEP / FRETE -->
+            <div class="frete-area">
+                <input
+                    type="text"
+                    id="cep-input"
+                    placeholder="Digite seu CEP (ex: 01310-100)"
+                    maxlength="9"
+                    oninput="mascaraCep(this)"
+                >
+                <button onclick="calcularFrete()">Calcular Frete</button>
+            </div>
+            <p class="frete-resultado" id="frete-resultado"></p>
+
             <!-- TOTAL -->
-
             <div class="total-area">
-
-                <h2 id="total">
-                    TOTAL: R$ 0,00
-                </h2>
-
+                <h2 id="total">TOTAL: R$ 0,00</h2>
             </div>
 
             <!-- FINALIZAR -->
-
             <div class="checkout">
-
-                <button onclick="abrirPix()">
-                    Finalizar Compra
-                </button>
-
+                <button onclick="abrirPix()">Finalizar Compra</button>
             </div>
 
         </section>
-
     </main>
 
     <!-- MODAL PIX -->
-
-    <div
-        class="pix-modal"
-        id="pix-modal"
-    >
-
+    <div class="pix-modal" id="pix-modal">
         <div class="pix-box">
-
-            <h2>
-                PAGAMENTO PIX
-            </h2>
-
-            <img
-                src="img/Qrcodepix.png"
-                alt="QR Code PIX"
-                onerror="this.style.display='none'"
-            >
-
+            <h2>PAGAMENTO PIX</h2>
+            <img src="img/Qrcodepix.png" alt="QR Code PIX" onerror="this.style.display='none'">
             <p id="pix-total"></p>
-
-            <button onclick="confirmarPagamento()">
-                Confirmar Pagamento
-            </button>
-
-            <button onclick="fecharPix()">
-                Fechar
-            </button>
-
+            <button onclick="confirmarPagamento()">Confirmar Pagamento</button>
+            <button onclick="fecharPix()">Fechar</button>
         </div>
-
     </div>
 
-    <!-- TOAST -->
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>NEONSHOP</h3>
+                <p style="font-size:14px;line-height:1.8;">A melhor loja gamer do Brasil.</p>
+                <div class="footer-redes">
+                    <a href="#">📸</a>
+                    <a href="#">🐦</a>
+                    <a href="#">▶️</a>
+                    <a href="#">💬</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>NAVEGAÇÃO</h3>
+                <a href="index.html">Home</a>
+                <a href="produtos.html">Produtos</a>
+                <a href="categorias.html">Categorias</a>
+                <a href="favoritos.html">Favoritos</a>
+            </div>
+            <div class="footer-col">
+                <h3>CONTA</h3>
+                <a href="login.html">Login</a>
+                <a href="register.html">Cadastro</a>
+                <a href="perfil.html">Meu Perfil</a>
+            </div>
+            <div class="footer-col">
+                <h3>CONTATO</h3>
+                <a href="#">📧 suporte@neonshop.com</a>
+                <a href="#">📞 (11) 9999-9999</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2025 <span>NeonShop</span> — Todos os direitos reservados
+        </div>
+    </footer>
 
     <div id="toast"></div>
-
-    <!-- SCRIPT -->
-
     <script type="module" src="js/script.js"></script>
+    <script>
+        // Máscara CEP
+        function mascaraCep(input) {
+            let v = input.value.replace(/\D/g, '');
+            if (v.length > 5) v = v.slice(0,5) + '-' + v.slice(5,8);
+            input.value = v;
+        }
 
+        // Calcular frete via ViaCEP + lógica de frete
+        async function calcularFrete() {
+            const cep = document.getElementById('cep-input').value.replace(/\D/g, '');
+            const resultado = document.getElementById('frete-resultado');
+
+            if (cep.length !== 8) {
+                resultado.textContent = '❌ CEP inválido. Digite 8 números.';
+                resultado.style.color = '#ff4466';
+                return;
+            }
+
+            resultado.textContent = '🔍 Consultando CEP...';
+            resultado.style.color = '#aaa';
+
+            try {
+                const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = await res.json();
+
+                if (data.erro) {
+                    resultado.textContent = '❌ CEP não encontrado.';
+                    resultado.style.color = '#ff4466';
+                    return;
+                }
+
+                // Calcular frete por região
+                const uf = data.uf;
+                let frete = 0;
+                let prazo = '';
+
+                const sudeste = ['SP','RJ','MG','ES'];
+                const sul     = ['PR','SC','RS'];
+                const centro  = ['GO','DF','MT','MS'];
+                const nordeste= ['BA','SE','AL','PE','PB','RN','CE','PI','MA'];
+                const norte   = ['PA','AM','AC','RO','RR','AP','TO'];
+
+                if (sudeste.includes(uf))      { frete = 15.90; prazo = '3-5 dias úteis'; }
+                else if (sul.includes(uf))     { frete = 18.90; prazo = '4-6 dias úteis'; }
+                else if (centro.includes(uf))  { frete = 22.90; prazo = '5-7 dias úteis'; }
+                else if (nordeste.includes(uf)){ frete = 27.90; prazo = '7-10 dias úteis'; }
+                else if (norte.includes(uf))   { frete = 34.90; prazo = '10-15 dias úteis'; }
+                else                           { frete = 19.90; prazo = '5-8 dias úteis'; }
+
+                resultado.style.color = 'cyan';
+                resultado.innerHTML = `
+                    📍 <strong>${data.localidade} - ${uf}</strong><br>
+                    🚚 Frete: <strong>R$ ${frete.toFixed(2)}</strong> &nbsp;|&nbsp; ⏱️ Prazo: <strong>${prazo}</strong>
+                `;
+
+                // Salvar frete para usar no total
+                localStorage.setItem('frete', frete);
+
+            } catch(e) {
+                resultado.textContent = '❌ Erro ao consultar CEP. Tente novamente.';
+                resultado.style.color = '#ff4466';
+            }
+        }
+    </script>
 </body>
-
 </html>

@@ -1,86 +1,155 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - NeonShop</title>
-
-    <link rel="stylesheet"
-        href="css/style.css">
-
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-    <header class="navbar">
-
-        <div class="logo">
-            <h1>NEONSHOP ADMIN</h1>
+    <div id="loading">
+        <div class="loader-box">
+            <h1>NEONSHOP</h1>
+            <div class="loading-bar"><div class="loading-fill"></div></div>
+            <p>Carregando painel...</p>
         </div>
+    </div>
 
+    <header class="navbar">
+        <div class="logo"><h1>⚙️ ADMIN</h1></div>
         <nav class="menu">
-
-            <a href="index.html">
-                Loja
-            </a>
-
+            <a href="index.html">← Loja</a>
+            <a href="perfil.html">Perfil</a>
+            <button class="tema-btn" onclick="trocarTema()">🌙</button>
         </nav>
-
     </header>
 
-    <section class="login-container">
+    <div class="admin-container">
 
-        <div class="login-box">
+        <h2 class="admin-titulo">PAINEL ADMINISTRATIVO</h2>
 
-            <h2>Adicionar Produto</h2>
-
-            <input
-                type="text"
-                id="produto-nome"
-                placeholder="Nome do produto"
-            >
-
-            <input
-                type="number"
-                id="produto-preco"
-                placeholder="Preço"
-            >
-
-            <input
-                type="text"
-                id="produto-imagem"
-                placeholder="Imagem (img/produto.png)"
-            >
-
-            <input
-                type="text"
-                id="produto-categoria"
-                placeholder="Categoria"
-            >
-
-            <input
-                type="number"
-                id="produto-estoque"
-                placeholder="Estoque"
-            >
-
-            <button onclick="adicionarProdutoAdmin()">
-                Adicionar Produto
-            </button>
-
-            <p id="admin-msg"></p>
-
+        <!-- STATS -->
+        <div class="admin-stats">
+            <div class="stat-card">
+                <div class="stat-num" id="stat-pedidos">—</div>
+                <div class="stat-label">Total de Pedidos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-receita">—</div>
+                <div class="stat-label">Receita Total</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-usuarios">—</div>
+                <div class="stat-label">Usuários</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-pendentes">—</div>
+                <div class="stat-label">Pedidos Pendentes</div>
+            </div>
         </div>
 
-    </section>
-     <div id="toast"></div>
-    <script type="module" src="js/script.js"></script>
-   
-</body>
+        <!-- TABELA DE PEDIDOS -->
+        <h3 style="color:cyan;margin-bottom:20px;font-size:20px;">📦 Todos os Pedidos</h3>
 
+        <div style="overflow-x:auto;">
+            <table class="admin-tabela">
+                <thead>
+                    <tr>
+                        <th>ID do Pedido</th>
+                        <th>Email</th>
+                        <th>Itens</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-pedidos">
+                    <tr>
+                        <td colspan="6" style="text-align:center;color:#aaa;padding:30px;">
+                            Carregando pedidos...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ADICIONAR PRODUTO -->
+        <h3 style="color:cyan;margin:50px 0 20px;font-size:20px;">➕ Adicionar Produto</h3>
+        <div class="login-box" style="max-width:500px;">
+            <input type="text" id="produto-nome" placeholder="Nome do produto">
+            <input type="number" id="produto-preco" placeholder="Preço (ex: 199.99)">
+            <input type="text" id="produto-imagem" placeholder="Imagem (img/produto.jpg)">
+            <input type="text" id="produto-categoria" placeholder="Categoria (mouse, teclado...)">
+            <input type="number" id="produto-estoque" placeholder="Estoque">
+            <button onclick="adicionarProdutoAdmin()">Adicionar Produto</button>
+            <p id="admin-msg"></p>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-bottom">
+            © 2025 <span>NeonShop</span> — Painel Administrativo
+        </div>
+    </footer>
+
+    <div id="toast"></div>
+    <script type="module" src="js/script.js"></script>
+    <script type="module">
+        import { db, auth } from './js/firebase.js';
+        import { collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+        async function carregarPainel() {
+            try {
+                // Carregar pedidos
+                const pedidosSnap = await getDocs(query(collection(db, 'pedidos'), orderBy('criadoEm', 'desc')));
+                const pedidos = pedidosSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+                // Stats
+                const receita = pedidos.reduce((s, p) => s + Number(p.total || 0), 0);
+                const pendentes = pedidos.filter(p => p.status === 'pendente').length;
+
+                document.getElementById('stat-pedidos').textContent = pedidos.length;
+                document.getElementById('stat-receita').textContent = 'R$' + receita.toFixed(0);
+                document.getElementById('stat-pendentes').textContent = pendentes;
+
+                // Usuários
+                try {
+                    const usersSnap = await getDocs(collection(db, 'usuarios'));
+                    document.getElementById('stat-usuarios').textContent = usersSnap.size;
+                } catch { document.getElementById('stat-usuarios').textContent = '—'; }
+
+                // Tabela
+                const tbody = document.getElementById('tabela-pedidos');
+                if (pedidos.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:30px;">Nenhum pedido ainda.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = pedidos.map(p => {
+                    const data = p.criadoEm?.toDate ? p.criadoEm.toDate().toLocaleDateString('pt-BR') : '—';
+                    const itens = Array.isArray(p.itens) ? p.itens.length : '—';
+                    const statusClass = 'status-' + (p.status || 'pendente');
+                    return `
+                        <tr>
+                            <td style="color:cyan;font-weight:bold;">#NEON${p.id.slice(-6).toUpperCase()}</td>
+                            <td>${p.email || '—'}</td>
+                            <td>${itens} item(s)</td>
+                            <td style="color:#0f0;">R$ ${Number(p.total).toFixed(2)}</td>
+                            <td><span class="status-badge ${statusClass}">${p.status || 'pendente'}</span></td>
+                            <td>${data}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } catch(e) {
+                document.getElementById('tabela-pedidos').innerHTML =
+                    `<tr><td colspan="6" style="text-align:center;color:#ff4466;padding:30px;">Erro ao carregar: ${e.message}</td></tr>`;
+            }
+        }
+
+        carregarPainel();
+    </script>
+</body>
 </html>
