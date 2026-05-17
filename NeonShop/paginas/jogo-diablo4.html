@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diablo IV - NeonShop</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="loading">
+        <div class="loader-box">
+            <h1>NEONSHOP</h1>
+            <div class="loading-bar"><div class="loading-fill"></div></div>
+            <p>Carregando...</p>
+        </div>
+    </div>
+    <header class="navbar">
+        <div class="logo"><h1>NEONSHOP</h1></div>
+        <nav class="menu">
+            <a href="../index.html">Home</a>
+            <a href="../produtos.html">Produtos</a>
+            <a href="../categorias.html">Categorias</a>
+            <a href="../carrinho.html" class="carrinho-link">Carrinho <span id="contador-carrinho">0</span></a>
+            <a href="../perfil.html">Perfil</a>
+            <a href="../login.html">Login</a>
+            <button class="tema-btn" onclick="trocarTema()">🌙</button>
+        </nav>
+    </header>
+    <section class="produto-detalhe">
+        <div class="produto-imagem">
+            <div class="galeria">
+                <img id="img-principal" class="galeria-principal" src="https://images.unsplash.com/photo-1637239822050-9e3fbe9c5a11?w=600&h=400&fit=crop" alt="Diablo IV (PC)">
+                <div class="galeria-thumbs">
+                    <img src="https://images.unsplash.com/photo-1637239822050-9e3fbe9c5a11?w=600&h=400&fit=crop" class="ativa" onclick="trocarImagem(this)" alt="Imagem 1">
+                </div>
+            </div>
+        </div>
+        <div class="produto-info">
+            <span class="badge badge-novo" style="position:static;display:inline-block;margin-bottom:15px;">🆕 Lançamento</span>
+            <h1>Diablo IV (PC)</h1>
+            <div class="estrelas">
+                <span class="estrela" onclick="avaliar(1)">★</span>
+                <span class="estrela" onclick="avaliar(2)">★</span>
+                <span class="estrela" onclick="avaliar(3)">★</span>
+                <span class="estrela" onclick="avaliar(4)">★</span>
+                <span class="estrela" onclick="avaliar(5)">★</span>
+            </div>
+            <p class="avaliacao-msg" id="avaliacao-msg"></p>
+            <p class="produto-preco">R$ 239,99</p>
+            <p class="produto-descricao">O retorno épico da franquia de RPG de ação mais sombria do gaming. Lil'th voltou ao Santuário e somente você pode detê-la. Escolha entre 5 classes únicas, explore o mundo aberto sombrio de Santuário, mate milhares de demônios e colecione o melhor loot do gênero. Temporadas regulares com conteúdo novo.</p>
+            <div class="produto-extra">
+                <p>✅ Chave digital entregue por email</p>
+                <p>✅ Plataforma: Battle.net</p>
+                <p>✅ 5 classes de personagem</p>
+                <p>✅ Mundo aberto sombrio</p>
+                <p>✅ Temporadas com conteúdo novo</p>
+                <p>✅ Cooperativo online até 4 jogadores</p>
+            </div>
+            <div class="produto-botoes">
+                <button onclick="adicionarCarrinho('Diablo IV (PC)', 239.99, 'https://images.unsplash.com/photo-1637239822050-9e3fbe9c5a11?w=600&h=400&fit=crop', 999)">🛒 Adicionar ao Carrinho</button>
+                <button class="favorito-btn" onclick="toggleFavoritoDetalhe(this, 'Diablo IV (PC)', 'R$ 239,99', 'https://images.unsplash.com/photo-1637239822050-9e3fbe9c5a11?w=600&h=400&fit=crop')">❤ Favoritar</button>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>NEONSHOP</h3>
+                <p style="font-size:14px;line-height:1.8;">A melhor loja gamer do Brasil.</p>
+                <div class="footer-redes">
+                    <a href="#">📸</a><a href="#">🐦</a><a href="#">▶️</a><a href="#">💬</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>NAVEGAÇÃO</h3>
+                <a href="../index.html">Home</a>
+                <a href="../produtos.html">Produtos</a>
+                <a href="../categorias.html">Categorias</a>
+            </div>
+            <div class="footer-col">
+                <h3>CONTA</h3>
+                <a href="../login.html">Login</a>
+                <a href="../register.html">Cadastro</a>
+                <a href="../perfil.html">Meu Perfil</a>
+            </div>
+            <div class="footer-col">
+                <h3>CONTATO</h3>
+                <a href="#">📧 suporte@neonshop.com</a>
+                <a href="#">📞 (11) 9999-9999</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2025 <span>NeonShop</span> — Todos os direitos reservados</div>
+    </footer>
+    <div id="toast"></div>
+    <script type="module" src="../js/script.js"></script>
+    <script>
+        function trocarImagem(t) {
+            document.getElementById('img-principal').src = t.src;
+            document.querySelectorAll('.galeria-thumbs img').forEach(i => i.classList.remove('ativa'));
+            t.classList.add('ativa');
+        }
+        function avaliar(nota) {
+            document.querySelectorAll('.estrela').forEach((e,i) => e.classList.toggle('ativa', i < nota));
+            const msgs = ['','Muito ruim 😞','Ruim 😕','Regular 😐','Bom 😊','Excelente! 🤩'];
+            document.getElementById('avaliacao-msg').textContent = msgs[nota];
+            localStorage.setItem('avaliacao-jogo-diablo4', nota);
+        }
+        const n = localStorage.getItem('avaliacao-jogo-diablo4');
+        if(n) avaliar(Number(n));
+        function toggleFavoritoDetalhe(btn, nome, preco, imagem) {
+            let favs = JSON.parse(localStorage.getItem('favoritos')) || [];
+            const existe = favs.find(i => i.nome === nome);
+            if(existe) { favs = favs.filter(i => i.nome !== nome); btn.textContent = '❤ Favoritar'; }
+            else { favs.push({nome, preco, imagem}); btn.textContent = '❤ Favoritado!'; }
+            localStorage.setItem('favoritos', JSON.stringify(favs));
+        }
+    </script>
+</body>
+</html>

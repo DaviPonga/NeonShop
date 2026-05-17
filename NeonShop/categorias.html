@@ -6,7 +6,6 @@
     <title>Categorias - NeonShop</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* ABAS DE CATEGORIA */
         .abas {
             display: flex;
             flex-wrap: wrap;
@@ -15,7 +14,6 @@
             margin: 30px auto 40px;
             max-width: 900px;
         }
-
         .aba-btn {
             padding: 12px 24px;
             border-radius: 30px;
@@ -28,24 +26,15 @@
             transition: 0.3s;
             letter-spacing: 1px;
         }
-
-        .aba-btn:hover,
-        .aba-btn.ativa {
+        .aba-btn:hover, .aba-btn.ativa {
             background: rgba(0,255,255,0.15);
             border-color: cyan;
             color: cyan;
             box-shadow: 0 0 15px rgba(0,255,255,0.3);
             transform: translateY(-2px);
         }
-
-        .categoria-secao {
-            display: none;
-        }
-
-        .categoria-secao.ativa {
-            display: block;
-        }
-
+        .categoria-secao { display: none; }
+        .categoria-secao.ativa { display: block; }
         .categoria-titulo {
             color: cyan;
             font-size: 28px;
@@ -54,8 +43,6 @@
             text-shadow: 0 0 15px cyan;
             letter-spacing: 2px;
         }
-
-        /* CARD DE JOGO */
         .jogo-card {
             background: rgba(10,10,20,0.8);
             border: 1px solid rgba(0,255,255,0.15);
@@ -66,41 +53,16 @@
             opacity: 0;
             transform: translateY(30px);
         }
-
-        .jogo-card.visivel {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        .jogo-card.visivel { opacity: 1; transform: translateY(0); }
         .jogo-card:hover {
             border-color: cyan;
             box-shadow: 0 0 25px rgba(0,255,255,0.2);
             transform: translateY(-5px);
         }
-
-        .jogo-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .jogo-info {
-            padding: 15px;
-        }
-
-        .jogo-info h3 {
-            color: cyan;
-            font-size: 16px;
-            margin-bottom: 6px;
-        }
-
-        .jogo-info .plataforma {
-            color: #888;
-            font-size: 12px;
-            margin-bottom: 8px;
-        }
-
+        .jogo-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+        .jogo-info { padding: 15px; }
+        .jogo-info h3 { color: cyan; font-size: 16px; margin-bottom: 6px; }
+        .jogo-info .plataforma { color: #888; font-size: 12px; margin-bottom: 8px; }
         .jogo-info .genero {
             display: inline-block;
             background: rgba(0,255,255,0.1);
@@ -110,27 +72,30 @@
             font-size: 11px;
             margin-bottom: 10px;
         }
-
-        .jogo-info .preco-jogo {
-            color: #0f0;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .jogo-info button {
-            width: 100%;
-        }
-
+        .jogo-info .preco-jogo { color: #0f0; font-size: 20px; font-weight: bold; margin-bottom: 10px; }
+        .jogo-info button { width: 100%; }
         .badge-jogo {
             position: absolute;
-            top: 12px;
-            right: 12px;
+            top: 12px; right: 12px;
             padding: 4px 10px;
             border-radius: 15px;
             font-size: 11px;
             font-weight: bold;
         }
+        .ver-mais-btn {
+            display: block;
+            margin: 10px auto 0;
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid rgba(0,255,255,0.4);
+            color: cyan;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: auto;
+        }
+        .ver-mais-btn:hover { background: rgba(0,255,255,0.1); }
     </style>
 </head>
 <body>
@@ -149,10 +114,7 @@
             <a href="index.html">Home</a>
             <a href="produtos.html">Produtos</a>
             <a href="favoritos.html">Favoritos</a>
-            <a href="carrinho.html" class="carrinho-link">
-                Carrinho
-                <span id="contador-carrinho">0</span>
-            </a>
+            <a href="carrinho.html" class="carrinho-link">Carrinho <span id="contador-carrinho">0</span></a>
             <a href="perfil.html">Perfil</a>
             <a href="login.html">Login</a>
             <button class="tema-btn" onclick="trocarTema()">🌙</button>
@@ -161,20 +123,18 @@
 
     <main>
         <section class="produtos">
-
             <h2 class="titulo-produtos">CATEGORIAS</h2>
 
-            <!-- ABAS -->
             <div class="abas">
-                <button class="aba-btn ativa" onclick="trocarAba('mouse', this)">🖱️ Mouse</button>
-                <button class="aba-btn" onclick="trocarAba('teclado', this)">⌨️ Teclados</button>
-                <button class="aba-btn" onclick="trocarAba('fone', this)">🎧 Fones</button>
-                <button class="aba-btn" onclick="trocarAba('monitor', this)">🖥️ Monitores</button>
-                <button class="aba-btn" onclick="trocarAba('cadeira', this)">🪑 Cadeiras</button>
-                <button class="aba-btn" onclick="trocarAba('jogos', this)">🎮 Jogos</button>
+                <button class="aba-btn ativa" onclick="trocarAba('mouse',this)">🖱️ Mouse</button>
+                <button class="aba-btn" onclick="trocarAba('teclado',this)">⌨️ Teclados</button>
+                <button class="aba-btn" onclick="trocarAba('fone',this)">🎧 Fones</button>
+                <button class="aba-btn" onclick="trocarAba('monitor',this)">🖥️ Monitores</button>
+                <button class="aba-btn" onclick="trocarAba('cadeira',this)">🪑 Cadeiras</button>
+                <button class="aba-btn" onclick="trocarAba('jogos',this)">🎮 Jogos</button>
             </div>
 
-            <!-- ==================== MOUSE ==================== -->
+            <!-- ===== MOUSE ===== -->
             <div class="categoria-secao ativa" id="secao-mouse">
                 <h3 class="categoria-titulo">🖱️ MOUSES GAMER</h3>
                 <div class="grid-produtos">
@@ -188,43 +148,66 @@
                         </a>
                         <p>Sensor 16.000 DPI, RGB, 6 botões programáveis.</p>
                         <span>R$ 199,99</span>
-                        <button onclick="adicionarCarrinho('Mouse Gamer Pro', 199.99, 'img/mouse.jpg', 10)">
-                            Adicionar ao Carrinho
-                        </button>
+                        <button onclick="adicionarCarrinho('Mouse Gamer Pro',199.99,'img/mouse.jpg',10)">Adicionar ao Carrinho</button>
+                        <a href="mouse.html" class="ver-mais-btn">Ver detalhes →</a>
                     </div>
 
                     <div class="produto visivel" data-categoria="mouse">
                         <span class="badge badge-novo">🆕 Novo</span>
                         <div class="favorito" onclick="toggleFavorito(this)">❤</div>
-                        <a href="mouse.html" class="produto-link">
-                            <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=250&fit=crop" alt="Mouse Sem Fio">
+                        <a href="paginas/mouse2.html" class="produto-link">
+                            <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=250&fit=crop" alt="Mouse Sem Fio Elite">
                             <h3>Mouse Sem Fio Elite</h3>
                         </a>
-                        <p>Wireless 2.4GHz, 70h bateria, RGB.</p>
+                        <p>Wireless 2.4GHz, 70h bateria, RGB, 20.000 DPI.</p>
                         <span>R$ 259,99</span>
-                        <button onclick="adicionarCarrinho('Mouse Sem Fio Elite', 259.99, 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=250&fit=crop', 7)">
-                            Adicionar ao Carrinho
-                        </button>
+                        <button onclick="adicionarCarrinho('Mouse Sem Fio Elite',259.99,'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=250&fit=crop',7)">Adicionar ao Carrinho</button>
+                        <a href="paginas/mouse2.html" class="ver-mais-btn">Ver detalhes →</a>
                     </div>
 
                     <div class="produto visivel" data-categoria="mouse">
                         <span class="badge badge-promo">⚡ Promoção</span>
                         <div class="favorito" onclick="toggleFavorito(this)">❤</div>
-                        <a href="#" class="produto-link">
-                            <img src="https://images.unsplash.com/photo-1616400619175-5beda3a17896?w=400&h=250&fit=crop" alt="Mousepad XL">
+                        <a href="paginas/mouse3.html" class="produto-link">
+                            <img src="https://images.unsplash.com/photo-1616400619175-5beda3a17896?w=400&h=250&fit=crop" alt="Mousepad XL RGB">
                             <h3>Mousepad XL RGB</h3>
                         </a>
-                        <p>900x400mm, borda costurada, RGB.</p>
+                        <p>900x400mm, borda costurada, RGB 14 modos.</p>
                         <span>R$ 89,99</span>
-                        <button onclick="adicionarCarrinho('Mousepad XL RGB', 89.99, 'https://images.unsplash.com/photo-1616400619175-5beda3a17896?w=400&h=250&fit=crop', 15)">
-                            Adicionar ao Carrinho
-                        </button>
+                        <button onclick="adicionarCarrinho('Mousepad XL RGB',89.99,'https://images.unsplash.com/photo-1616400619175-5beda3a17896?w=400&h=250&fit=crop',15)">Adicionar ao Carrinho</button>
+                        <a href="paginas/mouse3.html" class="ver-mais-btn">Ver detalhes →</a>
+                    </div>
+
+                    <div class="produto visivel" data-categoria="mouse">
+                        <span class="badge badge-novo">🆕 Novo</span>
+                        <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                        <a href="paginas/mouse4.html" class="produto-link">
+                            <img src="https://images.unsplash.com/photo-1563297007-0686b7003af7?w=400&h=250&fit=crop" alt="Mouse Vertical">
+                            <h3>Mouse Vertical Ergonômico</h3>
+                        </a>
+                        <p>Design vertical, previne LER, cliques silenciosos.</p>
+                        <span>R$ 179,99</span>
+                        <button onclick="adicionarCarrinho('Mouse Vertical Ergonômico',179.99,'https://images.unsplash.com/photo-1563297007-0686b7003af7?w=400&h=250&fit=crop',12)">Adicionar ao Carrinho</button>
+                        <a href="paginas/mouse4.html" class="ver-mais-btn">Ver detalhes →</a>
+                    </div>
+
+                    <div class="produto visivel" data-categoria="mouse">
+                        <span class="badge badge-vendido">🔥 Mais Vendido</span>
+                        <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                        <a href="paginas/mouse5.html" class="produto-link">
+                            <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=400&h=250&fit=crop" alt="Mouse Ultralight">
+                            <h3>Mouse Gamer Ultralight</h3>
+                        </a>
+                        <p>69g, honeycomb, Sensor Hero 25K, 1000Hz.</p>
+                        <span>R$ 319,99</span>
+                        <button onclick="adicionarCarrinho('Mouse Gamer Ultralight',319.99,'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=400&h=250&fit=crop',8)">Adicionar ao Carrinho</button>
+                        <a href="paginas/mouse5.html" class="ver-mais-btn">Ver detalhes →</a>
                     </div>
 
                 </div>
             </div>
 
-            <!-- ==================== TECLADO ==================== -->
+            <!-- ===== TECLADO ===== -->
             <div class="categoria-secao" id="secao-teclado">
                 <h3 class="categoria-titulo">⌨️ TECLADOS GAMER</h3>
                 <div class="grid-produtos">
@@ -233,48 +216,71 @@
                         <span class="badge badge-novo">🆕 Novo</span>
                         <div class="favorito" onclick="toggleFavorito(this)">❤</div>
                         <a href="teclado.html" class="produto-link">
-                            <img src="img/teclado.jpg" alt="Teclado Mecânico">
+                            <img src="img/teclado.jpg" alt="Teclado Mecânico RGB">
                             <h3>Teclado Mecânico RGB</h3>
                         </a>
-                        <p>Switches blue, RGB por tecla, anti-ghosting.</p>
+                        <p>Switches blue, RGB por tecla, anti-ghosting total.</p>
                         <span>R$ 299,99</span>
-                        <button onclick="adicionarCarrinho('Teclado Mecânico RGB', 299.99, 'img/teclado.jpg', 5)">
-                            Adicionar ao Carrinho
-                        </button>
+                        <button onclick="adicionarCarrinho('Teclado Mecânico RGB',299.99,'img/teclado.jpg',5)">Adicionar ao Carrinho</button>
+                        <a href="teclado.html" class="ver-mais-btn">Ver detalhes →</a>
                     </div>
 
                     <div class="produto" data-categoria="teclado">
                         <span class="badge badge-vendido">🔥 Mais Vendido</span>
                         <div class="favorito" onclick="toggleFavorito(this)">❤</div>
-                        <a href="teclado.html" class="produto-link">
+                        <a href="paginas/teclado2.html" class="produto-link">
                             <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=250&fit=crop" alt="Teclado TKL">
                             <h3>Teclado TKL Compacto</h3>
                         </a>
                         <p>Layout TKL 80%, hot-swap, RGB por tecla.</p>
                         <span>R$ 349,99</span>
-                        <button onclick="adicionarCarrinho('Teclado TKL Compacto', 349.99, 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=250&fit=crop', 4)">
-                            Adicionar ao Carrinho
-                        </button>
+                        <button onclick="adicionarCarrinho('Teclado TKL Compacto',349.99,'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=250&fit=crop',4)">Adicionar ao Carrinho</button>
+                        <a href="paginas/teclado2.html" class="ver-mais-btn">Ver detalhes →</a>
                     </div>
 
                     <div class="produto" data-categoria="teclado">
                         <span class="badge badge-promo">⚡ Promoção</span>
                         <div class="favorito" onclick="toggleFavorito(this)">❤</div>
-                        <a href="teclado.html" class="produto-link">
+                        <a href="paginas/teclado3.html" class="produto-link">
                             <img src="https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400&h=250&fit=crop" alt="Teclado Membrana">
                             <h3>Teclado Membrana Slim</h3>
                         </a>
-                        <p>Ultra-fino, silencioso, LED azul, USB.</p>
+                        <p>Ultrafino, silencioso, LED azul, resistente à água.</p>
                         <span>R$ 129,99</span>
-                        <button onclick="adicionarCarrinho('Teclado Membrana Slim', 129.99, 'https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400&h=250&fit=crop', 10)">
-                            Adicionar ao Carrinho
-                        </button>
+                        <button onclick="adicionarCarrinho('Teclado Membrana Slim',129.99,'https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400&h=250&fit=crop',10)">Adicionar ao Carrinho</button>
+                        <a href="paginas/teclado3.html" class="ver-mais-btn">Ver detalhes →</a>
+                    </div>
+
+                    <div class="produto" data-categoria="teclado">
+                        <span class="badge badge-novo">🆕 Novo</span>
+                        <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                        <a href="paginas/teclado4.html" class="produto-link">
+                            <img src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=400&h=250&fit=crop" alt="Teclado 60%">
+                            <h3>Teclado 60% Minimalista</h3>
+                        </a>
+                        <p>Case alumínio, Gateron Yellow pré-lubrificado, som thock.</p>
+                        <span>R$ 429,99</span>
+                        <button onclick="adicionarCarrinho('Teclado 60% Minimalista',429.99,'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=400&h=250&fit=crop',6)">Adicionar ao Carrinho</button>
+                        <a href="paginas/teclado4.html" class="ver-mais-btn">Ver detalhes →</a>
+                    </div>
+
+                    <div class="produto" data-categoria="teclado">
+                        <span class="badge badge-novo">🆕 Novo</span>
+                        <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                        <a href="paginas/teclado5.html" class="produto-link">
+                            <img src="https://images.unsplash.com/photo-1593640408182-31c228fa6d11?w=400&h=250&fit=crop" alt="Teclado Wireless">
+                            <h3>Teclado Wireless Recarregável</h3>
+                        </a>
+                        <p>BT 5.0 + 2.4G + USB-C, bateria 4000mAh / 200h.</p>
+                        <span>R$ 499,99</span>
+                        <button onclick="adicionarCarrinho('Teclado Wireless Recarregável',499.99,'https://images.unsplash.com/photo-1593640408182-31c228fa6d11?w=400&h=250&fit=crop',5)">Adicionar ao Carrinho</button>
+                        <a href="paginas/teclado5.html" class="ver-mais-btn">Ver detalhes →</a>
                     </div>
 
                 </div>
             </div>
 
-            <!-- ==================== FONE ==================== -->
+            <!-- ===== FONE ===== -->
             <div class="categoria-secao" id="secao-fone">
                 <h3 class="categoria-titulo">🎧 FONES GAMER</h3>
                 <div class="grid-produtos">
@@ -288,43 +294,66 @@
                         </a>
                         <p>Surround 7.1, microfone retrátil, memory foam.</p>
                         <span>R$ 149,99</span>
-                        <button onclick="adicionarCarrinho('Fone Gamer 7.1', 149.99, 'img/fone.jpg', 8)">
-                            Adicionar ao Carrinho
-                        </button>
+                        <button onclick="adicionarCarrinho('Fone Gamer 7.1',149.99,'img/fone.jpg',8)">Adicionar ao Carrinho</button>
+                        <a href="fone.html" class="ver-mais-btn">Ver detalhes →</a>
                     </div>
 
                     <div class="produto" data-categoria="fone">
                         <span class="badge badge-novo">🆕 Novo</span>
                         <div class="favorito" onclick="toggleFavorito(this)">❤</div>
-                        <a href="fone.html" class="produto-link">
-                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop" alt="Headset Pro">
+                        <a href="paginas/fone2.html" class="produto-link">
+                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop" alt="Headset Pro Wireless">
                             <h3>Headset Pro Wireless</h3>
                         </a>
-                        <p>Noise cancel ativo, 30h bateria, Bluetooth.</p>
+                        <p>ANC 95%, wireless 2.4GHz, bateria 30h.</p>
                         <span>R$ 449,99</span>
-                        <button onclick="adicionarCarrinho('Headset Pro Wireless', 449.99, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop', 6)">
-                            Adicionar ao Carrinho
-                        </button>
+                        <button onclick="adicionarCarrinho('Headset Pro Wireless',449.99,'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop',6)">Adicionar ao Carrinho</button>
+                        <a href="paginas/fone2.html" class="ver-mais-btn">Ver detalhes →</a>
                     </div>
 
                     <div class="produto" data-categoria="fone">
                         <span class="badge badge-vendido">🔥 Mais Vendido</span>
                         <div class="favorito" onclick="toggleFavorito(this)">❤</div>
-                        <a href="fone.html" class="produto-link">
+                        <a href="paginas/fone3.html" class="produto-link">
                             <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=250&fit=crop" alt="Fone Intra">
                             <h3>Fone Intra-Auricular Pro</h3>
                         </a>
-                        <p>Driver 10mm, graves profundos, cabo trançado.</p>
+                        <p>Driver 10mm, graves profundos, microfone embutido.</p>
                         <span>R$ 79,99</span>
-                        <button onclick="adicionarCarrinho('Fone Intra-Auricular Pro', 79.99, 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=250&fit=crop', 20)">
-                            Adicionar ao Carrinho
-                        </button>
+                        <button onclick="adicionarCarrinho('Fone Intra-Auricular Pro',79.99,'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=250&fit=crop',20)">Adicionar ao Carrinho</button>
+                        <a href="paginas/fone3.html" class="ver-mais-btn">Ver detalhes →</a>
+                    </div>
+
+                    <div class="produto" data-categoria="fone">
+                        <span class="badge badge-promo">⚡ Promoção</span>
+                        <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                        <a href="paginas/fone4.html" class="produto-link">
+                            <img src="https://images.unsplash.com/photo-1496957961598-e0218b0e4af7?w=400&h=250&fit=crop" alt="Fone Bluetooth Sport">
+                            <h3>Fone Bluetooth Sport</h3>
+                        </a>
+                        <p>BT 5.2, IPX5, bateria 8h + case 24h.</p>
+                        <span>R$ 119,99</span>
+                        <button onclick="adicionarCarrinho('Fone Bluetooth Sport',119.99,'https://images.unsplash.com/photo-1496957961598-e0218b0e4af7?w=400&h=250&fit=crop',14)">Adicionar ao Carrinho</button>
+                        <a href="paginas/fone4.html" class="ver-mais-btn">Ver detalhes →</a>
+                    </div>
+
+                    <div class="produto" data-categoria="fone">
+                        <span class="badge badge-promo">⚡ Promoção</span>
+                        <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                        <a href="paginas/fone5.html" class="produto-link">
+                            <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=250&fit=crop" alt="Headset Estéreo RGB">
+                            <h3>Headset Estéreo RGB</h3>
+                        </a>
+                        <p>Drivers 50mm, RGB, memory foam, controle no cabo.</p>
+                        <span>R$ 189,99</span>
+                        <button onclick="adicionarCarrinho('Headset Estéreo RGB',189.99,'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=250&fit=crop',9)">Adicionar ao Carrinho</button>
+                        <a href="paginas/fone5.html" class="ver-mais-btn">Ver detalhes →</a>
                     </div>
 
                 </div>
             </div>
 
-            <!-- ==================== MONITOR ==================== -->
+            <!-- ===== MONITOR ===== -->
             <div class="categoria-secao" id="secao-monitor">
                 <h3 class="categoria-titulo">🖥️ MONITORES</h3>
                 <div class="grid-produtos">
@@ -332,35 +361,46 @@
                     <div class="produto" data-categoria="monitor">
                         <span class="badge badge-vendido">🔥 Mais Vendido</span>
                         <div class="favorito" onclick="toggleFavorito(this)">❤</div>
-                        <a href="#" class="produto-link">
+                        <a href="paginas/monitor1.html" class="produto-link">
                             <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=250&fit=crop" alt="Monitor 144Hz">
                             <h3>Monitor 144Hz IPS</h3>
                         </a>
-                        <p>24" Full HD, 144Hz, 1ms, FreeSync Premium.</p>
+                        <p>24" Full HD, 1ms, FreeSync Premium + G-Sync.</p>
                         <span>R$ 899,99</span>
-                        <button onclick="adicionarCarrinho('Monitor 144Hz IPS', 899.99, 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=250&fit=crop', 5)">
-                            Adicionar ao Carrinho
-                        </button>
+                        <button onclick="adicionarCarrinho('Monitor 144Hz IPS',899.99,'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=250&fit=crop',5)">Adicionar ao Carrinho</button>
+                        <a href="paginas/monitor1.html" class="ver-mais-btn">Ver detalhes →</a>
                     </div>
 
                     <div class="produto" data-categoria="monitor">
                         <span class="badge badge-novo">🆕 Novo</span>
                         <div class="favorito" onclick="toggleFavorito(this)">❤</div>
-                        <a href="#" class="produto-link">
+                        <a href="paginas/monitor2.html" class="produto-link">
                             <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=250&fit=crop" alt="Monitor 4K">
                             <h3>Monitor 4K 165Hz</h3>
                         </a>
-                        <p>27" 4K UHD, 165Hz, HDR400, G-Sync.</p>
+                        <p>27" 4K, HDR400, 95% DCI-P3, G-Sync Ultimate.</p>
                         <span>R$ 2.499,99</span>
-                        <button onclick="adicionarCarrinho('Monitor 4K 165Hz', 2499.99, 'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=250&fit=crop', 3)">
-                            Adicionar ao Carrinho
-                        </button>
+                        <button onclick="adicionarCarrinho('Monitor 4K 165Hz',2499.99,'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=250&fit=crop',3)">Adicionar ao Carrinho</button>
+                        <a href="paginas/monitor2.html" class="ver-mais-btn">Ver detalhes →</a>
+                    </div>
+
+                    <div class="produto" data-categoria="monitor">
+                        <span class="badge badge-novo">🆕 Novo</span>
+                        <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                        <a href="paginas/monitor3.html" class="produto-link">
+                            <img src="https://images.unsplash.com/photo-1616400619175-5beda3a17896?w=400&h=250&fit=crop" alt="Monitor Ultrawide">
+                            <h3>Monitor Ultrawide 34"</h3>
+                        </a>
+                        <p>34" 21:9 curvo, WQHD 3440x1440, 144Hz.</p>
+                        <span>R$ 1.899,99</span>
+                        <button onclick="adicionarCarrinho('Monitor Ultrawide 34',1899.99,'https://images.unsplash.com/photo-1616400619175-5beda3a17896?w=400&h=250&fit=crop',4)">Adicionar ao Carrinho</button>
+                        <a href="paginas/monitor3.html" class="ver-mais-btn">Ver detalhes →</a>
                     </div>
 
                 </div>
             </div>
 
-            <!-- ==================== CADEIRA ==================== -->
+            <!-- ===== CADEIRA ===== -->
             <div class="categoria-secao" id="secao-cadeira">
                 <h3 class="categoria-titulo">🪑 CADEIRAS GAMER</h3>
                 <div class="grid-produtos">
@@ -368,59 +408,79 @@
                     <div class="produto" data-categoria="cadeira">
                         <span class="badge badge-novo">🆕 Novo</span>
                         <div class="favorito" onclick="toggleFavorito(this)">❤</div>
-                        <a href="#" class="produto-link">
-                            <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=250&fit=crop" alt="Cadeira Gamer">
+                        <a href="paginas/cadeira1.html" class="produto-link">
+                            <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=250&fit=crop" alt="Cadeira Gamer Pro">
                             <h3>Cadeira Gamer Pro</h3>
                         </a>
-                        <p>Reclinável 180°, lombar ajustável, espuma premium.</p>
+                        <p>Reclinável 180°, braços 4D, suporta 150kg.</p>
                         <span>R$ 1.299,99</span>
-                        <button onclick="adicionarCarrinho('Cadeira Gamer Pro', 1299.99, 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=250&fit=crop', 3)">
-                            Adicionar ao Carrinho
-                        </button>
+                        <button onclick="adicionarCarrinho('Cadeira Gamer Pro',1299.99,'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=250&fit=crop',3)">Adicionar ao Carrinho</button>
+                        <a href="paginas/cadeira1.html" class="ver-mais-btn">Ver detalhes →</a>
                     </div>
 
                     <div class="produto" data-categoria="cadeira">
                         <span class="badge badge-promo">⚡ Promoção</span>
                         <div class="favorito" onclick="toggleFavorito(this)">❤</div>
-                        <a href="#" class="produto-link">
+                        <a href="paginas/cadeira2.html" class="produto-link">
                             <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=250&fit=crop" alt="Cadeira Ergonômica">
                             <h3>Cadeira Ergonômica Plus</h3>
                         </a>
-                        <p>Suporte cervical, braço 4D, malha respirável.</p>
+                        <p>Malha respirável, cervical regulável, mecanismo sincronizado.</p>
                         <span>R$ 899,99</span>
-                        <button onclick="adicionarCarrinho('Cadeira Ergonômica Plus', 899.99, 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=250&fit=crop', 5)">
-                            Adicionar ao Carrinho
-                        </button>
+                        <button onclick="adicionarCarrinho('Cadeira Ergonômica Plus',899.99,'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=250&fit=crop',5)">Adicionar ao Carrinho</button>
+                        <a href="paginas/cadeira2.html" class="ver-mais-btn">Ver detalhes →</a>
+                    </div>
+
+                    <div class="produto" data-categoria="cadeira">
+                        <span class="badge badge-vendido">🔥 Mais Vendido</span>
+                        <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                        <a href="paginas/cadeira3.html" class="produto-link">
+                            <img src="https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400&h=250&fit=crop" alt="Cadeira Gamer RGB">
+                            <h3>Cadeira Gamer RGB</h3>
+                        </a>
+                        <p>RGB integrado, massageador lombar, couro PU premium.</p>
+                        <span>R$ 1.599,99</span>
+                        <button onclick="adicionarCarrinho('Cadeira Gamer RGB',1599.99,'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400&h=250&fit=crop',2)">Adicionar ao Carrinho</button>
+                        <a href="paginas/cadeira3.html" class="ver-mais-btn">Ver detalhes →</a>
+                    </div>
+
+                    <div class="produto" data-categoria="cadeira">
+                        <span class="badge badge-novo">🆕 Novo</span>
+                        <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                        <a href="paginas/cadeira4.html" class="produto-link">
+                            <img src="https://images.unsplash.com/photo-1614530614649-2f9eabe69a42?w=400&h=250&fit=crop" alt="Cadeira Escritório">
+                            <h3>Cadeira de Escritório Gamer</h3>
+                        </a>
+                        <p>Encosto alto, espuma viscoelástica, 5 rodas antiarranhão.</p>
+                        <span>R$ 699,99</span>
+                        <button onclick="adicionarCarrinho('Cadeira de Escritório Gamer',699.99,'https://images.unsplash.com/photo-1614530614649-2f9eabe69a42?w=400&h=250&fit=crop',7)">Adicionar ao Carrinho</button>
+                        <a href="paginas/cadeira4.html" class="ver-mais-btn">Ver detalhes →</a>
                     </div>
 
                 </div>
             </div>
 
-            <!-- ==================== JOGOS ==================== -->
+            <!-- ===== JOGOS ===== -->
             <div class="categoria-secao" id="secao-jogos">
                 <h3 class="categoria-titulo">🎮 JOGOS DIGITAIS</h3>
                 <p style="text-align:center;color:#aaa;margin-bottom:30px;font-size:15px;">
-                    Chave digital entregue por email em até 24h após confirmação do pagamento.
+                    🔑 Chave digital entregue por email em até 24h após confirmação do pagamento.
                 </p>
-
                 <div class="grid-produtos">
 
-                    <!-- 1 -->
                     <div class="jogo-card">
                         <span class="badge badge-vendido badge-jogo">🔥 Top Vendas</span>
-                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=200&fit=crop" alt="Cyberpunk">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=200&fit=crop" alt="Cyberpunk 2077">
                         <div class="jogo-info">
                             <h3>Cyberpunk 2077</h3>
                             <p class="plataforma">🖥️ PC (Steam)</p>
                             <span class="genero">RPG / Ação</span>
                             <p class="preco-jogo">R$ 99,99</p>
-                            <button onclick="adicionarCarrinho('Cyberpunk 2077 (PC)', 99.99, 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <button onclick="adicionarCarrinho('Cyberpunk 2077 (PC)',99.99,'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-cyberpunk.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 2 -->
                     <div class="jogo-card">
                         <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=200&fit=crop" alt="GTA V">
                         <div class="jogo-info">
@@ -428,13 +488,11 @@
                             <p class="plataforma">🖥️ PC (Rockstar)</p>
                             <span class="genero">Ação / Mundo Aberto</span>
                             <p class="preco-jogo">R$ 49,99</p>
-                            <button onclick="adicionarCarrinho('GTA V Premium (PC)', 49.99, 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <button onclick="adicionarCarrinho('GTA V Premium (PC)',49.99,'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-gtav.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 3 -->
                     <div class="jogo-card">
                         <span class="badge badge-novo badge-jogo">🆕 Lançamento</span>
                         <img src="https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=400&h=200&fit=crop" alt="Elden Ring">
@@ -443,13 +501,11 @@
                             <p class="plataforma">🖥️ PC (Steam)</p>
                             <span class="genero">RPG / Souls-like</span>
                             <p class="preco-jogo">R$ 179,99</p>
-                            <button onclick="adicionarCarrinho('Elden Ring (PC)', 179.99, 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <button onclick="adicionarCarrinho('Elden Ring (PC)',179.99,'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-eldenring.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 4 -->
                     <div class="jogo-card">
                         <span class="badge badge-promo badge-jogo">⚡ -40%</span>
                         <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400&h=200&fit=crop" alt="Minecraft">
@@ -458,27 +514,23 @@
                             <p class="plataforma">🖥️ PC (Mojang)</p>
                             <span class="genero">Survival / Criativo</span>
                             <p class="preco-jogo">R$ 59,99</p>
-                            <button onclick="adicionarCarrinho('Minecraft Java Edition', 59.99, 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <button onclick="adicionarCarrinho('Minecraft Java Edition',59.99,'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-minecraft.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 5 -->
                     <div class="jogo-card">
-                        <img src="https://images.unsplash.com/photo-1600861194802-a2b11076bc51?w=400&h=200&fit=crop" alt="Red Dead">
+                        <img src="https://images.unsplash.com/photo-1600861194802-a2b11076bc51?w=400&h=200&fit=crop" alt="RDR2">
                         <div class="jogo-info">
                             <h3>Red Dead Redemption 2</h3>
                             <p class="plataforma">🖥️ PC (Steam)</p>
                             <span class="genero">Ação / Mundo Aberto</span>
                             <p class="preco-jogo">R$ 89,99</p>
-                            <button onclick="adicionarCarrinho('Red Dead Redemption 2 (PC)', 89.99, 'https://images.unsplash.com/photo-1600861194802-a2b11076bc51?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <button onclick="adicionarCarrinho('Red Dead Redemption 2 (PC)',89.99,'https://images.unsplash.com/photo-1600861194802-a2b11076bc51?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-rdr2.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 6 -->
                     <div class="jogo-card">
                         <span class="badge badge-vendido badge-jogo">🔥 Top Vendas</span>
                         <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=200&fit=crop" alt="CS2">
@@ -486,14 +538,12 @@
                             <h3>Counter-Strike 2</h3>
                             <p class="plataforma">🖥️ PC (Steam)</p>
                             <span class="genero">FPS / Competitivo</span>
-                            <p class="preco-jogo" style="color:cyan;">GRÁTIS</p>
-                            <button onclick="adicionarCarrinho('CS2 Prime Status', 49.99, 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=200&fit=crop', 999)">
-                                🛒 Prime R$ 49,99
-                            </button>
+                            <p class="preco-jogo">R$ 49,99</p>
+                            <button onclick="adicionarCarrinho('CS2 Prime Status',49.99,'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=200&fit=crop',999)">🛒 Prime R$ 49,99</button>
+                            <a href="paginas/jogo-cs2prime.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 7 -->
                     <div class="jogo-card">
                         <span class="badge badge-novo badge-jogo">🆕 Lançamento</span>
                         <img src="https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?w=400&h=200&fit=crop" alt="Hogwarts">
@@ -502,101 +552,87 @@
                             <p class="plataforma">🖥️ PC (Steam)</p>
                             <span class="genero">RPG / Aventura</span>
                             <p class="preco-jogo">R$ 149,99</p>
-                            <button onclick="adicionarCarrinho('Hogwarts Legacy (PC)', 149.99, 'https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <button onclick="adicionarCarrinho('Hogwarts Legacy (PC)',149.99,'https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-hogwarts.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 8 -->
                     <div class="jogo-card">
                         <span class="badge badge-promo badge-jogo">⚡ -50%</span>
-                        <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=400&h=200&fit=crop" alt="FIFA">
+                        <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=400&h=200&fit=crop" alt="EA FC 25">
                         <div class="jogo-info">
                             <h3>EA Sports FC 25</h3>
                             <p class="plataforma">🖥️ PC (EA App)</p>
                             <span class="genero">Esporte / Futebol</span>
                             <p class="preco-jogo">R$ 129,99</p>
-                            <button onclick="adicionarCarrinho('EA Sports FC 25 (PC)', 129.99, 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <button onclick="adicionarCarrinho('EA Sports FC 25 (PC)',129.99,'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-eafc25.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 9 -->
                     <div class="jogo-card">
                         <img src="https://images.unsplash.com/photo-1589241062272-c0a000072dfa?w=400&h=200&fit=crop" alt="Valorant">
                         <div class="jogo-info">
-                            <h3>Valorant Points 1375</h3>
+                            <h3>Valorant Points 2800</h3>
                             <p class="plataforma">🖥️ PC (Riot Games)</p>
                             <span class="genero">FPS / Tático</span>
-                            <p class="preco-jogo">R$ 39,99</p>
-                            <button onclick="adicionarCarrinho('Valorant Points 1375', 39.99, 'https://images.unsplash.com/photo-1589241062272-c0a000072dfa?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <p class="preco-jogo">R$ 79,99</p>
+                            <button onclick="adicionarCarrinho('Valorant Points 2800',79.99,'https://images.unsplash.com/photo-1589241062272-c0a000072dfa?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-valorant.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 10 -->
                     <div class="jogo-card">
                         <span class="badge badge-vendido badge-jogo">🔥 Top Vendas</span>
                         <img src="https://images.unsplash.com/photo-1614294148960-9aa740632a87?w=400&h=200&fit=crop" alt="Forza">
                         <div class="jogo-info">
                             <h3>Forza Horizon 5</h3>
-                            <p class="plataforma">🖥️ PC (Xbox/Steam)</p>
+                            <p class="plataforma">🖥️ PC (Steam/Xbox)</p>
                             <span class="genero">Corrida / Mundo Aberto</span>
                             <p class="preco-jogo">R$ 199,99</p>
-                            <button onclick="adicionarCarrinho('Forza Horizon 5 (PC)', 199.99, 'https://images.unsplash.com/photo-1614294148960-9aa740632a87?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <button onclick="adicionarCarrinho('Forza Horizon 5 (PC)',199.99,'https://images.unsplash.com/photo-1614294148960-9aa740632a87?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-forza.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 11 -->
                     <div class="jogo-card">
                         <span class="badge badge-novo badge-jogo">🆕 Lançamento</span>
-                        <img src="https://images.unsplash.com/photo-1637239822050-9e3fbe9c5a11?w=400&h=200&fit=crop" alt="Diablo">
+                        <img src="https://images.unsplash.com/photo-1637239822050-9e3fbe9c5a11?w=400&h=200&fit=crop" alt="Diablo IV">
                         <div class="jogo-info">
                             <h3>Diablo IV</h3>
                             <p class="plataforma">🖥️ PC (Battle.net)</p>
                             <span class="genero">RPG / Hack and Slash</span>
                             <p class="preco-jogo">R$ 239,99</p>
-                            <button onclick="adicionarCarrinho('Diablo IV (PC)', 239.99, 'https://images.unsplash.com/photo-1637239822050-9e3fbe9c5a11?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <button onclick="adicionarCarrinho('Diablo IV (PC)',239.99,'https://images.unsplash.com/photo-1637239822050-9e3fbe9c5a11?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-diablo4.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 12 -->
                     <div class="jogo-card">
                         <span class="badge badge-promo badge-jogo">⚡ -30%</span>
-                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=200&fit=crop" alt="Witcher">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=200&fit=crop" alt="Witcher 3">
                         <div class="jogo-info">
                             <h3>The Witcher 3: Wild Hunt</h3>
                             <p class="plataforma">🖥️ PC (Steam/GOG)</p>
                             <span class="genero">RPG / Fantasia</span>
                             <p class="preco-jogo">R$ 49,99</p>
-                            <button onclick="adicionarCarrinho('The Witcher 3 (PC)', 49.99, 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <button onclick="adicionarCarrinho('The Witcher 3 (PC)',49.99,'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-witcher3.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 13 -->
                     <div class="jogo-card">
                         <img src="https://images.unsplash.com/photo-1609743522653-52354461eb27?w=400&h=200&fit=crop" alt="Apex">
                         <div class="jogo-info">
-                            <h3>Apex Legends Coins 1000</h3>
+                            <h3>Apex Legends Coins 2150</h3>
                             <p class="plataforma">🖥️ PC (EA App)</p>
                             <span class="genero">Battle Royale / FPS</span>
-                            <p class="preco-jogo">R$ 29,99</p>
-                            <button onclick="adicionarCarrinho('Apex Coins 1000', 29.99, 'https://images.unsplash.com/photo-1609743522653-52354461eb27?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <p class="preco-jogo">R$ 59,99</p>
+                            <button onclick="adicionarCarrinho('Apex Coins 2150',59.99,'https://images.unsplash.com/photo-1609743522653-52354461eb27?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-apexcoins.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 14 -->
                     <div class="jogo-card">
                         <span class="badge badge-vendido badge-jogo">🔥 Top Vendas</span>
                         <img src="https://images.unsplash.com/photo-1565465295423-68c959ca3a21?w=400&h=200&fit=crop" alt="Dark Souls">
@@ -605,13 +641,11 @@
                             <p class="plataforma">🖥️ PC (Steam)</p>
                             <span class="genero">RPG / Souls-like</span>
                             <p class="preco-jogo">R$ 79,99</p>
-                            <button onclick="adicionarCarrinho('Dark Souls III (PC)', 79.99, 'https://images.unsplash.com/photo-1565465295423-68c959ca3a21?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <button onclick="adicionarCarrinho('Dark Souls III (PC)',79.99,'https://images.unsplash.com/photo-1565465295423-68c959ca3a21?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-darksouls3.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
-                    <!-- 15 -->
                     <div class="jogo-card">
                         <span class="badge badge-novo badge-jogo">🆕 Lançamento</span>
                         <img src="https://images.unsplash.com/photo-1519326844852-704caea5679e?w=400&h=200&fit=crop" alt="Starfield">
@@ -620,9 +654,8 @@
                             <p class="plataforma">🖥️ PC (Steam/Xbox)</p>
                             <span class="genero">RPG / Sci-Fi</span>
                             <p class="preco-jogo">R$ 219,99</p>
-                            <button onclick="adicionarCarrinho('Starfield (PC)', 219.99, 'https://images.unsplash.com/photo-1519326844852-704caea5679e?w=400&h=200&fit=crop', 999)">
-                                🛒 Comprar
-                            </button>
+                            <button onclick="adicionarCarrinho('Starfield (PC)',219.99,'https://images.unsplash.com/photo-1519326844852-704caea5679e?w=400&h=200&fit=crop',999)">🛒 Comprar</button>
+                            <a href="paginas/jogo-starfield.html" class="ver-mais-btn">Ver detalhes →</a>
                         </div>
                     </div>
 
@@ -638,10 +671,7 @@
                 <h3>NEONSHOP</h3>
                 <p style="font-size:14px;line-height:1.8;">A melhor loja gamer do Brasil.</p>
                 <div class="footer-redes">
-                    <a href="#">📸</a>
-                    <a href="#">🐦</a>
-                    <a href="#">▶️</a>
-                    <a href="#">💬</a>
+                    <a href="#">📸</a><a href="#">🐦</a><a href="#">▶️</a><a href="#">💬</a>
                 </div>
             </div>
             <div class="footer-col">
@@ -663,33 +693,22 @@
                 <a href="#">📞 (11) 9999-9999</a>
             </div>
         </div>
-        <div class="footer-bottom">
-            © 2025 <span>NeonShop</span> — Todos os direitos reservados
-        </div>
+        <div class="footer-bottom">© 2025 <span>NeonShop</span> — Todos os direitos reservados</div>
     </footer>
 
     <div id="toast"></div>
     <script type="module" src="js/script.js"></script>
     <script>
         function trocarAba(categoria, btn) {
-            // Esconder todas as seções
             document.querySelectorAll('.categoria-secao').forEach(s => s.classList.remove('ativa'));
-            // Desativar todos os botões
             document.querySelectorAll('.aba-btn').forEach(b => b.classList.remove('ativa'));
-            // Mostrar seção correta
             document.getElementById('secao-' + categoria).classList.add('ativa');
-            // Ativar botão clicado
             btn.classList.add('ativa');
-
-            // Animação fade-in nos cards da seção ativa
             setTimeout(() => {
                 document.querySelectorAll('#secao-' + categoria + ' .produto, #secao-' + categoria + ' .jogo-card')
-                    .forEach((el, i) => {
-                        setTimeout(() => el.classList.add('visivel'), i * 100);
-                    });
+                    .forEach((el, i) => setTimeout(() => el.classList.add('visivel'), i * 80));
             }, 50);
         }
     </script>
-
 </body>
 </html>
