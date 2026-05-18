@@ -5,29 +5,218 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - NeonShop</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { min-height:100vh; display:flex; flex-direction:column; }
+        .auth-page {
+            flex:1; display:flex; align-items:center; justify-content:center;
+            padding:40px 20px;
+            background: radial-gradient(ellipse at 70% 50%, rgba(0,255,255,0.06) 0%, transparent 60%),
+                        radial-gradient(ellipse at 20% 80%, rgba(100,0,255,0.06) 0%, transparent 60%), #050510;
+            position:relative; overflow:hidden;
+        }
+        .auth-page::before {
+            content:''; position:absolute; inset:0;
+            background-image: linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px);
+            background-size:50px 50px;
+        }
+        .auth-card {
+            background:rgba(10,12,20,0.95); border:1px solid rgba(0,255,255,0.15);
+            border-radius:24px; padding:50px 40px; width:100%; max-width:440px;
+            position:relative; box-shadow:0 0 60px rgba(0,255,255,0.08), 0 30px 80px rgba(0,0,0,0.5);
+            animation:cardIn 0.6s ease both;
+        }
+        @keyframes cardIn { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+        .auth-logo { text-align:center; margin-bottom:30px; }
+        .auth-logo h1 { font-size:26px; color:cyan; text-shadow:0 0 20px cyan; letter-spacing:3px; }
+        .auth-logo p { color:#555; font-size:12px; margin-top:4px; letter-spacing:1px; }
+        .auth-title { font-size:22px; font-weight:900; color:white; margin-bottom:4px; }
+        .auth-subtitle { color:#666; font-size:14px; margin-bottom:28px; }
+        .input-group { margin-bottom:16px; }
+        .input-group label { display:block; color:#aaa; font-size:12px; letter-spacing:1px; text-transform:uppercase; margin-bottom:7px; }
+        .input-wrap { position:relative; display:flex; align-items:center; }
+        .input-icon { position:absolute; left:14px; font-size:15px; pointer-events:none; }
+        .input-group input {
+            width:100%; padding:13px 14px 13px 42px;
+            background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.08);
+            border-radius:12px; color:white; font-size:15px; transition:0.3s; outline:none;
+        }
+        .input-group input:focus {
+            border-color:rgba(0,255,255,0.5); background:rgba(0,255,255,0.03);
+            box-shadow:0 0 0 3px rgba(0,255,255,0.08);
+        }
+        .input-group input::placeholder { color:#444; }
+        .toggle-senha { position:absolute; right:12px; background:none; border:none; color:#555; cursor:pointer; font-size:15px; padding:4px; width:auto; margin:0; }
+        .toggle-senha:hover { color:cyan; }
+        /* Força da senha */
+        .senha-forca { margin-top:8px; display:none; }
+        .forca-bar { height:4px; border-radius:4px; background:rgba(255,255,255,0.08); overflow:hidden; }
+        .forca-fill { height:100%; border-radius:4px; transition:0.4s; width:0; }
+        .forca-label { font-size:11px; color:#666; margin-top:4px; }
+        /* Requisitos */
+        .req-list { margin-top:8px; display:none; }
+        .req { font-size:12px; color:#555; margin-bottom:3px; transition:0.2s; }
+        .req.ok { color:#00ff88; }
+        .req::before { content:'○ '; }
+        .req.ok::before { content:'✓ '; }
+        .btn-auth {
+            width:100%; padding:15px;
+            background:linear-gradient(135deg, cyan, #0077ff);
+            color:#000; border:none; border-radius:12px;
+            font-size:16px; font-weight:900; cursor:pointer; transition:0.3s;
+            letter-spacing:1px; margin-top:10px;
+        }
+        .btn-auth:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(0,255,255,0.35); }
+        .btn-auth:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+        .btn-outline {
+            width:100%; padding:13px; background:transparent; color:cyan;
+            border:1px solid rgba(0,255,255,0.3); border-radius:12px;
+            font-size:15px; font-weight:bold; cursor:pointer; transition:0.3s; margin-top:12px;
+        }
+        .btn-outline:hover { background:rgba(0,255,255,0.07); border-color:cyan; }
+        .auth-msg { min-height:22px; font-size:13px; text-align:center; margin-top:14px; border-radius:8px; padding:8px 12px; display:none; }
+        .auth-msg.erro { display:block; background:rgba(255,50,80,0.1); color:#ff5060; border:1px solid rgba(255,50,80,0.2); }
+        .auth-msg.ok   { display:block; background:rgba(0,255,100,0.1); color:#00ff88; border:1px solid rgba(0,255,100,0.2); }
+        .auth-footer { text-align:center; margin-top:20px; color:#555; font-size:13px; }
+        .auth-footer a { color:cyan; text-decoration:none; font-weight:bold; }
+        .spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(0,0,0,0.3); border-top-color:#000; border-radius:50%; animation:spin 0.6s linear infinite; vertical-align:middle; margin-right:8px; }
+        @keyframes spin { to{transform:rotate(360deg)} }
+        .auth-divider { display:flex; align-items:center; gap:12px; margin:18px 0; }
+        .auth-divider hr { flex:1; border:none; border-top:1px solid rgba(255,255,255,0.07); }
+        .auth-divider span { color:#444; font-size:12px; }
+    </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-box">
-            <h2>CRIAR CONTA</h2>
-            <p style="color:#aaa;margin-bottom:25px;font-size:15px;">Junte-se à NeonShop</p>
 
-            <input type="text" id="nome" placeholder="Seu nome completo">
-            <input type="email" id="email" placeholder="Seu email">
-            <input type="password" id="senha" placeholder="Senha (mín. 6 caracteres)">
+    <header class="navbar">
+        <div class="logo"><h1>NEONSHOP</h1></div>
+        <nav class="menu">
+            <a href="index.html">← Voltar</a>
+            <button class="tema-btn" onclick="trocarTema()">🌙</button>
+        </nav>
+    </header>
 
-            <button type="button" onclick="cadastrar()">Cadastrar</button>
+    <div class="auth-page">
+        <div class="auth-card">
 
-            <button type="button" class="cadastro-btn"
-                onclick="window.location.href='login.html'">
-                Já tenho conta
+            <div class="auth-logo">
+                <h1>NEONSHOP</h1>
+                <p>// CRIAR CONTA</p>
+            </div>
+
+            <div class="auth-title">Crie sua conta 🚀</div>
+            <div class="auth-subtitle">Junte-se a milhares de gamers</div>
+
+            <div class="input-group">
+                <label>Nome completo</label>
+                <div class="input-wrap">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="nome" placeholder="Seu nome completo" autocomplete="name">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Email</label>
+                <div class="input-wrap">
+                    <span class="input-icon">📧</span>
+                    <input type="email" id="email" placeholder="seuemail@exemplo.com" autocomplete="email">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Senha</label>
+                <div class="input-wrap">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="senha" placeholder="Mínimo 6 caracteres" autocomplete="new-password" oninput="verificarSenha(this.value)">
+                    <button class="toggle-senha" type="button" onclick="toggleSenha()">👁️</button>
+                </div>
+                <div class="senha-forca" id="senha-forca">
+                    <div class="forca-bar"><div class="forca-fill" id="forca-fill"></div></div>
+                    <div class="forca-label" id="forca-label"></div>
+                </div>
+                <div class="req-list" id="req-list">
+                    <div class="req" id="req-len">Mínimo 6 caracteres</div>
+                    <div class="req" id="req-num">Contém número</div>
+                    <div class="req" id="req-upper">Letra maiúscula</div>
+                </div>
+            </div>
+
+            <button class="btn-auth" id="btn-cadastrar" onclick="fazerCadastro(this)">
+                Criar Conta
             </button>
 
-            <p id="mensagem"></p>
+            <div class="auth-msg" id="mensagem"></div>
+
+            <div class="auth-divider"><hr><span>ou</span><hr></div>
+
+            <button class="btn-outline" onclick="window.location.href='login.html'">
+                🔑 Já tenho uma conta
+            </button>
+
         </div>
     </div>
 
     <div id="toast"></div>
-   <script type="module" src="js/script.js"></script>
+    <script type="module" src="js/script.js"></script>
+    <script>
+        function toggleSenha() {
+            const input = document.getElementById('senha');
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        function verificarSenha(v) {
+            document.getElementById('senha-forca').style.display = 'block';
+            document.getElementById('req-list').style.display = 'block';
+
+            const len   = v.length >= 6;
+            const num   = /\d/.test(v);
+            const upper = /[A-Z]/.test(v);
+
+            document.getElementById('req-len').className   = 'req' + (len   ? ' ok' : '');
+            document.getElementById('req-num').className   = 'req' + (num   ? ' ok' : '');
+            document.getElementById('req-upper').className = 'req' + (upper ? ' ok' : '');
+
+            const score = [len, num, upper].filter(Boolean).length;
+            const fill  = document.getElementById('forca-fill');
+            const label = document.getElementById('forca-label');
+            const cores = ['','#ff4444','#ffaa00','#00ff88'];
+            const labels= ['','Fraca','Média','Forte 💪'];
+            fill.style.width  = (score / 3 * 100) + '%';
+            fill.style.background = cores[score] || '#ff4444';
+            label.style.color = cores[score] || '#ff4444';
+            label.textContent = labels[score] || 'Fraca';
+        }
+
+        function mostrarMsg(texto, tipo) {
+            const el = document.getElementById('mensagem');
+            el.textContent = texto;
+            el.className = 'auth-msg ' + tipo;
+        }
+
+        async function fazerCadastro(btn) {
+            const nome  = document.getElementById('nome').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const senha = document.getElementById('senha').value;
+
+            if (!nome || !email || !senha) {
+                mostrarMsg('Preencha todos os campos.', 'erro'); return;
+            }
+            if (senha.length < 6) {
+                mostrarMsg('Senha precisa ter pelo menos 6 caracteres.', 'erro'); return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>Criando conta...';
+
+            try {
+                await cadastrar?.();
+            } catch(e) {
+                mostrarMsg('Erro ao criar conta. Tente novamente.', 'erro');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Criar Conta';
+            }
+        }
+    </script>
 </body>
 </html>

@@ -558,6 +558,42 @@
                 <button onclick="adicionarCarrinho('Fone Gamer 7.1',149.99,'img/fone.jpg',8)">Adicionar ao Carrinho</button>
             </div>
 
+            <div class="produto">
+                <span class="badge badge-novo">🆕 Novo</span>
+                <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                <a href="paginas/mouse2.html" class="produto-link">
+                    <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=250&fit=crop" alt="Mouse Sem Fio Elite">
+                    <h3>Mouse Sem Fio Elite</h3>
+                </a>
+                <p>Wireless 2.4GHz, 70h bateria, 20.000 DPI.</p>
+                <span>R$ 259,99</span>
+                <button onclick="adicionarCarrinho('Mouse Sem Fio Elite',259.99,'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=250&fit=crop',7)">Adicionar ao Carrinho</button>
+            </div>
+
+            <div class="produto">
+                <span class="badge badge-vendido">🔥 Mais Vendido</span>
+                <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                <a href="paginas/teclado2.html" class="produto-link">
+                    <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=250&fit=crop" alt="Teclado TKL">
+                    <h3>Teclado TKL Compacto</h3>
+                </a>
+                <p>Layout TKL 80%, hot-swap, RGB por tecla.</p>
+                <span>R$ 349,99</span>
+                <button onclick="adicionarCarrinho('Teclado TKL Compacto',349.99,'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=250&fit=crop',4)">Adicionar ao Carrinho</button>
+            </div>
+
+            <div class="produto">
+                <span class="badge badge-novo">🆕 Novo</span>
+                <div class="favorito" onclick="toggleFavorito(this)">❤</div>
+                <a href="paginas/fone2.html" class="produto-link">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop" alt="Headset Pro">
+                    <h3>Headset Pro Wireless</h3>
+                </a>
+                <p>ANC 95%, wireless, bateria 30h, Hi-Res Audio.</p>
+                <span>R$ 449,99</span>
+                <button onclick="adicionarCarrinho('Headset Pro Wireless',449.99,'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop',6)">Adicionar ao Carrinho</button>
+            </div>
+
         </div>
 
         <div style="text-align:center;margin-top:40px;">
@@ -626,6 +662,39 @@
                 <p style="padding:0 15px;">RPG / Souls-like — PC</p>
                 <span style="padding:0 15px;display:block;margin:8px 0;">R$ 179,99</span>
                 <button style="margin:0 15px 15px;width:calc(100% - 30px);" onclick="adicionarCarrinho('Elden Ring (PC)',179.99,'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=400&h=220&fit=crop',999)">🛒 Comprar</button>
+            </div>
+
+            <div class="produto" style="padding:0;overflow:hidden;">
+                <span class="badge badge-vendido">🔥 Top Vendas</span>
+                <a href="paginas/jogo-gtav.html" class="produto-link">
+                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=220&fit=crop" alt="GTA V" style="height:180px;object-fit:cover;border-radius:0;">
+                    <h3 style="padding:0 15px;margin-top:12px;">GTA V Premium</h3>
+                </a>
+                <p style="padding:0 15px;">Ação / Mundo Aberto — PC</p>
+                <span style="padding:0 15px;display:block;margin:8px 0;">R$ 49,99</span>
+                <button style="margin:0 15px 15px;width:calc(100% - 30px);" onclick="adicionarCarrinho('GTA V Premium (PC)',49.99,'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=220&fit=crop',999)">🛒 Comprar</button>
+            </div>
+
+            <div class="produto" style="padding:0;overflow:hidden;">
+                <span class="badge badge-novo">🆕 Lançamento</span>
+                <a href="paginas/jogo-hogwarts.html" class="produto-link">
+                    <img src="https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?w=400&h=220&fit=crop" alt="Hogwarts" style="height:180px;object-fit:cover;border-radius:0;">
+                    <h3 style="padding:0 15px;margin-top:12px;">Hogwarts Legacy</h3>
+                </a>
+                <p style="padding:0 15px;">RPG / Aventura — PC</p>
+                <span style="padding:0 15px;display:block;margin:8px 0;">R$ 149,99</span>
+                <button style="margin:0 15px 15px;width:calc(100% - 30px);" onclick="adicionarCarrinho('Hogwarts Legacy (PC)',149.99,'https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?w=400&h=220&fit=crop',999)">🛒 Comprar</button>
+            </div>
+
+            <div class="produto" style="padding:0;overflow:hidden;">
+                <span class="badge badge-promo">⚡ -30%</span>
+                <a href="paginas/jogo-witcher3.html" class="produto-link">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=220&fit=crop" alt="Witcher 3" style="height:180px;object-fit:cover;border-radius:0;">
+                    <h3 style="padding:0 15px;margin-top:12px;">The Witcher 3</h3>
+                </a>
+                <p style="padding:0 15px;">RPG / Fantasia — PC</p>
+                <span style="padding:0 15px;display:block;margin:8px 0;">R$ 49,99</span>
+                <button style="margin:0 15px 15px;width:calc(100% - 30px);" onclick="adicionarCarrinho('The Witcher 3 (PC)',49.99,'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=220&fit=crop',999)">🛒 Comprar</button>
             </div>
 
         </div>

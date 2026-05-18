@@ -5,6 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - NeonShop</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .admin-page { max-width:1200px; margin:0 auto; padding:40px 20px 80px; }
+        .admin-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:40px; flex-wrap:wrap; gap:15px; }
+        .admin-top h1 { font-size:28px; font-weight:900; color:white; }
+        .admin-top h1 span { color:cyan; text-shadow:0 0 10px cyan; }
+        .admin-top .badge-admin { background:rgba(255,165,0,0.1); border:1px solid rgba(255,165,0,0.3); color:orange; padding:6px 16px; border-radius:20px; font-size:12px; font-weight:bold; letter-spacing:1px; }
+
+        /* STATS */
+        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:35px; }
+        .stat-box { background:rgba(10,12,20,0.9); border:1px solid rgba(255,255,255,0.06); border-radius:18px; padding:25px; position:relative; overflow:hidden; transition:0.3s; }
+        .stat-box:hover { border-color:rgba(0,255,255,0.2); transform:translateY(-3px); }
+        .stat-box::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; border-radius:2px 2px 0 0; }
+        .stat-box.cyan-box::before { background:linear-gradient(90deg,transparent,cyan,transparent); }
+        .stat-box.green-box::before { background:linear-gradient(90deg,transparent,#00ff88,transparent); }
+        .stat-box.orange-box::before { background:linear-gradient(90deg,transparent,orange,transparent); }
+        .stat-box.pink-box::before { background:linear-gradient(90deg,transparent,#ff66cc,transparent); }
+        .stat-icon { font-size:32px; margin-bottom:10px; }
+        .stat-num { font-size:36px; font-weight:900; margin-bottom:4px; }
+        .cyan-box .stat-num { color:cyan; }
+        .green-box .stat-num { color:#00ff88; }
+        .orange-box .stat-num { color:orange; }
+        .pink-box .stat-num { color:#ff66cc; }
+        .stat-label { color:#555; font-size:13px; letter-spacing:1px; }
+
+        /* TABS */
+        .admin-tabs { display:flex; gap:8px; margin-bottom:25px; flex-wrap:wrap; }
+        .atab { padding:10px 22px; border-radius:30px; border:1px solid rgba(255,255,255,0.08); background:transparent; color:#666; font-size:14px; font-weight:bold; cursor:pointer; transition:0.3s; }
+        .atab.ativa { background:rgba(0,255,255,0.1); border-color:cyan; color:cyan; }
+        .atab:hover { border-color:rgba(0,255,255,0.3); color:#aaa; }
+        .atab-content { display:none; animation:fadeIn 0.3s ease; }
+        .atab-content.ativa { display:block; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+        /* TABELA PEDIDOS */
+        .tabela-wrap { overflow-x:auto; border-radius:16px; border:1px solid rgba(255,255,255,0.06); }
+        .admin-table { width:100%; border-collapse:collapse; }
+        .admin-table th { background:rgba(0,255,255,0.06); color:cyan; padding:14px 16px; text-align:left; font-size:12px; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,0.06); white-space:nowrap; }
+        .admin-table td { padding:14px 16px; color:#ccc; font-size:14px; border-bottom:1px solid rgba(255,255,255,0.04); vertical-align:middle; }
+        .admin-table tr:last-child td { border-bottom:none; }
+        .admin-table tr:hover td { background:rgba(0,255,255,0.02); }
+        .badge-status { padding:4px 12px; border-radius:20px; font-size:11px; font-weight:bold; white-space:nowrap; }
+        .badge-status.pendente { background:rgba(255,165,0,0.12); color:orange; border:1px solid rgba(255,165,0,0.2); }
+        .badge-status.enviado  { background:rgba(0,200,255,0.12); color:cyan; border:1px solid rgba(0,200,255,0.2); }
+        .badge-status.entregue { background:rgba(0,255,100,0.12); color:#00ff88; border:1px solid rgba(0,255,100,0.2); }
+        .pedido-id-tag { color:cyan; font-weight:bold; font-size:13px; font-family:monospace; }
+
+        /* ADD PRODUTO */
+        .add-form { background:rgba(10,12,20,0.9); border:1px solid rgba(255,255,255,0.06); border-radius:18px; padding:30px; }
+        .add-form h3 { font-size:18px; font-weight:bold; color:white; margin-bottom:25px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.06); }
+        .form-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+        .form-field label { display:block; color:#aaa; font-size:12px; letter-spacing:1px; text-transform:uppercase; margin-bottom:7px; }
+        .form-field input, .form-field select {
+            width:100%; padding:12px 14px;
+            background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.08);
+            border-radius:10px; color:white; font-size:14px; outline:none; transition:0.3s;
+        }
+        .form-field input:focus, .form-field select:focus { border-color:rgba(0,255,255,0.4); background:rgba(0,255,255,0.03); }
+        .form-field input::placeholder { color:#444; }
+        .form-field select option { background:#111; }
+        .btn-add { padding:13px 30px; background:linear-gradient(135deg,cyan,#0077ff); color:#000; border:none; border-radius:12px; font-size:15px; font-weight:900; cursor:pointer; transition:0.3s; margin-top:20px; }
+        .btn-add:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(0,255,255,0.3); }
+        .add-msg { margin-top:12px; font-size:13px; min-height:20px; }
+        .add-msg.ok { color:#00ff88; }
+        .add-msg.erro { color:#ff5060; }
+
+        /* REFRESH btn */
+        .btn-refresh { padding:10px 20px; background:rgba(0,255,255,0.08); border:1px solid rgba(0,255,255,0.2); color:cyan; border-radius:10px; cursor:pointer; font-size:13px; transition:0.3s; width:auto; margin:0; }
+        .btn-refresh:hover { background:rgba(0,255,255,0.15); }
+
+        .tabela-empty { text-align:center; padding:50px; color:#444; }
+        .tabela-empty .icon { font-size:48px; margin-bottom:12px; opacity:0.4; }
+    </style>
 </head>
 <body>
 
@@ -25,129 +97,212 @@
         </nav>
     </header>
 
-    <div class="admin-container">
+    <div class="admin-page">
 
-        <h2 class="admin-titulo">PAINEL ADMINISTRATIVO</h2>
+        <div class="admin-top">
+            <div>
+                <h1>Painel <span>Administrativo</span></h1>
+                <p style="color:#555;font-size:13px;margin-top:4px;">Visão geral da NeonShop</p>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                <span class="badge-admin">🔐 ADMIN</span>
+                <button class="btn-refresh" onclick="carregarPainel()">🔄 Atualizar</button>
+            </div>
+        </div>
 
         <!-- STATS -->
-        <div class="admin-stats">
-            <div class="stat-card">
-                <div class="stat-num" id="stat-pedidos">—</div>
-                <div class="stat-label">Total de Pedidos</div>
+        <div class="stats-grid">
+            <div class="stat-box cyan-box">
+                <div class="stat-icon">📦</div>
+                <div class="stat-num" id="s-pedidos">—</div>
+                <div class="stat-label">TOTAL PEDIDOS</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-num" id="stat-receita">—</div>
-                <div class="stat-label">Receita Total</div>
+            <div class="stat-box green-box">
+                <div class="stat-icon">💰</div>
+                <div class="stat-num" id="s-receita">—</div>
+                <div class="stat-label">RECEITA TOTAL</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-num" id="stat-usuarios">—</div>
-                <div class="stat-label">Usuários</div>
+            <div class="stat-box orange-box">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-num" id="s-pendentes">—</div>
+                <div class="stat-label">PENDENTES</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-num" id="stat-pendentes">—</div>
-                <div class="stat-label">Pedidos Pendentes</div>
+            <div class="stat-box pink-box">
+                <div class="stat-icon">👥</div>
+                <div class="stat-num" id="s-usuarios">—</div>
+                <div class="stat-label">USUÁRIOS</div>
             </div>
         </div>
 
-        <!-- TABELA DE PEDIDOS -->
-        <h3 style="color:cyan;margin-bottom:20px;font-size:20px;">📦 Todos os Pedidos</h3>
-
-        <div style="overflow-x:auto;">
-            <table class="admin-tabela">
-                <thead>
-                    <tr>
-                        <th>ID do Pedido</th>
-                        <th>Email</th>
-                        <th>Itens</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-                <tbody id="tabela-pedidos">
-                    <tr>
-                        <td colspan="6" style="text-align:center;color:#aaa;padding:30px;">
-                            Carregando pedidos...
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- TABS -->
+        <div class="admin-tabs">
+            <button class="atab ativa" onclick="trocarAtab('pedidos',this)">📋 Pedidos</button>
+            <button class="atab" onclick="trocarAtab('add',this)">➕ Adicionar Produto</button>
         </div>
 
-        <!-- ADICIONAR PRODUTO -->
-        <h3 style="color:cyan;margin:50px 0 20px;font-size:20px;">➕ Adicionar Produto</h3>
-        <div class="login-box" style="max-width:500px;">
-            <input type="text" id="produto-nome" placeholder="Nome do produto">
-            <input type="number" id="produto-preco" placeholder="Preço (ex: 199.99)">
-            <input type="text" id="produto-imagem" placeholder="Imagem (img/produto.jpg)">
-            <input type="text" id="produto-categoria" placeholder="Categoria (mouse, teclado...)">
-            <input type="number" id="produto-estoque" placeholder="Estoque">
-            <button onclick="adicionarProdutoAdmin()">Adicionar Produto</button>
-            <p id="admin-msg"></p>
+        <!-- TAB PEDIDOS -->
+        <div class="atab-content ativa" id="atab-pedidos">
+            <div class="tabela-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID PEDIDO</th>
+                            <th>EMAIL</th>
+                            <th>ITENS</th>
+                            <th>TOTAL</th>
+                            <th>STATUS</th>
+                            <th>DATA</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-pedidos">
+                        <tr><td colspan="6" style="text-align:center;padding:40px;color:#555;">Carregando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB ADD PRODUTO -->
+        <div class="atab-content" id="atab-add">
+            <div class="add-form">
+                <h3>➕ Adicionar Novo Produto</h3>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Nome do Produto</label>
+                        <input type="text" id="p-nome" placeholder="Ex: Mouse Gamer Pro">
+                    </div>
+                    <div class="form-field">
+                        <label>Preço (R$)</label>
+                        <input type="number" id="p-preco" placeholder="Ex: 199.99" step="0.01">
+                    </div>
+                    <div class="form-field">
+                        <label>URL da Imagem</label>
+                        <input type="text" id="p-imagem" placeholder="img/produto.jpg ou URL">
+                    </div>
+                    <div class="form-field">
+                        <label>Categoria</label>
+                        <select id="p-categoria">
+                            <option value="mouse">Mouse</option>
+                            <option value="teclado">Teclado</option>
+                            <option value="fone">Fone</option>
+                            <option value="monitor">Monitor</option>
+                            <option value="cadeira">Cadeira</option>
+                            <option value="jogos">Jogo</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label>Estoque</label>
+                        <input type="number" id="p-estoque" placeholder="Ex: 10" min="1">
+                    </div>
+                    <div class="form-field">
+                        <label>Badge</label>
+                        <select id="p-badge">
+                            <option value="nenhum">Sem badge</option>
+                            <option value="vendido">🔥 Mais Vendido</option>
+                            <option value="novo">🆕 Novo</option>
+                            <option value="promo">⚡ Promoção</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-field" style="margin-top:16px;">
+                    <label>Descrição</label>
+                    <input type="text" id="p-descricao" placeholder="Breve descrição do produto">
+                </div>
+                <button class="btn-add" onclick="adicionarProdutoAdmin()">➕ Adicionar Produto</button>
+                <div class="add-msg" id="add-msg"></div>
+            </div>
         </div>
 
     </div>
 
     <footer>
-        <div class="footer-bottom">
-            © 2025 <span>NeonShop</span> — Painel Administrativo
+        <div class="footer-bottom" style="padding:20px;text-align:center;border-top:1px solid rgba(255,255,255,0.05);">
+            © 2025 <span style="color:cyan;">NeonShop</span> — Painel Administrativo
         </div>
     </footer>
 
     <div id="toast"></div>
     <script type="module" src="js/script.js"></script>
     <script type="module">
-        import { db, auth } from './js/firebase.js';
-        import { collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+        import { db } from './js/firebase.js';
+        import { collection, getDocs, query, orderBy, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-        async function carregarPainel() {
+        window.trocarAtab = function(tab, btn) {
+            document.querySelectorAll('.atab').forEach(b => b.classList.remove('ativa'));
+            document.querySelectorAll('.atab-content').forEach(c => c.classList.remove('ativa'));
+            btn.classList.add('ativa');
+            document.getElementById('atab-'+tab).classList.add('ativa');
+        };
+
+        window.carregarPainel = async function() {
             try {
-                // Carregar pedidos
-                const pedidosSnap = await getDocs(query(collection(db, 'pedidos'), orderBy('criadoEm', 'desc')));
-                const pedidos = pedidosSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+                const snap = await getDocs(query(collection(db,'pedidos'), orderBy('criadoEm','desc')));
+                const pedidos = snap.docs.map(d=>({id:d.id,...d.data()}));
 
-                // Stats
-                const receita = pedidos.reduce((s, p) => s + Number(p.total || 0), 0);
-                const pendentes = pedidos.filter(p => p.status === 'pendente').length;
+                const receita = pedidos.reduce((s,p)=>s+Number(p.total||0),0);
+                const pendentes = pedidos.filter(p=>p.status==='pendente').length;
 
-                document.getElementById('stat-pedidos').textContent = pedidos.length;
-                document.getElementById('stat-receita').textContent = 'R$' + receita.toFixed(0);
-                document.getElementById('stat-pendentes').textContent = pendentes;
+                document.getElementById('s-pedidos').textContent = pedidos.length;
+                document.getElementById('s-receita').textContent = 'R$'+receita.toFixed(0);
+                document.getElementById('s-pendentes').textContent = pendentes;
 
-                // Usuários
                 try {
-                    const usersSnap = await getDocs(collection(db, 'usuarios'));
-                    document.getElementById('stat-usuarios').textContent = usersSnap.size;
-                } catch { document.getElementById('stat-usuarios').textContent = '—'; }
+                    const uSnap = await getDocs(collection(db,'usuarios'));
+                    document.getElementById('s-usuarios').textContent = uSnap.size;
+                } catch { document.getElementById('s-usuarios').textContent = '—'; }
 
-                // Tabela
-                const tbody = document.getElementById('tabela-pedidos');
-                if (pedidos.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:30px;">Nenhum pedido ainda.</td></tr>`;
+                const tbody = document.getElementById('tbody-pedidos');
+                if(pedidos.length === 0){
+                    tbody.innerHTML = `<tr><td colspan="6"><div class="tabela-empty"><div class="icon">📭</div><p>Nenhum pedido ainda.</p></div></td></tr>`;
                     return;
                 }
 
                 tbody.innerHTML = pedidos.map(p => {
                     const data = p.criadoEm?.toDate ? p.criadoEm.toDate().toLocaleDateString('pt-BR') : '—';
-                    const itens = Array.isArray(p.itens) ? p.itens.length : '—';
-                    const statusClass = 'status-' + (p.status || 'pendente');
-                    return `
-                        <tr>
-                            <td style="color:cyan;font-weight:bold;">#NEON${p.id.slice(-6).toUpperCase()}</td>
-                            <td>${p.email || '—'}</td>
-                            <td>${itens} item(s)</td>
-                            <td style="color:#0f0;">R$ ${Number(p.total).toFixed(2)}</td>
-                            <td><span class="status-badge ${statusClass}">${p.status || 'pendente'}</span></td>
-                            <td>${data}</td>
-                        </tr>
-                    `;
+                    const qtd  = Array.isArray(p.itens) ? p.itens.length : '—';
+                    const st   = p.status || 'pendente';
+                    return `<tr>
+                        <td><span class="pedido-id-tag">#NEON${p.id.slice(-6).toUpperCase()}</span></td>
+                        <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.email||'—'}</td>
+                        <td>${qtd} item(s)</td>
+                        <td style="color:#00ff88;font-weight:bold;">R$ ${Number(p.total).toFixed(2)}</td>
+                        <td><span class="badge-status ${st}">${st.charAt(0).toUpperCase()+st.slice(1)}</span></td>
+                        <td>${data}</td>
+                    </tr>`;
                 }).join('');
 
             } catch(e) {
-                document.getElementById('tabela-pedidos').innerHTML =
-                    `<tr><td colspan="6" style="text-align:center;color:#ff4466;padding:30px;">Erro ao carregar: ${e.message}</td></tr>`;
+                document.getElementById('tbody-pedidos').innerHTML =
+                    `<tr><td colspan="6" style="text-align:center;color:#ff5060;padding:30px;">Erro: ${e.message}</td></tr>`;
             }
-        }
+        };
+
+        window.adicionarProdutoAdmin = async function() {
+            const nome      = document.getElementById('p-nome').value.trim();
+            const preco     = document.getElementById('p-preco').value;
+            const imagem    = document.getElementById('p-imagem').value.trim();
+            const categoria = document.getElementById('p-categoria').value;
+            const estoque   = document.getElementById('p-estoque').value;
+            const badge     = document.getElementById('p-badge').value;
+            const descricao = document.getElementById('p-descricao').value.trim();
+            const msg       = document.getElementById('add-msg');
+
+            if(!nome || !preco || !estoque){ msg.textContent='Preencha nome, preço e estoque.'; msg.className='add-msg erro'; return; }
+
+            try {
+                msg.textContent = 'Salvando...'; msg.className='add-msg';
+                await addDoc(collection(db,'produtos'), {
+                    nome, preco:Number(preco), imagem: imagem||'img/mouse.jpg',
+                    categoria, estoque:Number(estoque), badge, descricao,
+                    criadoEm: serverTimestamp()
+                });
+                msg.textContent = '✅ Produto adicionado com sucesso!';
+                msg.className = 'add-msg ok';
+                ['p-nome','p-preco','p-imagem','p-estoque','p-descricao'].forEach(id => document.getElementById(id).value='');
+            } catch(e) {
+                msg.textContent = '❌ Erro: '+e.message;
+                msg.className = 'add-msg erro';
+            }
+        };
 
         carregarPainel();
     </script>
