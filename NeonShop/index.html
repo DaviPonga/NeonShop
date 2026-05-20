@@ -1171,7 +1171,7 @@
             <a href="categorias.html">Categorias</a>
             <a href="carrinho.html" class="carrinho-link">
                 Carrinho
-                <span id="contador-carrinho">0</span>
+                <span id="contador-carrinho-2">0</span>
             </a>
             <a href="perfil.html">Perfil</a>
             <a href="login.html">Login</a>
@@ -1532,41 +1532,7 @@
         </div>
     </footer>
 
-    <div id="toast"></div>
+    
     <script type="module" src="js/script.js"></script>
-    <script>
-        // Partículas flutuantes
-        const container = document.getElementById('particles');
-        for (let i = 0; i < 30; i++) {
-            const p = document.createElement('div');
-            p.className = 'particle';
-            p.style.left = Math.random() * 100 + '%';
-            p.style.animationDuration = (6 + Math.random() * 10) + 's';
-            p.style.animationDelay = (Math.random() * 8) + 's';
-            p.style.width = p.style.height = (1 + Math.random() * 3) + 'px';
-            // Cores variadas
-            const cores = ['cyan','#0088ff','#ff00aa','white'];
-            p.style.background = cores[Math.floor(Math.random() * cores.length)];
-            p.style.boxShadow = `0 0 6px ${p.style.background}`;
-            container.appendChild(p);
-        }
-
-        // Reveal ao rolar
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) e.target.classList.add('visible');
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // Copiar cupom
-        function copiarCupom(codigo, el) {
-            navigator.clipboard.writeText(codigo).then(() => {
-                const orig = el.innerHTML;
-                el.innerHTML = `✅ COPIADO!<span class="cupom-desc">Cole no carrinho</span>`;
-                setTimeout(() => el.innerHTML = orig, 2000);
-            });
-        }
-    </script>
 </body>
 </html>
