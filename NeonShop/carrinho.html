@@ -5,122 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho - NeonShop</title>
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        .carrinho-page { max-width:1100px; margin:0 auto; padding:40px 20px 80px; }
-        .carrinho-header { text-align:center; margin-bottom:50px; }
-        .carrinho-header h1 { font-size:36px; font-weight:900; color:white; }
-        .carrinho-header h1 span { color:cyan; text-shadow:0 0 15px cyan; }
-        .carrinho-header p { color:#555; font-size:14px; margin-top:6px; }
-        .carrinho-layout { display:grid; grid-template-columns:1fr 360px; gap:30px; align-items:start; }
-        @media(max-width:900px){ .carrinho-layout{ grid-template-columns:1fr; } }
-
-        /* LISTA DE ITENS */
-        .carrinho-lista { display:flex; flex-direction:column; gap:16px; }
-        .carrinho-item {
-            background:rgba(10,12,20,0.9); border:1px solid rgba(255,255,255,0.06);
-            border-radius:18px; padding:20px; display:flex; gap:20px; align-items:center;
-            transition:0.3s; animation:slideIn 0.4s ease both;
-        }
-        @keyframes slideIn { from{opacity:0;transform:translateX(-20px)} to{opacity:1;transform:translateX(0)} }
-        .carrinho-item:hover { border-color:rgba(0,255,255,0.2); }
-        .item-img { width:90px; height:90px; object-fit:cover; border-radius:12px; flex-shrink:0; background:#111; }
-        .item-info { flex:1; min-width:0; }
-        .item-nome { font-size:16px; font-weight:bold; color:white; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .item-preco-unit { color:#666; font-size:13px; margin-bottom:12px; }
-        .item-qty { display:flex; align-items:center; gap:12px; }
-        .qty-btn {
-            width:32px; height:32px; border-radius:50%;
-            background:rgba(0,255,255,0.08); border:1px solid rgba(0,255,255,0.2);
-            color:cyan; font-size:18px; cursor:pointer; display:flex;
-            align-items:center; justify-content:center; transition:0.2s;
-            padding:0; margin:0; line-height:1;
-        }
-        .qty-btn:hover { background:rgba(0,255,255,0.18); transform:scale(1.1); }
-        .qty-num { font-size:16px; font-weight:bold; color:white; min-width:24px; text-align:center; }
-        .item-subtotal { font-size:18px; font-weight:900; color:cyan; white-space:nowrap; }
-        .item-remove {
-            background:none; border:none; color:#333; cursor:pointer;
-            font-size:18px; padding:8px; border-radius:8px; transition:0.2s;
-            flex-shrink:0; margin:0; width:auto;
-        }
-        .item-remove:hover { background:rgba(255,50,80,0.1); color:#ff5060; }
-
-        /* VAZIO */
-        .carrinho-vazio { text-align:center; padding:80px 20px; color:#444; }
-        .carrinho-vazio .vazio-icon { font-size:80px; margin-bottom:20px; opacity:0.4; }
-        .carrinho-vazio h3 { font-size:22px; color:#555; margin-bottom:10px; }
-        .carrinho-vazio a { display:inline-block; margin-top:20px; padding:14px 35px; background:linear-gradient(135deg,cyan,#0077ff); color:#000; border-radius:30px; font-weight:900; text-decoration:none; }
-
-        /* PAINEL LATERAL */
-        .carrinho-painel {
-            background:rgba(10,12,20,0.95); border:1px solid rgba(0,255,255,0.12);
-            border-radius:20px; padding:30px; position:sticky; top:20px;
-        }
-        .painel-titulo { font-size:18px; font-weight:900; color:white; margin-bottom:25px; padding-bottom:15px; border-bottom:1px solid rgba(255,255,255,0.06); }
-
-        /* CUPOM */
-        .cupom-row { display:flex; gap:10px; margin-bottom:8px; }
-        .cupom-row input { flex:1; padding:11px 14px; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.08); border-radius:10px; color:white; font-size:14px; outline:none; transition:0.3s; }
-        .cupom-row input:focus { border-color:rgba(0,255,255,0.4); }
-        .cupom-row input::placeholder { color:#444; }
-        .cupom-row button { padding:11px 18px; background:rgba(0,255,255,0.1); border:1px solid rgba(0,255,255,0.3); color:cyan; border-radius:10px; cursor:pointer; font-size:13px; font-weight:bold; transition:0.3s; white-space:nowrap; width:auto; margin:0; }
-        .cupom-row button:hover { background:rgba(0,255,255,0.2); }
-        .cupom-msg { font-size:12px; min-height:18px; margin-bottom:20px; }
-
-        /* CEP */
-        .cep-row { display:flex; gap:10px; margin-bottom:8px; }
-        .cep-row input { flex:1; padding:11px 14px; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.08); border-radius:10px; color:white; font-size:14px; outline:none; transition:0.3s; }
-        .cep-row input:focus { border-color:rgba(0,255,255,0.4); }
-        .cep-row input::placeholder { color:#444; }
-        .cep-row button { padding:11px 16px; background:rgba(0,255,255,0.1); border:1px solid rgba(0,255,255,0.3); color:cyan; border-radius:10px; cursor:pointer; font-size:13px; font-weight:bold; transition:0.3s; white-space:nowrap; width:auto; margin:0; }
-        .cep-row button:hover { background:rgba(0,255,255,0.2); }
-        .frete-info { font-size:12px; min-height:18px; margin-bottom:20px; color:#aaa; }
-
-        /* RESUMO */
-        .resumo-linha { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-size:14px; color:#888; }
-        .resumo-linha .valor { color:#ccc; }
-        .resumo-linha.desconto .valor { color:#00ff88; }
-        .resumo-linha.frete-linha .valor { color:cyan; }
-        .resumo-total { display:flex; justify-content:space-between; align-items:center; padding-top:16px; border-top:1px solid rgba(255,255,255,0.06); margin-top:8px; }
-        .resumo-total .label { font-size:16px; font-weight:bold; color:white; }
-        .resumo-total .valor { font-size:24px; font-weight:900; color:cyan; text-shadow:0 0 10px rgba(0,255,255,0.4); }
-
-        .btn-comprar {
-            width:100%; padding:16px; margin-top:20px;
-            background:linear-gradient(135deg, cyan, #0077ff);
-            color:#000; border:none; border-radius:14px;
-            font-size:17px; font-weight:900; cursor:pointer; transition:0.3s;
-            letter-spacing:1px;
-        }
-        .btn-comprar:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,255,255,0.35); }
-        .btn-comprar:active { transform:translateY(0); }
-        .seguro-label { text-align:center; color:#444; font-size:12px; margin-top:12px; }
-
-        /* MODAL PIX */
-        .pix-modal {
-            display:none; position:fixed; inset:0;
-            background:rgba(0,0,0,0.85); z-index:999;
-            align-items:center; justify-content:center;
-            backdrop-filter:blur(8px);
-        }
-        .pix-modal.show { display:flex; }
-        .pix-box {
-            background:rgba(10,12,20,0.98); border:1px solid rgba(0,255,255,0.2);
-            border-radius:24px; padding:40px; text-align:center;
-            max-width:420px; width:90%; animation:cardIn 0.3s ease;
-        }
-        @keyframes cardIn { from{opacity:0;transform:scale(0.9)} to{opacity:1;transform:scale(1)} }
-        .pix-box h2 { color:cyan; font-size:24px; text-shadow:0 0 15px cyan; margin-bottom:6px; }
-        .pix-box .pix-sub { color:#666; font-size:14px; margin-bottom:25px; }
-        .pix-box img { width:180px; height:180px; object-fit:cover; border-radius:12px; margin-bottom:20px; border:2px solid rgba(0,255,255,0.2); }
-        .pix-total-val { font-size:32px; font-weight:900; color:cyan; text-shadow:0 0 15px rgba(0,255,255,0.5); margin-bottom:25px; }
-        .pix-key { background:rgba(0,255,255,0.06); border:1px dashed rgba(0,255,255,0.3); border-radius:10px; padding:12px 20px; color:#aaa; font-size:13px; margin-bottom:25px; }
-        .pix-btns { display:flex; gap:12px; flex-direction:column; }
-        .btn-confirmar { padding:15px; background:linear-gradient(135deg,#00ff88,#00aa55); color:#000; border:none; border-radius:12px; font-size:16px; font-weight:900; cursor:pointer; transition:0.3s; }
-        .btn-confirmar:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(0,255,136,0.3); }
-        .btn-fechar-pix { padding:13px; background:transparent; color:#666; border:1px solid rgba(255,255,255,0.08); border-radius:12px; font-size:14px; cursor:pointer; transition:0.3s; }
-        .btn-fechar-pix:hover { color:#aaa; border-color:rgba(255,255,255,0.2); }
-    </style>
 </head>
 <body>
 
@@ -139,236 +23,186 @@
             <a href="produtos.html">Produtos</a>
             <a href="categorias.html">Categorias</a>
             <a href="favoritos.html">Favoritos</a>
-            <a href="carrinho.html" class="carrinho-link">Carrinho <span id="contador-carrinho">0</span></a>
+            <a href="carrinho.html" class="carrinho-link">
+                Carrinho
+                <span id="contador-carrinho">0</span>
+            </a>
             <a href="perfil.html">Perfil</a>
             <a href="login.html">Login</a>
+            <button onclick="abrirBusca()" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#888;border-radius:8px;padding:7px 14px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:6px;transition:0.2s;width:auto;margin:0;" title="Buscar (Ctrl+K)">🔍 <span style='color:#555;font-size:11px;'>Ctrl+K</span></button>
             <button class="tema-btn" onclick="trocarTema()">🌙</button>
         </nav>
     </header>
 
-    <div class="carrinho-page">
-        <div class="carrinho-header">
-            <h1>Meu <span>Carrinho</span> 🛒</h1>
-            <p id="qtd-itens">Carregando itens...</p>
-        </div>
+    <main>
+        <section class="produtos">
 
-        <div class="carrinho-layout">
-            <!-- LISTA -->
-            <div>
-                <div id="carrinho-produtos" class="carrinho-lista"></div>
+            <h2 class="titulo-produtos">CARRINHO</h2>
+
+            <div id="carrinho-produtos" class="grid-produtos"></div>
+
+            <!-- CUPOM -->
+            <div class="cupom-area">
+                <input type="text" id="cupom" placeholder="Digite seu cupom">
+                <button onclick="aplicarCupom()">Aplicar</button>
+            </div>
+            <p id="mensagem-cupom"></p>
+
+            <!-- CEP / FRETE -->
+            <div class="frete-area">
+                <input
+                    type="text"
+                    id="cep-input"
+                    placeholder="Digite seu CEP (ex: 01310-100)"
+                    maxlength="9"
+                    oninput="mascaraCep(this)"
+                >
+                <button onclick="calcularFrete()">Calcular Frete</button>
+            </div>
+            <p class="frete-resultado" id="frete-resultado"></p>
+
+            <!-- TOTAL -->
+            <div class="total-area">
+                <h2 id="total">TOTAL: R$ 0,00</h2>
             </div>
 
-            <!-- PAINEL -->
-            <div class="carrinho-painel">
-                <div class="painel-titulo">📋 Resumo do Pedido</div>
-
-                <!-- CUPOM -->
-                <div style="margin-bottom:5px;color:#aaa;font-size:13px;">🎟️ Cupom de desconto</div>
-                <div class="cupom-row">
-                    <input type="text" id="cupom" placeholder="Ex: NEON10">
-                    <button onclick="aplicarCupom()">Aplicar</button>
-                </div>
-                <div class="cupom-msg" id="mensagem-cupom"></div>
-
-                <!-- CEP -->
-                <div style="margin-bottom:5px;color:#aaa;font-size:13px;">🚚 Calcular frete</div>
-                <div class="cep-row">
-                    <input type="text" id="cep-input" placeholder="00000-000" maxlength="9" oninput="mascaraCep(this)">
-                    <button onclick="calcularFrete()">Calcular</button>
-                </div>
-                <div class="frete-info" id="frete-resultado"></div>
-
-                <!-- RESUMO -->
-                <div class="resumo-linha">
-                    <span>Subtotal</span>
-                    <span class="valor" id="resumo-subtotal">R$ 0,00</span>
-                </div>
-                <div class="resumo-linha desconto" id="linha-desconto" style="display:none;">
-                    <span>Desconto</span>
-                    <span class="valor" id="resumo-desconto">-R$ 0,00</span>
-                </div>
-                <div class="resumo-linha frete-linha" id="linha-frete" style="display:none;">
-                    <span>Frete</span>
-                    <span class="valor" id="resumo-frete">R$ 0,00</span>
-                </div>
-                <div class="resumo-total">
-                    <span class="label">Total</span>
-                    <span class="valor" id="total">R$ 0,00</span>
-                </div>
-
-                <button class="btn-comprar" onclick="abrirPix()">
-                    ⚡ Finalizar com PIX
-                </button>
-                <div class="seguro-label">🔒 Pagamento 100% seguro</div>
+            <!-- FINALIZAR -->
+            <div class="checkout">
+                <button onclick="abrirPix()">Finalizar Compra</button>
             </div>
-        </div>
-    </div>
+
+        </section>
+    </main>
 
     <!-- MODAL PIX -->
     <div class="pix-modal" id="pix-modal">
         <div class="pix-box">
-            <h2>💳 PAGAR COM PIX</h2>
-            <p class="pix-sub">Escaneie o QR Code ou copie a chave</p>
+            <h2>PAGAMENTO PIX</h2>
             <img src="img/Qrcodepix.png" alt="QR Code PIX" onerror="this.style.display='none'">
-            <div class="pix-total-val" id="pix-total">R$ 0,00</div>
-            <div class="pix-key">📋 Chave PIX: suporte@neonshop.com</div>
-            <div class="pix-btns">
-                <button class="btn-confirmar" onclick="confirmarPagamento()">✅ Confirmar Pagamento</button>
-                <button class="btn-fechar-pix" onclick="fecharPix()">Cancelar</button>
-            </div>
+            <p id="pix-total"></p>
+            <button onclick="confirmarPagamento()">Confirmar Pagamento</button>
+            <button onclick="fecharPix()">Fechar</button>
         </div>
     </div>
 
+    <!-- FOOTER -->
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
                 <h3>NEONSHOP</h3>
                 <p style="font-size:14px;line-height:1.8;">A melhor loja gamer do Brasil.</p>
-                <div class="footer-redes"><a href="#">📸</a><a href="#">🐦</a><a href="#">▶️</a><a href="#">💬</a></div>
+                <div class="footer-redes">
+                    <a href="#">📸</a>
+                    <a href="#">🐦</a>
+                    <a href="#">▶️</a>
+                    <a href="#">💬</a>
+                </div>
             </div>
             <div class="footer-col">
                 <h3>NAVEGAÇÃO</h3>
-                <a href="index.html">Home</a><a href="produtos.html">Produtos</a><a href="categorias.html">Categorias</a>
+                <a href="index.html">Home</a>
+                <a href="produtos.html">Produtos</a>
+                <a href="categorias.html">Categorias</a>
+                <a href="favoritos.html">Favoritos</a>
             </div>
             <div class="footer-col">
-                <h3>CONTA</h3>
-                <a href="login.html">Login</a><a href="register.html">Cadastro</a><a href="perfil.html">Perfil</a>
+                <h3>CONTEÚDO</h3><a href="blog.html">Blog</a><a href="sobre.html">Sobre Nós</a><a href="faq.html">FAQ</a><a href="parceiros.html">Parceiros</a></div>
+            <div class="footer-col"><h3>CONTA</h3>
+                <a href="login.html">Login</a>
+                <a href="register.html">Cadastro</a>
+                <a href="perfil.html">Meu Perfil</a>
             </div>
             <div class="footer-col">
                 <h3>CONTATO</h3>
-                <a href="#">📧 suporte@neonshop.com</a><a href="#">📞 (11) 9999-9999</a>
+                <a href="#">📧 suporte@neonshop.com</a>
+                <a href="#">📞 (11) 9999-9999</a>
             </div>
         </div>
-        <div class="footer-bottom">© 2025 <span>NeonShop</span> — Todos os direitos reservados</div>
+        <div class="footer-bottom">
+            © 2025 <span>NeonShop</span> — Todos os direitos reservados
+        </div>
     </footer>
 
     <div id="toast"></div>
     <script type="module" src="js/script.js"></script>
     <script>
-        let descontoGlobal = 0;
-        let freteGlobal = 0;
-
+        // Máscara CEP
         function mascaraCep(input) {
-            let v = input.value.replace(/\D/g,'');
-            if(v.length > 5) v = v.slice(0,5)+'-'+v.slice(5,8);
+            let v = input.value.replace(/\D/g, '');
+            if (v.length > 5) v = v.slice(0,5) + '-' + v.slice(5,8);
             input.value = v;
         }
 
+        // Calcular frete via ViaCEP + lógica de frete
         async function calcularFrete() {
-            const cep = document.getElementById('cep-input').value.replace(/\D/g,'');
-            const el = document.getElementById('frete-resultado');
-            if(cep.length !== 8){ el.textContent='❌ CEP inválido.'; el.style.color='#ff5060'; return; }
-            el.textContent='🔍 Consultando...'; el.style.color='#aaa';
-            try {
-                const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-                const data = await res.json();
-                if(data.erro){ el.textContent='❌ CEP não encontrado.'; el.style.color='#ff5060'; return; }
-                const uf = data.uf;
-                const tabela = { SP:15.9, RJ:15.9, MG:15.9, ES:15.9, PR:18.9, SC:18.9, RS:18.9, GO:22.9, DF:22.9, MT:22.9, MS:22.9, BA:27.9, SE:27.9, AL:27.9, PE:27.9, PB:27.9, RN:27.9, CE:27.9, PI:27.9, MA:27.9, PA:34.9, AM:34.9, AC:34.9, RO:34.9, RR:34.9, AP:34.9, TO:34.9 };
-                const prazo = { SP:3, RJ:3, MG:3, ES:3, PR:5, SC:5, RS:5, GO:6, DF:5, MT:7, MS:6, BA:8, SE:8, AL:9, PE:9, PB:9, RN:9, CE:9, PI:10, MA:10, PA:12, AM:15, AC:15, RO:14, RR:15, AP:15, TO:12 };
-                freteGlobal = tabela[uf] || 19.9;
-                const dias = prazo[uf] || 7;
-                el.innerHTML = `📍 <b>${data.localidade}-${uf}</b> | 🚚 R$ ${freteGlobal.toFixed(2)} | ⏱️ ${dias} dias úteis`;
-                el.style.color = 'cyan';
-                localStorage.setItem('frete', freteGlobal);
-                atualizarResumo();
-                document.getElementById('linha-frete').style.display='flex';
-                document.getElementById('resumo-frete').textContent = 'R$ '+freteGlobal.toFixed(2);
-            } catch(e){ el.textContent='❌ Erro ao consultar. Tente novamente.'; el.style.color='#ff5060'; }
-        }
+            const cep = document.getElementById('cep-input').value.replace(/\D/g, '');
+            const resultado = document.getElementById('frete-resultado');
 
-        function atualizarResumo() {
-            const carrinho = JSON.parse(localStorage.getItem('carrinho'))||[];
-            const subtotal = carrinho.reduce((s,p)=>s+p.preco*p.quantidade,0);
-            const desconto = subtotal * descontoGlobal / 100;
-            const total = subtotal - desconto + freteGlobal;
-            document.getElementById('resumo-subtotal').textContent = 'R$ '+subtotal.toFixed(2);
-            document.getElementById('total').textContent = 'R$ '+total.toFixed(2);
-            document.getElementById('pix-total').textContent = 'R$ '+total.toFixed(2);
-            if(descontoGlobal > 0){
-                document.getElementById('linha-desconto').style.display='flex';
-                document.getElementById('resumo-desconto').textContent = '-R$ '+desconto.toFixed(2);
-            }
-            const qtd = carrinho.reduce((s,p)=>s+p.quantidade,0);
-            document.getElementById('qtd-itens').textContent = qtd + ' item(s) no carrinho';
-        }
-
-        // Override aplicarCupom para atualizar resumo visual
-        const _aplicarCupomOrig = window.aplicarCupom;
-        window.aplicarCupomVisual = function() {
-            const cupom = document.getElementById('cupom')?.value.toUpperCase();
-            const cupons = {'NEON10':10,'GAMER20':20,'VIP50':50};
-            descontoGlobal = cupons[cupom] || 0;
-            const msg = document.getElementById('mensagem-cupom');
-            if(descontoGlobal > 0){
-                msg.textContent = '✅ Cupom de '+descontoGlobal+'% aplicado!';
-                msg.style.color = '#00ff88';
-            } else {
-                msg.textContent = '❌ Cupom inválido.';
-                msg.style.color = '#ff5060';
-            }
-            atualizarResumo();
-        };
-        window.aplicarCupom = window.aplicarCupomVisual;
-
-        // Render carrinho
-        function renderCarrinho() {
-            const container = document.getElementById('carrinho-produtos');
-            const carrinho = JSON.parse(localStorage.getItem('carrinho'))||[];
-
-            if(carrinho.length === 0){
-                container.innerHTML = `
-                    <div class="carrinho-vazio">
-                        <div class="vazio-icon">🛒</div>
-                        <h3>Seu carrinho está vazio</h3>
-                        <p>Adicione produtos para continuar</p>
-                        <a href="produtos.html">Ver Produtos</a>
-                    </div>`;
-                document.getElementById('qtd-itens').textContent = '0 itens no carrinho';
-                document.getElementById('total').textContent = 'R$ 0,00';
+            if (cep.length !== 8) {
+                resultado.textContent = '❌ CEP inválido. Digite 8 números.';
+                resultado.style.color = '#ff4466';
                 return;
             }
 
-            container.innerHTML = carrinho.map((p,i) => `
-                <div class="carrinho-item">
-                    <img class="item-img" src="${p.imagem}" alt="${p.nome}" onerror="this.src='img/mouse.jpg'">
-                    <div class="item-info">
-                        <div class="item-nome">${p.nome}</div>
-                        <div class="item-preco-unit">R$ ${Number(p.preco).toFixed(2)} cada</div>
-                        <div class="item-qty">
-                            <button class="qty-btn" onclick="mudarQty(${i},-1)">−</button>
-                            <span class="qty-num">${p.quantidade}</span>
-                            <button class="qty-btn" onclick="mudarQty(${i},1)">+</button>
-                        </div>
-                    </div>
-                    <div style="text-align:right;">
-                        <div class="item-subtotal">R$ ${(p.preco*p.quantidade).toFixed(2)}</div>
-                        <button class="item-remove" onclick="removerItem(${i})" title="Remover">🗑️</button>
-                    </div>
-                </div>
-            `).join('');
+            resultado.textContent = '🔍 Consultando CEP...';
+            resultado.style.color = '#aaa';
 
-            atualizarResumo();
+            try {
+                const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = await res.json();
+
+                if (data.erro) {
+                    resultado.textContent = '❌ CEP não encontrado.';
+                    resultado.style.color = '#ff4466';
+                    return;
+                }
+
+                // Calcular frete por região
+                const uf = data.uf;
+                let frete = 0;
+                let prazo = '';
+
+                const sudeste = ['SP','RJ','MG','ES'];
+                const sul     = ['PR','SC','RS'];
+                const centro  = ['GO','DF','MT','MS'];
+                const nordeste= ['BA','SE','AL','PE','PB','RN','CE','PI','MA'];
+                const norte   = ['PA','AM','AC','RO','RR','AP','TO'];
+
+                if (sudeste.includes(uf))      { frete = 15.90; prazo = '3-5 dias úteis'; }
+                else if (sul.includes(uf))     { frete = 18.90; prazo = '4-6 dias úteis'; }
+                else if (centro.includes(uf))  { frete = 22.90; prazo = '5-7 dias úteis'; }
+                else if (nordeste.includes(uf)){ frete = 27.90; prazo = '7-10 dias úteis'; }
+                else if (norte.includes(uf))   { frete = 34.90; prazo = '10-15 dias úteis'; }
+                else                           { frete = 19.90; prazo = '5-8 dias úteis'; }
+
+                resultado.style.color = 'cyan';
+                resultado.innerHTML = `
+                    📍 <strong>${data.localidade} - ${uf}</strong><br>
+                    🚚 Frete: <strong>R$ ${frete.toFixed(2)}</strong> &nbsp;|&nbsp; ⏱️ Prazo: <strong>${prazo}</strong>
+                `;
+
+                // Salvar frete para usar no total
+                localStorage.setItem('frete', frete);
+
+            } catch(e) {
+                resultado.textContent = '❌ Erro ao consultar CEP. Tente novamente.';
+                resultado.style.color = '#ff4466';
+            }
         }
-
-        window.mudarQty = function(i, delta) {
-            let carrinho = JSON.parse(localStorage.getItem('carrinho'))||[];
-            carrinho[i].quantidade += delta;
-            if(carrinho[i].quantidade < 1) carrinho.splice(i,1);
-            else if(carrinho[i].quantidade > carrinho[i].estoque) carrinho[i].quantidade = carrinho[i].estoque;
-            localStorage.setItem('carrinho', JSON.stringify(carrinho));
-            renderCarrinho();
-        };
-
-        window.removerItem = function(i) {
-            let carrinho = JSON.parse(localStorage.getItem('carrinho'))||[];
-            carrinho.splice(i,1);
-            localStorage.setItem('carrinho', JSON.stringify(carrinho));
-            renderCarrinho();
-        };
-
-        // Inicializar
-        setTimeout(renderCarrinho, 100);
     </script>
+
+    <!-- BUSCA GLOBAL -->
+    <div class="busca-global" id="busca-global">
+        <div class="busca-box">
+            <div class="busca-input-wrap">
+                <span>🔍</span>
+                <input type="text" id="busca-global-input" placeholder="Buscar produtos, jogos..." oninput="buscaGlobal(this.value)" autofocus>
+                <button class="busca-fechar" onclick="fecharBusca()">ESC ✕</button>
+            </div>
+            <div class="busca-resultados" id="busca-resultados" style="display:none;"></div>
+            <div class="busca-hint">Pressione ESC para fechar • Enter para buscar</div>
+        </div>
+    </div>
+    <script src="js/chat-notif.js"></script>
 </body>
 </html>

@@ -327,10 +327,16 @@ window.confirmarPagamento = async function () {
         console.warn("Pedido não salvo no Firebase:", e);
     }
 
-    mostrarToast("✅ Pagamento aprovado! Obrigado!");
+    // Adicionar pontos de fidelidade
+    const pontosGanhos = Math.floor(totalFinal * 10);
+    const pontosAtuais = parseInt(localStorage.getItem("neon-pontos") || "0");
+    localStorage.setItem("neon-pontos", pontosAtuais + pontosGanhos);
+
+    mostrarToast("✅ Pagamento aprovado! +" + pontosGanhos + " pontos!");
     localStorage.removeItem("carrinho");
     localStorage.removeItem("frete");
     localStorage.setItem("ultimo-pedido", pedidoId);
+    localStorage.setItem("pontos-ganhos", pontosGanhos);
     atualizarContadorCarrinho();
 
     setTimeout(() => {

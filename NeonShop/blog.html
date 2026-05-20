@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - NeonShop</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .blog-hero { text-align:center; padding:80px 20px 50px; background:radial-gradient(ellipse at 50% 50%, rgba(0,255,255,0.06) 0%, transparent 60%); }
+        .blog-tag { display:inline-block; background:rgba(0,255,255,0.1); border:1px solid rgba(0,255,255,0.3); color:cyan; padding:6px 20px; border-radius:30px; font-size:12px; letter-spacing:3px; margin-bottom:16px; }
+        .blog-hero h1 { font-size:clamp(32px,5vw,56px); font-weight:900; color:white; margin-bottom:12px; }
+        .blog-hero h1 span { color:cyan; text-shadow:0 0 15px cyan; }
+        .blog-hero p { color:#888; font-size:16px; }
+        .blog-page { max-width:1100px; margin:0 auto; padding:0 20px 80px; }
+        .blog-cats { display:flex; gap:10px; flex-wrap:wrap; margin:30px 0; }
+        .blog-cat { padding:8px 18px; border-radius:20px; border:1px solid rgba(255,255,255,0.08); background:transparent; color:#666; font-size:13px; cursor:pointer; transition:0.3s; }
+        .blog-cat.ativa { background:rgba(0,255,255,0.1); border-color:cyan; color:cyan; }
+        .blog-cat:hover { border-color:rgba(0,255,255,0.3); color:#aaa; }
+
+        /* DESTAQUE */
+        .blog-featured { background:rgba(10,12,20,0.9); border:1px solid rgba(0,255,255,0.12); border-radius:24px; overflow:hidden; margin-bottom:40px; display:grid; grid-template-columns:1fr 1fr; transition:0.3s; cursor:pointer; }
+        @media(max-width:700px){ .blog-featured{ grid-template-columns:1fr; } }
+        .blog-featured:hover { border-color:rgba(0,255,255,0.25); transform:translateY(-3px); box-shadow:0 15px 40px rgba(0,0,0,0.4); }
+        .bf-img { height:280px; overflow:hidden; }
+        .bf-img img { width:100%; height:100%; object-fit:cover; transition:0.4s; }
+        .blog-featured:hover .bf-img img { transform:scale(1.05); }
+        .bf-content { padding:40px; display:flex; flex-direction:column; justify-content:center; }
+        .bf-cat { display:inline-block; background:rgba(0,255,255,0.1); color:cyan; border-radius:20px; padding:4px 14px; font-size:12px; font-weight:bold; margin-bottom:16px; }
+        .bf-titulo { font-size:clamp(20px,3vw,28px); font-weight:900; color:white; margin-bottom:12px; line-height:1.3; }
+        .bf-desc { color:#888; font-size:14px; line-height:1.7; margin-bottom:20px; }
+        .bf-meta { display:flex; gap:15px; align-items:center; color:#555; font-size:13px; }
+        .bf-meta span { display:flex; align-items:center; gap:5px; }
+
+        /* GRID */
+        .blog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px; }
+        .blog-card { background:rgba(10,12,20,0.9); border:1px solid rgba(255,255,255,0.06); border-radius:18px; overflow:hidden; transition:0.3s; cursor:pointer; }
+        .blog-card:hover { border-color:rgba(0,255,255,0.2); transform:translateY(-4px); box-shadow:0 15px 40px rgba(0,0,0,0.3); }
+        .bc-img { height:180px; overflow:hidden; }
+        .bc-img img { width:100%; height:100%; object-fit:cover; transition:0.4s; }
+        .blog-card:hover .bc-img img { transform:scale(1.05); }
+        .bc-content { padding:20px; }
+        .bc-cat { display:inline-block; font-size:11px; font-weight:bold; padding:3px 10px; border-radius:10px; margin-bottom:10px; }
+        .bc-cat.hardware { background:rgba(0,255,255,0.1); color:cyan; }
+        .bc-cat.jogos { background:rgba(255,100,0,0.1); color:orange; }
+        .bc-cat.dicas { background:rgba(0,200,100,0.1); color:#00c864; }
+        .bc-cat.noticias { background:rgba(200,0,255,0.1); color:#cc44ff; }
+        .bc-titulo { font-size:16px; font-weight:bold; color:white; margin-bottom:8px; line-height:1.4; }
+        .bc-desc { font-size:13px; color:#666; line-height:1.6; margin-bottom:15px; }
+        .bc-meta { display:flex; gap:12px; color:#444; font-size:12px; }
+        .bc-meta span { display:flex; align-items:center; gap:4px; }
+    </style>
+</head>
+<body>
+    <div id="loading"><div class="loader-box"><h1>NEONSHOP</h1><div class="loading-bar"><div class="loading-fill"></div></div><p>Carregando blog...</p></div></div>
+
+    <header class="navbar">
+        <div class="logo"><h1>NEONSHOP</h1></div>
+        <nav class="menu">
+            <a href="index.html">Home</a><a href="produtos.html">Produtos</a>
+            <a href="carrinho.html" class="carrinho-link">Carrinho <span id="contador-carrinho">0</span></a>
+            <a href="login.html">Login</a>
+            <button class="tema-btn" onclick="trocarTema()">🌙</button>
+        </nav>
+    </header>
+
+    <div class="blog-hero">
+        <div class="blog-tag">// NEONSHOP BLOG</div>
+        <h1>News & <span>Dicas Gamer</span></h1>
+        <p>Fique por dentro das novidades do mundo gamer</p>
+    </div>
+
+    <div class="blog-page">
+        <div class="blog-cats">
+            <button class="blog-cat ativa">Todos</button>
+            <button class="blog-cat">🖥️ Hardware</button>
+            <button class="blog-cat">🎮 Jogos</button>
+            <button class="blog-cat">💡 Dicas</button>
+            <button class="blog-cat">📰 Notícias</button>
+        </div>
+
+        <!-- DESTAQUE -->
+        <div class="blog-featured">
+            <div class="bf-img">
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop" alt="Blog destaque">
+            </div>
+            <div class="bf-content">
+                <span class="bf-cat">🎮 Jogos</span>
+                <h2 class="bf-titulo">Os 10 melhores jogos para PC em 2025 — lista definitiva</h2>
+                <p class="bf-desc">De RPGs épicos a shooters competitivos, selecionamos os títulos que todo gamer precisa ter na biblioteca esse ano. Confira nossa lista completa com análises detalhadas.</p>
+                <div class="bf-meta">
+                    <span>👤 Equipe NeonShop</span>
+                    <span>📅 15 Mai 2025</span>
+                    <span>⏱️ 8 min de leitura</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRID -->
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="bc-img"><img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=250&fit=crop" alt="Teclado mecânico"></div>
+                <div class="bc-content">
+                    <span class="bc-cat hardware">🖥️ Hardware</span>
+                    <h3 class="bc-titulo">Teclado mecânico vs membrana: qual escolher em 2025?</h3>
+                    <p class="bc-desc">Comparamos as principais diferenças, prós e contras de cada tipo para ajudar você a fazer a melhor escolha.</p>
+                    <div class="bc-meta"><span>📅 10 Mai 2025</span><span>⏱️ 5 min</span></div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="bc-img"><img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=250&fit=crop" alt="Mouse gamer"></div>
+                <div class="bc-content">
+                    <span class="bc-cat dicas">💡 Dicas</span>
+                    <h3 class="bc-titulo">Como escolher o DPI ideal para seu estilo de jogo</h3>
+                    <p class="bc-desc">DPI alto ou baixo? Sensibilidade no jogo ou no mouse? Entenda de vez como configurar seu mouse perfeitamente.</p>
+                    <div class="bc-meta"><span>📅 8 Mai 2025</span><span>⏱️ 4 min</span></div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="bc-img"><img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400&h=250&fit=crop" alt="Minecraft"></div>
+                <div class="bc-content">
+                    <span class="bc-cat jogos">🎮 Jogos</span>
+                    <h3 class="bc-titulo">Minecraft em 2025: por que ainda é o jogo mais popular do mundo</h3>
+                    <p class="bc-desc">238 milhões de cópias vendidas e ainda crescendo. Exploramos o fenômeno que não para de expandir.</p>
+                    <div class="bc-meta"><span>📅 5 Mai 2025</span><span>⏱️ 6 min</span></div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="bc-img"><img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=250&fit=crop" alt="Monitor"></div>
+                <div class="bc-content">
+                    <span class="bc-cat hardware">🖥️ Hardware</span>
+                    <h3 class="bc-titulo">144Hz vs 240Hz: vale a pena o upgrade no monitor gamer?</h3>
+                    <p class="bc-desc">Analisamos se a diferença na taxa de atualização realmente impacta sua performance nos jogos competitivos.</p>
+                    <div class="bc-meta"><span>📅 2 Mai 2025</span><span>⏱️ 5 min</span></div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="bc-img"><img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=250&fit=crop" alt="Setup gamer"></div>
+                <div class="bc-content">
+                    <span class="bc-cat dicas">💡 Dicas</span>
+                    <h3 class="bc-titulo">Como montar o setup gamer perfeito com menos de R$ 2.000</h3>
+                    <p class="bc-desc">Guia completo com as melhores escolhas de custo-benefício para montar um setup profissional sem gastar muito.</p>
+                    <div class="bc-meta"><span>📅 28 Abr 2025</span><span>⏱️ 7 min</span></div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="bc-img"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop" alt="Headset"></div>
+                <div class="bc-content">
+                    <span class="bc-cat noticias">📰 Notícias</span>
+                    <h3 class="bc-titulo">NeonShop lança sistema de fidelidade com pontos e recompensas</h3>
+                    <p class="bc-desc">Novo sistema dá 10 pontos por real gasto e permite trocar por descontos. Saiba como participar!</p>
+                    <div class="bc-meta"><span>📅 25 Abr 2025</span><span>⏱️ 3 min</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col"><h3>NEONSHOP</h3><p style="font-size:14px;line-height:1.8;">A melhor loja gamer do Brasil.</p></div>
+            <div class="footer-col"><h3>CONTEÚDO</h3><a href="blog.html">Blog</a><a href="sobre.html">Sobre Nós</a><a href="faq.html">FAQ</a><a href="parceiros.html">Parceiros</a></div>
+            <div class="footer-col"><h3>CONTA</h3><a href="login.html">Login</a><a href="register.html">Cadastro</a></div>
+            <div class="footer-col"><h3>CONTATO</h3><a href="#">📧 suporte@neonshop.com</a></div>
+        </div>
+        <div class="footer-bottom">© 2025 <span>NeonShop</span> — Todos os direitos reservados</div>
+    </footer>
+
+    <div id="toast"></div>
+    <script type="module" src="js/script.js"></script>
+    <script src="js/chat-notif.js"></script>
+</body>
+</html>

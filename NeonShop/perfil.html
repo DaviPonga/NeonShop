@@ -5,84 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil - NeonShop</title>
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        .perfil-page { max-width:1000px; margin:0 auto; padding:40px 20px 80px; }
-        .perfil-header { display:flex; align-items:center; gap:30px; background:rgba(10,12,20,0.9); border:1px solid rgba(0,255,255,0.12); border-radius:24px; padding:35px; margin-bottom:30px; flex-wrap:wrap; }
-        .perfil-avatar { position:relative; flex-shrink:0; }
-        .perfil-avatar img { width:100px; height:100px; border-radius:50%; border:3px solid cyan; box-shadow:0 0 20px rgba(0,255,255,0.3); object-fit:cover; }
-        .avatar-status { position:absolute; bottom:4px; right:4px; width:18px; height:18px; background:#00ff88; border-radius:50%; border:3px solid #0a0c14; }
-        .perfil-info { flex:1; }
-        .perfil-info h2 { font-size:26px; font-weight:900; color:white; margin-bottom:4px; }
-        .perfil-info .perfil-email { color:#666; font-size:14px; margin-bottom:12px; }
-        .perfil-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(0,255,255,0.1); border:1px solid rgba(0,255,255,0.2); color:cyan; padding:5px 14px; border-radius:20px; font-size:12px; font-weight:bold; letter-spacing:1px; }
-        .perfil-stats { display:flex; gap:25px; margin-top:16px; flex-wrap:wrap; }
-        .p-stat { text-align:center; }
-        .p-stat .num { font-size:22px; font-weight:900; color:cyan; }
-        .p-stat .lbl { font-size:11px; color:#555; letter-spacing:1px; }
-        .btn-logout { margin-left:auto; padding:12px 24px; background:rgba(255,50,80,0.1); border:1px solid rgba(255,50,80,0.2); color:#ff5060; border-radius:12px; cursor:pointer; font-size:14px; font-weight:bold; transition:0.3s; white-space:nowrap; width:auto; }
-        .btn-logout:hover { background:rgba(255,50,80,0.2); }
-
-        /* TABS */
-        .perfil-tabs { display:flex; gap:8px; margin-bottom:25px; flex-wrap:wrap; }
-        .tab-btn { padding:10px 22px; border-radius:30px; border:1px solid rgba(255,255,255,0.08); background:transparent; color:#666; font-size:14px; font-weight:bold; cursor:pointer; transition:0.3s; }
-        .tab-btn.ativa { background:rgba(0,255,255,0.1); border-color:cyan; color:cyan; }
-        .tab-btn:hover { border-color:rgba(0,255,255,0.3); color:#aaa; }
-        .tab-content { display:none; }
-        .tab-content.ativa { display:block; animation:fadeIn 0.4s ease; }
-        @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-
-        /* PEDIDOS */
-        .pedido-card { background:rgba(10,12,20,0.9); border:1px solid rgba(255,255,255,0.06); border-radius:16px; padding:20px; margin-bottom:14px; transition:0.3s; }
-        .pedido-card:hover { border-color:rgba(0,255,255,0.2); }
-        .pedido-top { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
-        .pedido-id { font-size:15px; font-weight:900; color:cyan; }
-        .pedido-data { font-size:12px; color:#555; }
-        .pedido-status { padding:4px 12px; border-radius:20px; font-size:12px; font-weight:bold; }
-        .pedido-status.pendente { background:rgba(255,165,0,0.15); color:orange; border:1px solid rgba(255,165,0,0.2); }
-        .pedido-status.enviado  { background:rgba(0,255,255,0.1); color:cyan; border:1px solid rgba(0,255,255,0.2); }
-        .pedido-status.entregue { background:rgba(0,255,100,0.1); color:#00ff88; border:1px solid rgba(0,255,100,0.2); }
-        .pedido-itens { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
-        .pedido-item-chip { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:5px 12px; font-size:12px; color:#888; }
-        .pedido-total { font-size:18px; font-weight:900; color:cyan; text-align:right; }
-
-        /* FAVORITOS */
-        .fav-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:16px; }
-        .fav-card { background:rgba(10,12,20,0.9); border:1px solid rgba(255,255,255,0.06); border-radius:14px; overflow:hidden; transition:0.3s; }
-        .fav-card:hover { border-color:rgba(0,255,255,0.2); transform:translateY(-3px); }
-        .fav-card img { width:100%; height:130px; object-fit:cover; }
-        .fav-info { padding:12px; }
-        .fav-info h4 { font-size:14px; color:white; margin-bottom:4px; }
-        .fav-info .fav-preco { color:cyan; font-size:15px; font-weight:bold; }
-        .btn-fav-add { width:100%; padding:9px; background:rgba(0,255,255,0.08); border:1px solid rgba(0,255,255,0.2); color:cyan; border-radius:8px; cursor:pointer; font-size:12px; font-weight:bold; transition:0.3s; margin-top:10px; }
-        .btn-fav-add:hover { background:rgba(0,255,255,0.18); }
-
-        /* CONFIGS */
-        .config-section { background:rgba(10,12,20,0.9); border:1px solid rgba(255,255,255,0.06); border-radius:16px; padding:25px; margin-bottom:16px; }
-        .config-title { font-size:16px; font-weight:bold; color:white; margin-bottom:18px; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.06); }
-        .config-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
-        .config-row:last-child { border-bottom:none; padding-bottom:0; }
-        .config-label { color:#aaa; font-size:14px; }
-        .config-label small { display:block; color:#555; font-size:12px; margin-top:2px; }
-        .toggle-switch { position:relative; width:44px; height:24px; }
-        .toggle-switch input { opacity:0; width:0; height:0; }
-        .toggle-track { position:absolute; inset:0; background:rgba(255,255,255,0.08); border-radius:24px; cursor:pointer; transition:0.3s; }
-        .toggle-track::before { content:''; position:absolute; width:18px; height:18px; left:3px; top:3px; background:#555; border-radius:50%; transition:0.3s; }
-        input:checked + .toggle-track { background:rgba(0,255,255,0.3); }
-        input:checked + .toggle-track::before { transform:translateX(20px); background:cyan; }
-
-        /* VAZIO */
-        .estado-vazio { text-align:center; padding:60px 20px; color:#444; }
-        .estado-vazio .icon { font-size:60px; margin-bottom:16px; opacity:0.4; }
-        .estado-vazio p { font-size:16px; color:#555; margin-bottom:20px; }
-        .estado-vazio a { display:inline-block; padding:12px 28px; background:linear-gradient(135deg,cyan,#0077ff); color:#000; border-radius:30px; font-weight:900; text-decoration:none; font-size:14px; }
-
-        /* NÃO LOGADO */
-        .nao-logado { text-align:center; padding:80px 20px; }
-        .nao-logado .icon { font-size:80px; margin-bottom:20px; opacity:0.4; }
-        .nao-logado h2 { color:white; margin-bottom:8px; }
-        .nao-logado p { color:#555; margin-bottom:25px; }
-        .nao-logado a { display:inline-block; padding:14px 35px; background:linear-gradient(135deg,cyan,#0077ff); color:#000; border-radius:30px; font-weight:900; text-decoration:none; margin:5px; }
-    </style>
 </head>
 <body>
 
@@ -99,223 +21,90 @@
         <nav class="menu">
             <a href="index.html">Home</a>
             <a href="produtos.html">Produtos</a>
-            <a href="carrinho.html" class="carrinho-link">Carrinho <span id="contador-carrinho">0</span></a>
-            <a href="perfil.html">Perfil</a>
+            <a href="carrinho.html" class="carrinho-link">
+                Carrinho
+                <span id="contador-carrinho">0</span>
+            </a>
             <a href="login.html">Login</a>
+            <button onclick="abrirBusca()" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#888;border-radius:8px;padding:7px 14px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:6px;transition:0.2s;width:auto;margin:0;" title="Buscar (Ctrl+K)">🔍 <span style='color:#555;font-size:11px;'>Ctrl+K</span></button>
             <button class="tema-btn" onclick="trocarTema()">🌙</button>
         </nav>
     </header>
 
-    <div class="perfil-page">
+    <section class="login-container" style="flex-direction:column;gap:30px;padding:60px 20px;align-items:center;">
 
-        <!-- ESTADO: NÃO LOGADO -->
-        <div id="estado-nao-logado" style="display:none;">
-            <div class="nao-logado">
-                <div class="icon">🔐</div>
-                <h2>Você não está logado</h2>
-                <p>Entre na sua conta para ver seu perfil, pedidos e favoritos.</p>
-                <a href="login.html">Fazer Login</a>
-                <a href="register.html" style="background:transparent;color:cyan;border:2px solid rgba(0,255,255,0.4);">Criar Conta</a>
+        <div class="perfil-box">
+            <img src="img/avatar.png" class="avatar" alt="Avatar">
+            <h2 id="perfil-nome">Carregando...</h2>
+            <p id="perfil-email">---</p>
+            <span class="status">ONLINE</span>
+            <button onclick="logout()">Sair da Conta</button>
+        </div>
+
+        <!-- MEUS PEDIDOS -->
+        <div style="width:100%;max-width:600px;">
+            <h2 style="color:cyan;text-align:center;margin-bottom:20px;text-shadow:0 0 10px cyan;">
+                MEUS PEDIDOS
+            </h2>
+            <div id="perfil-pedidos" style="text-align:center;color:#aaa;">
+                Carregando pedidos...
             </div>
         </div>
 
-        <!-- ESTADO: LOGADO -->
-        <div id="estado-logado" style="display:none;">
-
-            <!-- HEADER DO PERFIL -->
-            <div class="perfil-header">
-                <div class="perfil-avatar">
-                    <img src="img/avatar.png" alt="Avatar" id="avatar-img">
-                    <div class="avatar-status"></div>
-                </div>
-                <div class="perfil-info">
-                    <h2 id="perfil-nome">Carregando...</h2>
-                    <div class="perfil-email" id="perfil-email">---</div>
-                    <div class="perfil-badge">⚡ GAMER VERIFICADO</div>
-                    <div class="perfil-stats">
-                        <div class="p-stat">
-                            <div class="num" id="stat-pedidos-count">0</div>
-                            <div class="lbl">PEDIDOS</div>
-                        </div>
-                        <div class="p-stat">
-                            <div class="num" id="stat-favs-count">0</div>
-                            <div class="lbl">FAVORITOS</div>
-                        </div>
-                        <div class="p-stat">
-                            <div class="num" id="stat-gasto">R$0</div>
-                            <div class="lbl">TOTAL GASTO</div>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn-logout" onclick="logout()">🚪 Sair</button>
-            </div>
-
-            <!-- TABS -->
-            <div class="perfil-tabs">
-                <button class="tab-btn ativa" onclick="trocarTab('pedidos',this)">📦 Meus Pedidos</button>
-                <button class="tab-btn" onclick="trocarTab('favoritos',this)">❤ Favoritos</button>
-                <button class="tab-btn" onclick="trocarTab('configs',this)">⚙️ Configurações</button>
-            </div>
-
-            <!-- TAB: PEDIDOS -->
-            <div class="tab-content ativa" id="tab-pedidos">
-                <div id="lista-pedidos">
-                    <div style="text-align:center;padding:40px;color:#555;">Carregando pedidos...</div>
-                </div>
-            </div>
-
-            <!-- TAB: FAVORITOS -->
-            <div class="tab-content" id="tab-favoritos">
-                <div id="lista-favoritos"></div>
-            </div>
-
-            <!-- TAB: CONFIGS -->
-            <div class="tab-content" id="tab-configs">
-                <div class="config-section">
-                    <div class="config-title">🎨 Aparência</div>
-                    <div class="config-row">
-                        <div class="config-label">
-                            Modo escuro
-                            <small>Ativar tema escuro da loja</small>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="toggle-dark" checked onchange="trocarTema()">
-                            <span class="toggle-track"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="config-section">
-                    <div class="config-title">🔔 Notificações</div>
-                    <div class="config-row">
-                        <div class="config-label">
-                            Promoções e ofertas
-                            <small>Receber avisos de desconto</small>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked>
-                            <span class="toggle-track"></span>
-                        </label>
-                    </div>
-                    <div class="config-row">
-                        <div class="config-label">
-                            Status do pedido
-                            <small>Atualização de envio e entrega</small>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked>
-                            <span class="toggle-track"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="config-section">
-                    <div class="config-title">🔑 Conta</div>
-                    <div class="config-row">
-                        <div class="config-label">
-                            Email
-                            <small id="config-email">---</small>
-                        </div>
-                        <span style="color:#555;font-size:13px;">Verificado ✅</span>
-                    </div>
-                    <div class="config-row">
-                        <div class="config-label">Sair de todas as sessões</div>
-                        <button onclick="logout()" style="padding:8px 18px;background:rgba(255,50,80,0.1);border:1px solid rgba(255,50,80,0.2);color:#ff5060;border-radius:8px;cursor:pointer;font-size:13px;width:auto;margin:0;">Sair</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
+    </section>
 
     <footer>
         <div class="footer-grid">
-            <div class="footer-col"><h3>NEONSHOP</h3><p style="font-size:14px;line-height:1.8;">A melhor loja gamer do Brasil.</p></div>
-            <div class="footer-col"><h3>NAVEGAÇÃO</h3><a href="index.html">Home</a><a href="produtos.html">Produtos</a><a href="categorias.html">Categorias</a></div>
-            <div class="footer-col"><h3>CONTA</h3><a href="login.html">Login</a><a href="register.html">Cadastro</a></div>
-            <div class="footer-col"><h3>CONTATO</h3><a href="#">📧 suporte@neonshop.com</a></div>
+            <div class="footer-col">
+                <h3>NEONSHOP</h3>
+                <p style="font-size:14px;line-height:1.8;">A melhor loja gamer do Brasil.</p>
+                <div class="footer-redes">
+                    <a href="#">📸</a>
+                    <a href="#">🐦</a>
+                    <a href="#">▶️</a>
+                    <a href="#">💬</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>NAVEGAÇÃO</h3>
+                <a href="index.html">Home</a>
+                <a href="produtos.html">Produtos</a>
+                <a href="categorias.html">Categorias</a>
+                <a href="favoritos.html">Favoritos</a>
+            </div>
+            <div class="footer-col">
+                <h3>CONTEÚDO</h3><a href="blog.html">Blog</a><a href="sobre.html">Sobre Nós</a><a href="faq.html">FAQ</a><a href="parceiros.html">Parceiros</a></div>
+            <div class="footer-col"><h3>CONTA</h3>
+                <a href="login.html">Login</a>
+                <a href="register.html">Cadastro</a>
+                <a href="perfil.html">Meu Perfil</a>
+            </div>
+            <div class="footer-col">
+                <h3>CONTATO</h3>
+                <a href="#">📧 suporte@neonshop.com</a>
+                <a href="#">📞 (11) 9999-9999</a>
+            </div>
         </div>
-        <div class="footer-bottom">© 2025 <span>NeonShop</span> — Todos os direitos reservados</div>
+        <div class="footer-bottom">
+            © 2025 <span>NeonShop</span> — Todos os direitos reservados
+        </div>
     </footer>
 
     <div id="toast"></div>
     <script type="module" src="js/script.js"></script>
-    <script type="module">
-        import { auth, db, buscarMeusPedidos, buscarNomeUsuario } from './js/firebase.js';
-        import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
-        function trocarTab(tab, btn) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('ativa'));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('ativa'));
-            btn.classList.add('ativa');
-            document.getElementById('tab-'+tab).classList.add('ativa');
-        }
-        window.trocarTab = trocarTab;
-
-        function carregarFavoritos() {
-            const favs = JSON.parse(localStorage.getItem('favoritos'))||[];
-            const el = document.getElementById('lista-favoritos');
-            document.getElementById('stat-favs-count').textContent = favs.length;
-            if(favs.length === 0){
-                el.innerHTML = `<div class="estado-vazio"><div class="icon">❤</div><p>Nenhum favorito ainda</p><a href="produtos.html">Ver Produtos</a></div>`;
-                return;
-            }
-            el.innerHTML = `<div class="fav-grid">${favs.map((f,i)=>`
-                <div class="fav-card">
-                    <img src="${f.imagem}" alt="${f.nome}" onerror="this.src='img/mouse.jpg'">
-                    <div class="fav-info">
-                        <h4>${f.nome}</h4>
-                        <div class="fav-preco">${f.preco}</div>
-                        <button class="btn-fav-add" onclick="adicionarCarrinho('${f.nome}',${parseFloat(String(f.preco).replace('R$ ','').replace(',','.'))}, '${f.imagem}',10)">🛒 Adicionar</button>
-                    </div>
-                </div>`).join('')}</div>`;
-        }
-
-        onAuthStateChanged(auth, async (user) => {
-            if(user){
-                document.getElementById('estado-nao-logado').style.display='none';
-                document.getElementById('estado-logado').style.display='block';
-                document.getElementById('perfil-email').textContent = user.email;
-                document.getElementById('config-email').textContent = user.email;
-
-                try {
-                    const nome = await buscarNomeUsuario();
-                    document.getElementById('perfil-nome').textContent = nome || user.email.split('@')[0];
-                } catch { document.getElementById('perfil-nome').textContent = user.email.split('@')[0]; }
-
-                try {
-                    const pedidos = await buscarMeusPedidos();
-                    document.getElementById('stat-pedidos-count').textContent = pedidos.length;
-                    const totalGasto = pedidos.reduce((s,p)=>s+Number(p.total||0),0);
-                    document.getElementById('stat-gasto').textContent = 'R$'+totalGasto.toFixed(0);
-
-                    const el = document.getElementById('lista-pedidos');
-                    if(pedidos.length === 0){
-                        el.innerHTML = `<div class="estado-vazio"><div class="icon">📦</div><p>Nenhum pedido ainda</p><a href="produtos.html">Comprar agora</a></div>`;
-                    } else {
-                        el.innerHTML = pedidos.map(p => {
-                            const data = p.criadoEm?.toDate ? p.criadoEm.toDate().toLocaleDateString('pt-BR') : '—';
-                            const itens = Array.isArray(p.itens) ? p.itens : [];
-                            const status = p.status || 'pendente';
-                            return `<div class="pedido-card">
-                                <div class="pedido-top">
-                                    <span class="pedido-id">#NEON${p.id.slice(-6).toUpperCase()}</span>
-                                    <span class="pedido-data">📅 ${data}</span>
-                                    <span class="pedido-status ${status}">${status.charAt(0).toUpperCase()+status.slice(1)}</span>
-                                </div>
-                                <div class="pedido-itens">${itens.map(i=>`<span class="pedido-item-chip">${i.nome} x${i.quantidade}</span>`).join('')}</div>
-                                <div class="pedido-total">R$ ${Number(p.total).toFixed(2)}</div>
-                            </div>`;
-                        }).join('');
-                    }
-                } catch(e) {
-                    document.getElementById('lista-pedidos').innerHTML = `<div style="text-align:center;color:#ff5060;padding:40px;">Erro ao carregar pedidos.</div>`;
-                }
-
-                carregarFavoritos();
-            } else {
-                document.getElementById('estado-nao-logado').style.display='block';
-                document.getElementById('estado-logado').style.display='none';
-            }
-        });
-    </script>
+    <!-- BUSCA GLOBAL -->
+    <div class="busca-global" id="busca-global">
+        <div class="busca-box">
+            <div class="busca-input-wrap">
+                <span>🔍</span>
+                <input type="text" id="busca-global-input" placeholder="Buscar produtos, jogos..." oninput="buscaGlobal(this.value)" autofocus>
+                <button class="busca-fechar" onclick="fecharBusca()">ESC ✕</button>
+            </div>
+            <div class="busca-resultados" id="busca-resultados" style="display:none;"></div>
+            <div class="busca-hint">Pressione ESC para fechar • Enter para buscar</div>
+        </div>
+    </div>
+    <script src="js/chat-notif.js"></script>
 </body>
 </html>

@@ -18,6 +18,7 @@
                 <span id="contador-carrinho">0</span>
             </a>
             <a href="perfil.html">Perfil</a>
+            <button onclick="abrirBusca()" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#888;border-radius:8px;padding:7px 14px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:6px;transition:0.2s;width:auto;margin:0;" title="Buscar (Ctrl+K)">🔍 <span style='color:#555;font-size:11px;'>Ctrl+K</span></button>
             <button class="tema-btn" onclick="trocarTema()">🌙</button>
         </nav>
     </header>
@@ -35,6 +36,14 @@
         <p style="color:#aaa;font-size:15px;">
             Guarde esse número para acompanhar seu pedido no perfil.
         </p>
+
+        <!-- PONTOS GANHOS -->
+        <div id="pontos-ganhos-box" style="display:none;background:linear-gradient(135deg,rgba(255,200,0,0.08),rgba(255,100,0,0.08));border:1px solid rgba(255,200,0,0.2);border-radius:16px;padding:20px 30px;margin:20px auto;text-align:center;max-width:340px;">
+            <div style="font-size:36px;margin-bottom:8px;">⭐</div>
+            <div style="font-size:28px;font-weight:900;color:gold;text-shadow:0 0 10px rgba(255,200,0,0.5);" id="pontos-ganhos-num">+0</div>
+            <div style="color:#aaa;font-size:13px;margin-top:4px;">pontos adicionados ao seu saldo</div>
+            <div style="color:#666;font-size:12px;margin-top:8px;">Total: <span style="color:gold;font-weight:bold;" id="pontos-total-num">0 pts</span></div>
+        </div>
 
         <div style="display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin-top:10px;">
             <button class="btn-voltar" onclick="window.location.href='produtos.html'">
@@ -69,7 +78,8 @@
                 <a href="favoritos.html">Favoritos</a>
             </div>
             <div class="footer-col">
-                <h3>CONTA</h3>
+                <h3>CONTEÚDO</h3><a href="blog.html">Blog</a><a href="sobre.html">Sobre Nós</a><a href="faq.html">FAQ</a><a href="parceiros.html">Parceiros</a></div>
+            <div class="footer-col"><h3>CONTA</h3>
                 <a href="login.html">Login</a>
                 <a href="register.html">Cadastro</a>
                 <a href="perfil.html">Meu Perfil</a>
@@ -96,6 +106,33 @@
         if (id) {
             document.getElementById('pedido-id').textContent = '#NEON' + id.slice(-6).toUpperCase();
         }
+
+        // Mostrar pontos ganhos
+        const pontosGanhos = parseInt(localStorage.getItem('pontos-ganhos') || '0');
+        const totalPontos  = parseInt(localStorage.getItem('neon-pontos') || '0');
+        if (pontosGanhos > 0) {
+            const pontosEl = document.getElementById('pontos-ganhos-box');
+            if (pontosEl) {
+                pontosEl.style.display = 'block';
+                document.getElementById('pontos-ganhos-num').textContent = '+' + pontosGanhos;
+                document.getElementById('pontos-total-num').textContent = totalPontos + ' pts';
+            }
+            localStorage.removeItem('pontos-ganhos');
+        }
     </script>
+
+    <!-- BUSCA GLOBAL -->
+    <div class="busca-global" id="busca-global">
+        <div class="busca-box">
+            <div class="busca-input-wrap">
+                <span>🔍</span>
+                <input type="text" id="busca-global-input" placeholder="Buscar produtos, jogos..." oninput="buscaGlobal(this.value)" autofocus>
+                <button class="busca-fechar" onclick="fecharBusca()">ESC ✕</button>
+            </div>
+            <div class="busca-resultados" id="busca-resultados" style="display:none;"></div>
+            <div class="busca-hint">Pressione ESC para fechar • Enter para buscar</div>
+        </div>
+    </div>
+    <script src="js/chat-notif.js"></script>
 </body>
 </html>

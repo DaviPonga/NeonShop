@@ -28,6 +28,7 @@
             </a>
             <a href="perfil.html">Perfil</a>
             <a href="login.html">Login</a>
+            <button onclick="abrirBusca()" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#888;border-radius:8px;padding:7px 14px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:6px;transition:0.2s;width:auto;margin:0;" title="Buscar (Ctrl+K)">🔍 <span style='color:#555;font-size:11px;'>Ctrl+K</span></button>
             <button class="tema-btn" onclick="trocarTema()">🌙</button>
         </nav>
     </header>
@@ -129,5 +130,19 @@
             localStorage.setItem('favoritos', JSON.stringify(favoritos));
         }
     </script>
+
+    <!-- BUSCA GLOBAL -->
+    <div class="busca-global" id="busca-global">
+        <div class="busca-box">
+            <div class="busca-input-wrap">
+                <span>🔍</span>
+                <input type="text" id="busca-global-input" placeholder="Buscar produtos, jogos..." oninput="buscaGlobal(this.value)" autofocus>
+                <button class="busca-fechar" onclick="fecharBusca()">ESC ✕</button>
+            </div>
+            <div class="busca-resultados" id="busca-resultados" style="display:none;"></div>
+            <div class="busca-hint">Pressione ESC para fechar • Enter para buscar</div>
+        </div>
+    </div>
+    <script src="js/chat-notif.js"></script>
 </body>
 </html>

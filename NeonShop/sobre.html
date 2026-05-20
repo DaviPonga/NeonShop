@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nós - NeonShop</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .sobre-hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px 60px;
+            background:
+                radial-gradient(ellipse at 30% 50%, rgba(0,255,255,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(0,100,255,0.07) 0%, transparent 60%);
+            position: relative;
+        }
+        .sobre-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        .sobre-hero-content { position: relative; max-width: 700px; }
+        .sobre-tag { display:inline-block; background:rgba(0,255,255,0.1); border:1px solid rgba(0,255,255,0.3); color:cyan; padding:6px 20px; border-radius:30px; font-size:12px; letter-spacing:3px; margin-bottom:20px; }
+        .sobre-hero h1 { font-size: clamp(36px,6vw,72px); font-weight:900; color:white; margin-bottom:16px; }
+        .sobre-hero h1 span { color:cyan; text-shadow:0 0 20px cyan; }
+        .sobre-hero p { font-size:18px; color:#888; line-height:1.7; }
+
+        .section-sobre { max-width:1100px; margin:0 auto; padding:60px 30px; }
+        .sec-tag { color:cyan; font-size:12px; letter-spacing:4px; text-transform:uppercase; display:block; margin-bottom:10px; }
+        .sec-title { font-size:clamp(26px,4vw,40px); font-weight:900; color:white; margin-bottom:40px; }
+        .sec-title span { color:cyan; }
+
+        /* MISSÃO */
+        .missao-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; }
+        .missao-card { background:rgba(10,12,20,0.9); border:1px solid rgba(255,255,255,0.06); border-radius:20px; padding:30px; transition:0.3s; }
+        .missao-card:hover { border-color:rgba(0,255,255,0.2); transform:translateY(-4px); }
+        .missao-icon { font-size:40px; margin-bottom:16px; }
+        .missao-card h3 { color:cyan; font-size:18px; margin-bottom:10px; }
+        .missao-card p { color:#888; font-size:14px; line-height:1.7; }
+
+        /* HISTÓRIA */
+        .historia-layout { display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center; }
+        @media(max-width:700px){ .historia-layout{ grid-template-columns:1fr; } }
+        .historia-texto h2 { font-size:clamp(24px,3vw,36px); font-weight:900; color:white; margin-bottom:20px; }
+        .historia-texto p { color:#888; font-size:15px; line-height:1.8; margin-bottom:16px; }
+        .historia-img { background:rgba(0,255,255,0.05); border:1px solid rgba(0,255,255,0.1); border-radius:24px; padding:40px; text-align:center; }
+        .historia-img .big-icon { font-size:100px; display:block; margin-bottom:20px; }
+        .historia-stats { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+        .h-stat { background:rgba(0,0,0,0.3); border-radius:12px; padding:16px; text-align:center; }
+        .h-stat .num { font-size:28px; font-weight:900; color:cyan; }
+        .h-stat .lbl { font-size:11px; color:#555; letter-spacing:1px; margin-top:4px; }
+
+        /* TIME */
+        .time-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; }
+        .membro-card { background:rgba(10,12,20,0.9); border:1px solid rgba(255,255,255,0.06); border-radius:18px; padding:25px; text-align:center; transition:0.3s; }
+        .membro-card:hover { border-color:rgba(0,255,255,0.2); transform:translateY(-4px); }
+        .membro-avatar { font-size:60px; margin-bottom:12px; }
+        .membro-nome { font-size:16px; font-weight:bold; color:white; margin-bottom:4px; }
+        .membro-cargo { font-size:13px; color:cyan; margin-bottom:8px; }
+        .membro-desc { font-size:12px; color:#666; line-height:1.5; }
+
+        /* VALORES */
+        .valores-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+        .valor-card { background:rgba(10,12,20,0.9); border:1px solid rgba(255,255,255,0.06); border-radius:16px; padding:25px; display:flex; gap:15px; align-items:flex-start; transition:0.3s; }
+        .valor-card:hover { border-color:rgba(0,255,255,0.15); }
+        .valor-icon { font-size:28px; flex-shrink:0; }
+        .valor-info h4 { color:white; font-size:15px; margin-bottom:6px; }
+        .valor-info p { color:#666; font-size:13px; line-height:1.5; }
+
+        /* TIMELINE */
+        .timeline { position:relative; padding-left:30px; }
+        .timeline::before { content:''; position:absolute; left:6px; top:0; bottom:0; width:2px; background:linear-gradient(180deg,cyan,rgba(0,255,255,0.1)); }
+        .timeline-item { position:relative; margin-bottom:35px; }
+        .timeline-item::before { content:''; position:absolute; left:-27px; top:4px; width:12px; height:12px; background:cyan; border-radius:50%; box-shadow:0 0 10px cyan; }
+        .timeline-ano { color:cyan; font-size:13px; font-weight:bold; letter-spacing:1px; margin-bottom:4px; }
+        .timeline-titulo { font-size:16px; font-weight:bold; color:white; margin-bottom:6px; }
+        .timeline-desc { font-size:14px; color:#666; line-height:1.6; }
+
+        /* CTA */
+        .sobre-cta { background:linear-gradient(135deg,rgba(0,255,255,0.06),rgba(0,100,255,0.06)); border:1px solid rgba(0,255,255,0.15); border-radius:24px; padding:60px 40px; text-align:center; margin:0 30px 60px; }
+        .sobre-cta h2 { font-size:clamp(24px,4vw,38px); font-weight:900; color:white; margin-bottom:10px; }
+        .sobre-cta h2 span { color:cyan; text-shadow:0 0 15px cyan; }
+        .sobre-cta p { color:#888; font-size:16px; margin-bottom:30px; }
+        .cta-btns { display:flex; gap:15px; justify-content:center; flex-wrap:wrap; }
+        .btn-cta-primary { padding:15px 35px; background:linear-gradient(135deg,cyan,#0077ff); color:#000; border:none; border-radius:30px; font-size:16px; font-weight:900; cursor:pointer; text-decoration:none; display:inline-block; transition:0.3s; }
+        .btn-cta-primary:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,255,255,0.3); }
+        .btn-cta-outline { padding:15px 35px; background:transparent; color:cyan; border:2px solid rgba(0,255,255,0.4); border-radius:30px; font-size:16px; font-weight:bold; text-decoration:none; display:inline-block; transition:0.3s; }
+        .btn-cta-outline:hover { background:rgba(0,255,255,0.08); }
+
+        .divider-neon { height:1px; background:linear-gradient(90deg,transparent,rgba(0,255,255,0.2),transparent); margin:0 30px; }
+        .reveal { opacity:0; transform:translateY(30px); transition:0.7s ease; }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div id="loading">
+        <div class="loader-box">
+            <h1>NEONSHOP</h1>
+            <div class="loading-bar"><div class="loading-fill"></div></div>
+            <p>Carregando...</p>
+        </div>
+    </div>
+
+    <header class="navbar">
+        <div class="logo"><h1>NEONSHOP</h1></div>
+        <nav class="menu">
+            <a href="index.html">Home</a>
+            <a href="produtos.html">Produtos</a>
+            <a href="categorias.html">Categorias</a>
+            <a href="carrinho.html" class="carrinho-link">Carrinho <span id="contador-carrinho">0</span></a>
+            <a href="login.html">Login</a>
+            <button class="tema-btn" onclick="trocarTema()">🌙</button>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="sobre-hero">
+        <div class="sobre-hero-content">
+            <div class="sobre-tag">// NOSSA HISTÓRIA</div>
+            <h1>Sobre a <span>NeonShop</span></h1>
+            <p>Nascemos da paixão por games e tecnologia. Somos mais do que uma loja — somos parte da sua jornada gamer.</p>
+        </div>
+    </section>
+
+    <!-- MISSÃO -->
+    <div class="divider-neon"></div>
+    <div class="section-sobre reveal">
+        <span class="sec-tag">// nossa missão</span>
+        <h2 class="sec-title">O que nos <span>move</span></h2>
+        <div class="missao-grid">
+            <div class="missao-card">
+                <div class="missao-icon">🎯</div>
+                <h3>Missão</h3>
+                <p>Oferecer os melhores produtos gamer com preços justos, entrega rápida e suporte de qualidade para elevar a experiência de cada jogador.</p>
+            </div>
+            <div class="missao-card">
+                <div class="missao-icon">👁️</div>
+                <h3>Visão</h3>
+                <p>Ser a loja gamer mais confiável e completa do Brasil, reconhecida pela qualidade dos produtos e excelência no atendimento ao cliente.</p>
+            </div>
+            <div class="missao-card">
+                <div class="missao-icon">💎</div>
+                <h3>Valores</h3>
+                <p>Honestidade, transparência, paixão por games e compromisso total com a satisfação de cada cliente que visita nossa loja.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HISTÓRIA -->
+    <div class="divider-neon"></div>
+    <div class="section-sobre reveal">
+        <div class="historia-layout">
+            <div class="historia-texto">
+                <span class="sec-tag">// como tudo começou</span>
+                <h2>A história da <span style="color:cyan;">NeonShop</span></h2>
+                <p>A NeonShop nasceu em 2020 dentro de um quarto de gamer apaixonado. O fundador, cansado de não encontrar produtos de qualidade a preços acessíveis, decidiu criar uma loja diferente.</p>
+                <p>Começamos pequenos, com apenas 5 produtos. Hoje contamos com mais de 50 itens, 15 jogos digitais e uma comunidade crescente de gamers satisfeitos em todo o Brasil.</p>
+                <p>Nossa tecnologia é moderna, nossos produtos são originais e nosso suporte é humano — porque sabemos que por trás de cada pedido há um gamer esperando ansioso pela sua nova conquista.</p>
+            </div>
+            <div class="historia-img">
+                <span class="big-icon">🎮</span>
+                <div class="historia-stats">
+                    <div class="h-stat"><div class="num">50+</div><div class="lbl">PRODUTOS</div></div>
+                    <div class="h-stat"><div class="num">15</div><div class="lbl">JOGOS</div></div>
+                    <div class="h-stat"><div class="num">500+</div><div class="lbl">CLIENTES</div></div>
+                    <div class="h-stat"><div class="num">4.9★</div><div class="lbl">AVALIAÇÃO</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="divider-neon"></div>
+    <div class="section-sobre reveal">
+        <span class="sec-tag">// linha do tempo</span>
+        <h2 class="sec-title">Nossa <span>Jornada</span></h2>
+        <div style="max-width:600px;">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-ano">2020</div>
+                    <div class="timeline-titulo">O começo 🌱</div>
+                    <div class="timeline-desc">NeonShop nasce com 5 produtos e muita vontade de fazer diferente no mercado gamer.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-ano">2021</div>
+                    <div class="timeline-titulo">Primeira expansão 📦</div>
+                    <div class="timeline-desc">Linha de produtos ampliada para 20 itens. Primeiros 100 clientes satisfeitos e avaliação 5 estrelas.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-ano">2022</div>
+                    <div class="timeline-titulo">Jogos digitais chegam! 🎮</div>
+                    <div class="timeline-desc">Lançamos a categoria de jogos digitais com entrega em 24h. Sucesso imediato com a comunidade.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-ano">2023</div>
+                    <div class="timeline-titulo">Plataforma renovada 💻</div>
+                    <div class="timeline-desc">Site completamente redesenhado com Firebase, sistema de fidelidade e chat de suporte ao vivo.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-ano">2024</div>
+                    <div class="timeline-titulo">Crescimento contínuo 🚀</div>
+                    <div class="timeline-desc">Mais de 500 clientes, 50+ produtos e expansão para cadeiras, monitores e acessórios premium.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TIME -->
+    <div class="divider-neon"></div>
+    <div class="section-sobre reveal">
+        <span class="sec-tag">// quem faz acontecer</span>
+        <h2 class="sec-title">Nosso <span>Time</span></h2>
+        <div class="time-grid">
+            <div class="membro-card">
+                <div class="membro-avatar">👨‍💻</div>
+                <div class="membro-nome">Davi Ponga</div>
+                <div class="membro-cargo">Fundador & Dev</div>
+                <div class="membro-desc">Criador da NeonShop, apaixonado por games e tecnologia desde os 10 anos.</div>
+            </div>
+            <div class="membro-card">
+                <div class="membro-avatar">🎮</div>
+                <div class="membro-nome">Ana Lima</div>
+                <div class="membro-cargo">Suporte & Atendimento</div>
+                <div class="membro-desc">Garante que cada cliente tenha a melhor experiência de compra possível.</div>
+            </div>
+            <div class="membro-card">
+                <div class="membro-avatar">📦</div>
+                <div class="membro-nome">Carlos Silva</div>
+                <div class="membro-cargo">Logística</div>
+                <div class="membro-desc">Responsável por garantir que todos os pedidos cheguem no prazo e com segurança.</div>
+            </div>
+            <div class="membro-card">
+                <div class="membro-avatar">🎨</div>
+                <div class="membro-nome">Julia Santos</div>
+                <div class="membro-cargo">Design & Marketing</div>
+                <div class="membro-desc">Cria a identidade visual e as campanhas que fazem a NeonShop brilhar.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VALORES -->
+    <div class="divider-neon"></div>
+    <div class="section-sobre reveal">
+        <span class="sec-tag">// em que acreditamos</span>
+        <h2 class="sec-title">Nossos <span>Valores</span></h2>
+        <div class="valores-grid">
+            <div class="valor-card"><div class="valor-icon">🔒</div><div class="valor-info"><h4>Segurança</h4><p>Pagamentos seguros e dados protegidos em todas as transações.</p></div></div>
+            <div class="valor-card"><div class="valor-icon">⚡</div><div class="valor-info"><h4>Agilidade</h4><p>Entrega rápida de jogos digitais e periféricos sem complicação.</p></div></div>
+            <div class="valor-card"><div class="valor-icon">💯</div><div class="valor-info"><h4>Qualidade</h4><p>Apenas produtos originais com garantia do fabricante.</p></div></div>
+            <div class="valor-card"><div class="valor-icon">❤️</div><div class="valor-info"><h4>Paixão</h4><p>Amamos games tanto quanto você. Isso faz toda a diferença.</p></div></div>
+            <div class="valor-card"><div class="valor-icon">🤝</div><div class="valor-info"><h4>Confiança</h4><p>Construída compra a compra, avaliação a avaliação.</p></div></div>
+            <div class="valor-card"><div class="valor-icon">🌱</div><div class="valor-info"><h4>Crescimento</h4><p>Sempre melhorando para oferecer o melhor a você.</p></div></div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="divider-neon"></div>
+    <div class="sobre-cta reveal">
+        <h2>Pronto para <span>jogar?</span></h2>
+        <p>Explore nossa loja e encontre tudo que precisa para o seu setup gamer.</p>
+        <div class="cta-btns">
+            <a href="produtos.html" class="btn-cta-primary">🛒 Ver Produtos</a>
+            <a href="categorias.html" class="btn-cta-outline">🎮 Ver Categorias</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col"><h3>NEONSHOP</h3><p style="font-size:14px;line-height:1.8;">A melhor loja gamer do Brasil.</p></div>
+            <div class="footer-col"><h3>NAVEGAÇÃO</h3><a href="index.html">Home</a><a href="produtos.html">Produtos</a><a href="sobre.html">Sobre Nós</a><a href="faq.html">FAQ</a></div>
+            <div class="footer-col"><h3>CONTA</h3><a href="login.html">Login</a><a href="register.html">Cadastro</a><a href="perfil.html">Perfil</a></div>
+            <div class="footer-col"><h3>CONTATO</h3><a href="#">📧 suporte@neonshop.com</a><a href="#">📞 (11) 9999-9999</a></div>
+        </div>
+        <div class="footer-bottom">© 2025 <span>NeonShop</span> — Todos os direitos reservados</div>
+    </footer>
+
+    <div id="toast"></div>
+    <script type="module" src="js/script.js"></script>
+    <script src="js/chat-notif.js"></script>
+    <script>
+        const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1});
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    </script>
+</body>
+</html>

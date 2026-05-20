@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - NeonShop</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .faq-page { max-width:800px; margin:0 auto; padding:60px 20px 80px; }
+        .faq-header { text-align:center; margin-bottom:50px; }
+        .faq-tag { display:inline-block; background:rgba(0,255,255,0.1); border:1px solid rgba(0,255,255,0.3); color:cyan; padding:6px 20px; border-radius:30px; font-size:12px; letter-spacing:3px; margin-bottom:16px; }
+        .faq-header h1 { font-size:clamp(32px,5vw,52px); font-weight:900; color:white; margin-bottom:12px; }
+        .faq-header h1 span { color:cyan; text-shadow:0 0 15px cyan; }
+        .faq-header p { color:#888; font-size:16px; }
+        .faq-busca { display:flex; gap:10px; margin-bottom:40px; background:rgba(10,12,20,0.9); border:1px solid rgba(0,255,255,0.15); border-radius:14px; padding:6px 16px; }
+        .faq-busca span { font-size:20px; }
+        .faq-busca input { flex:1; background:none; border:none; color:white; font-size:15px; outline:none; padding:10px 0; }
+        .faq-busca input::placeholder { color:#444; }
+        .faq-cats { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:35px; }
+        .faq-cat { padding:8px 18px; border-radius:20px; border:1px solid rgba(255,255,255,0.08); background:transparent; color:#666; font-size:13px; cursor:pointer; transition:0.3s; }
+        .faq-cat.ativa { background:rgba(0,255,255,0.1); border-color:cyan; color:cyan; }
+        .faq-cat:hover { border-color:rgba(0,255,255,0.3); color:#aaa; }
+        .faq-section { margin-bottom:40px; }
+        .faq-section-title { font-size:14px; font-weight:bold; color:cyan; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; padding-left:4px; }
+        .faq-item { background:rgba(10,12,20,0.9); border:1px solid rgba(255,255,255,0.06); border-radius:14px; margin-bottom:10px; overflow:hidden; transition:0.3s; }
+        .faq-item.open { border-color:rgba(0,255,255,0.2); }
+        .faq-question { padding:18px 20px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; gap:15px; }
+        .faq-question:hover { background:rgba(255,255,255,0.02); }
+        .faq-question span { font-size:15px; color:#ccc; font-weight:500; line-height:1.4; }
+        .faq-arrow { color:cyan; font-size:18px; transition:0.3s; flex-shrink:0; }
+        .faq-item.open .faq-arrow { transform:rotate(180deg); }
+        .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.4s ease, padding 0.3s; }
+        .faq-item.open .faq-answer { max-height:300px; }
+        .faq-answer-inner { padding:0 20px 18px; color:#888; font-size:14px; line-height:1.8; border-top:1px solid rgba(255,255,255,0.04); }
+        .faq-answer-inner strong { color:cyan; }
+        .faq-vazio { text-align:center; padding:50px; color:#555; }
+        .faq-contato { background:rgba(0,255,255,0.04); border:1px solid rgba(0,255,255,0.1); border-radius:20px; padding:40px; text-align:center; margin-top:50px; }
+        .faq-contato h3 { color:white; font-size:22px; margin-bottom:10px; }
+        .faq-contato p { color:#888; margin-bottom:25px; font-size:15px; }
+        .faq-contato-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+        .btn-contato { padding:12px 28px; border-radius:30px; font-size:14px; font-weight:bold; cursor:pointer; transition:0.3s; text-decoration:none; display:inline-block; }
+        .btn-contato.primary { background:linear-gradient(135deg,cyan,#0077ff); color:#000; border:none; }
+        .btn-contato.primary:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(0,255,255,0.3); }
+        .btn-contato.outline { background:transparent; color:cyan; border:1px solid rgba(0,255,255,0.4); }
+        .btn-contato.outline:hover { background:rgba(0,255,255,0.08); }
+    </style>
+</head>
+<body>
+
+    <div id="loading">
+        <div class="loader-box">
+            <h1>NEONSHOP</h1>
+            <div class="loading-bar"><div class="loading-fill"></div></div>
+            <p>Carregando...</p>
+        </div>
+    </div>
+
+    <header class="navbar">
+        <div class="logo"><h1>NEONSHOP</h1></div>
+        <nav class="menu">
+            <a href="index.html">Home</a>
+            <a href="produtos.html">Produtos</a>
+            <a href="carrinho.html" class="carrinho-link">Carrinho <span id="contador-carrinho">0</span></a>
+            <a href="login.html">Login</a>
+            <button class="tema-btn" onclick="trocarTema()">🌙</button>
+        </nav>
+    </header>
+
+    <div class="faq-page">
+        <div class="faq-header">
+            <div class="faq-tag">// CENTRAL DE AJUDA</div>
+            <h1>Perguntas <span>Frequentes</span></h1>
+            <p>Encontre respostas rápidas para as dúvidas mais comuns</p>
+        </div>
+
+        <div class="faq-busca">
+            <span>🔍</span>
+            <input type="text" id="faq-search" placeholder="Buscar pergunta..." oninput="filtrarFAQ()">
+        </div>
+
+        <div class="faq-cats">
+            <button class="faq-cat ativa" onclick="filtrarCat('todos',this)">Todos</button>
+            <button class="faq-cat" onclick="filtrarCat('pedidos',this)">📦 Pedidos</button>
+            <button class="faq-cat" onclick="filtrarCat('pagamento',this)">💳 Pagamento</button>
+            <button class="faq-cat" onclick="filtrarCat('entrega',this)">🚚 Entrega</button>
+            <button class="faq-cat" onclick="filtrarCat('jogos',this)">🎮 Jogos</button>
+            <button class="faq-cat" onclick="filtrarCat('conta',this)">👤 Conta</button>
+        </div>
+
+        <div id="faq-lista"></div>
+
+        <div class="faq-contato">
+            <h3>Não encontrou sua resposta? 🤔</h3>
+            <p>Nossa equipe de suporte está pronta para ajudar você!</p>
+            <div class="faq-contato-btns">
+                <a href="#" class="btn-contato primary" onclick="document.getElementById('chat-fab')?.click()">💬 Chat ao Vivo</a>
+                <a href="mailto:suporte@neonshop.com" class="btn-contato outline">📧 Enviar Email</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col"><h3>NEONSHOP</h3><p style="font-size:14px;line-height:1.8;">A melhor loja gamer do Brasil.</p></div>
+            <div class="footer-col"><h3>NAVEGAÇÃO</h3><a href="index.html">Home</a><a href="sobre.html">Sobre Nós</a><a href="faq.html">FAQ</a><a href="parceiros.html">Parceiros</a></div>
+            <div class="footer-col"><h3>CONTA</h3><a href="login.html">Login</a><a href="register.html">Cadastro</a><a href="perfil.html">Perfil</a></div>
+            <div class="footer-col"><h3>CONTATO</h3><a href="#">📧 suporte@neonshop.com</a><a href="#">📞 (11) 9999-9999</a></div>
+        </div>
+        <div class="footer-bottom">© 2025 <span>NeonShop</span> — Todos os direitos reservados</div>
+    </footer>
+
+    <div id="toast"></div>
+    <script type="module" src="js/script.js"></script>
+    <script src="js/chat-notif.js"></script>
+    <script>
+    const FAQS = [
+        { cat:'pedidos', q:'Como acompanho meu pedido?', a:'Acesse a página de <strong>Perfil</strong> e clique na aba "Meus Pedidos". Lá você encontra o número e o status de cada pedido.' },
+        { cat:'pedidos', q:'Posso cancelar um pedido?', a:'Pedidos podem ser cancelados antes do envio. Entre em contato pelo email <strong>suporte@neonshop.com</strong> informando o número do pedido. Após o envio, aguarde o recebimento e solicite devolução.' },
+        { cat:'pedidos', q:'Meu pedido não chegou, o que faço?', a:'Verifique o prazo estimado no seu email de confirmação. Se o prazo passou, entre em contato com nosso suporte pelo chat ou email com o número do pedido.' },
+        { cat:'pagamento', q:'Quais formas de pagamento vocês aceitam?', a:'Atualmente aceitamos pagamento via <strong>PIX</strong>. É rápido, seguro e sem taxas adicionais. A confirmação é instantânea!' },
+        { cat:'pagamento', q:'O pagamento via PIX é seguro?', a:'Sim! O PIX é regulamentado pelo Banco Central do Brasil. Nossas transações são criptografadas e seus dados estão sempre protegidos.' },
+        { cat:'pagamento', q:'Como funciona o sistema de cupons?', a:'Na página do carrinho, há um campo para inserir cupons. Temos: <strong>NEON10</strong> (10% off), <strong>GAMER20</strong> (20% off) e <strong>VIP50</strong> (50% off). Os cupons são aplicados no total.' },
+        { cat:'entrega', q:'Qual o prazo de entrega?', a:'Jogos digitais: até <strong>24 horas</strong> por email. Produtos físicos: de 3 a 15 dias úteis conforme sua região (Sudeste 3-5 dias, Sul 4-6 dias, Nordeste 7-10 dias, Norte 10-15 dias).' },
+        { cat:'entrega', q:'Como calculo o frete?', a:'Na página do carrinho, informe seu <strong>CEP</strong> e clique em "Calcular". O sistema consultará automaticamente os valores e prazos para sua região.' },
+        { cat:'entrega', q:'Vocês entregam em todo o Brasil?', a:'Sim! Entregamos para todos os estados brasileiros. O prazo e valor do frete variam conforme a região. Use o calculador de frete no carrinho.' },
+        { cat:'jogos', q:'Como recebo um jogo digital?', a:'Após a confirmação do pagamento, você receberá a <strong>chave digital</strong> no email cadastrado em até 24 horas. A chave é ativada diretamente na plataforma indicada (Steam, Rockstar, etc.).' },
+        { cat:'jogos', q:'E se a chave do jogo não funcionar?', a:'Garantimos que todas as chaves são originais. Se houver qualquer problema, entre em contato imediatamente pelo chat ou email com o comprovante de compra e resolveremos em até 24h.' },
+        { cat:'jogos', q:'Posso trocar o jogo após a compra?', a:'Chaves digitais não podem ser trocadas após o resgate. Certifique-se de que o jogo é compatível com seu sistema antes de comprar. Em caso de chave inválida, garantimos a substituição.' },
+        { cat:'conta', q:'Como criar uma conta?', a:'Clique em "Login" na navbar e depois em "Criar nova conta". Preencha seu nome, email e senha. Sua conta estará ativa imediatamente!' },
+        { cat:'conta', q:'Esqueci minha senha, como recupero?', a:'No momento, entre em contato pelo email <strong>suporte@neonshop.com</strong> solicitando a redefinição de senha. Em breve teremos recuperação automática disponível.' },
+        { cat:'conta', q:'Como funcionam os pontos de fidelidade?', a:'A cada R$ 1,00 gasto, você ganha <strong>10 pontos</strong>. Os pontos acumulam e sobem seu nível: Bronze, Prata, Ouro, Diamante e Lendário. Em breve os pontos poderão ser trocados por descontos!' },
+        { cat:'pedidos', q:'Vocês emitem nota fiscal?', a:'Emitimos comprovante de compra digital para todos os pedidos. Para nota fiscal completa, entre em contato com nosso suporte informando seus dados fiscais.' },
+        { cat:'entrega', q:'Vocês entregam em endereço comercial?', a:'Sim! Basta informar o endereço completo no momento da compra. Certifique-se de que alguém estará disponível para receber.' },
+    ];
+
+    let catAtiva = 'todos';
+
+    function renderFAQ(items) {
+        const lista = document.getElementById('faq-lista');
+        if (!items.length) {
+            lista.innerHTML = '<div class="faq-vazio">🔍 Nenhuma pergunta encontrada. Tente outros termos ou use o chat!</div>';
+            return;
+        }
+        const cats = { pedidos:'📦 Pedidos', pagamento:'💳 Pagamento', entrega:'🚚 Entrega', jogos:'🎮 Jogos', conta:'👤 Conta' };
+        const grupos = {};
+        items.forEach(f => { if (!grupos[f.cat]) grupos[f.cat] = []; grupos[f.cat].push(f); });
+        lista.innerHTML = Object.entries(grupos).map(([cat, faqs]) => `
+            <div class="faq-section">
+                <div class="faq-section-title">${cats[cat] || cat}</div>
+                ${faqs.map((f, i) => `
+                    <div class="faq-item" id="faq-${cat}-${i}">
+                        <div class="faq-question" onclick="toggleFAQ('${cat}-${i}')">
+                            <span>${f.q}</span>
+                            <span class="faq-arrow">▾</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">${f.a}</div>
+                        </div>
+                    </div>`).join('')}
+            </div>`).join('');
+    }
+
+    window.toggleFAQ = function(id) {
+        const item = document.getElementById('faq-'+id);
+        item?.classList.toggle('open');
+    };
+
+    window.filtrarFAQ = function() {
+        const q = document.getElementById('faq-search').value.toLowerCase();
+        const base = catAtiva === 'todos' ? FAQS : FAQS.filter(f => f.cat === catAtiva);
+        renderFAQ(q ? base.filter(f => f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q)) : base);
+    };
+
+    window.filtrarCat = function(cat, btn) {
+        catAtiva = cat;
+        document.querySelectorAll('.faq-cat').forEach(b => b.classList.remove('ativa'));
+        btn.classList.add('ativa');
+        filtrarFAQ();
+    };
+
+    renderFAQ(FAQS);
+    </script>
+</body>
+</html>
